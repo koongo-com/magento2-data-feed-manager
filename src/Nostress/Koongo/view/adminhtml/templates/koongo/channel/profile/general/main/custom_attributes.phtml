@@ -1,0 +1,169 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\CustomAttributes */
+?>
+
+<fieldset class="fieldset" id="channel_profile_custom_attributes_table_fieldset" data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+    <legend class="legend">
+        <span>
+            <?php /* @escapeNotVerified */ echo __('Custom Attributes Table') ?>
+            <?php echo $this->getTooltip(); ?>
+        </span>
+    </legend>
+    
+    <?php if (!$block->exportCustomAttributes()):?>
+    	<?php echo __("Custom attributes not available for this feed.")?>
+    <?php else:?>
+	    <?php echo __("Define custom attributes for %1 using the table below.", $block->getChannelLabel())?>
+	    <div id="manage-attributes-table">
+			<table id="convert_table" class="admin__control-table convert_table">
+				<thead>
+				    <tr>
+				        <th class="col-index"><?= /* @escapeNotVerified */  __('#')?></th>
+				        <th class="col-label"><?= /* @escapeNotVerified */  __('%1 Attribute Label', $block->getChannelLabel())?></th>
+				        <th class="col-magento_attribute"><?= /* @escapeNotVerified */  __('Magento Attribute')?></th>
+				        <th class="col-default_value"><?= /* @escapeNotVerified */  __('Default Value')?></th>
+				        <th class="col-settings"><?= /* @escapeNotVerified */  __('Settings')?></th>
+				        <th class="col-delete"><?= /* @escapeNotVerified */  __('Action')?></th>
+				    </tr>
+				</thead>
+			
+				<!-- rules are empty -->
+				<!-- ko if: (attributes().length <= 0) -->
+					<input type="hidden" id="attributes_empty" name="<?php echo $block->getAttributeInputName()?>" value=""/>
+				<!-- /ko -->
+				<tbody id="convert_container" data-bind="foreach: attributes()">
+					<tr>
+						<td class="col-index">
+						 	<span data-bind="text: $index()+1"></span>
+						</td>
+						<td class="col-label">
+							<input type="text" data-bind="value: label, attr: { name: <?php echo $block->getAttributeInputNameKO('label')?>, id: 'custom_attribute_label_'+$index()  }" class=" input-text admin__control-text required-entry _required">
+						</td>
+						<td class="col-magento_attribute">
+							<?php echo $block->getSelectHtmlWithValue();?>
+						</td>
+						<td class="col-default_value">
+							<input type="text" id="custom_attribute_constant" data-bind="value: constant, attr: { name: <?php echo $block->getAttributeInputNameKO('constant')?> }" class=" input-text admin__control-text">
+						</td>
+						<td class="col-settings">
+							<button id='attribute_settings' data-bind='click: function(){ $parent.openCustomAttributeSettings($index()); }' data-action='open-attribute-settings' class='primary add'><?= /* @escapeNotVerified */  __('Settings')?></button>
+							
+							<!-- hidden inputs for form submit -->
+							<input type="hidden" id="custom_attribute_limit" data-bind="value: limit, attr: { name: <?php echo $block->getAttributeInputNameKO('limit')?> }" class=" input-text admin__control-text">
+							<input type="hidden" id="custom_attribute_eppav" data-bind="value: eppav, attr: { name: <?php echo $block->getAttributeInputNameKO('eppav')?> }" class=" input-text admin__control-text">
+							<input type="hidden" id="custom_attribute_postproc" data-bind="value: postproc, attr: { name: <?php echo $block->getAttributeInputNameKO('postproc')?> }" class=" input-text admin__control-text">
+							<input type="hidden" id="custom_attribute_composed_value" data-bind="value: composed_value, attr: { name: <?php echo $block->getAttributeInputNameKO('composed_value')?> }" class=" input-text admin__control-text">
+							<span id="convert_container_values" data-bind="foreach: convert">
+					            <input type="hidden"
+					            	id="convert_row_from"
+					            	data-bind="value: from,
+					            			  attr: { name: <?php echo $block->getAttributeInputNameKO('convert', true)?> + '[' + $index() + '][from]',
+			    							  id: 'convert_row_from_' + $parentContext.$index()  +  '_' + $index() }"
+					            	 class=" input-text admin__control-text">
+			            		<input type="hidden"
+			            			data-bind="value: to,
+			            			  		attr: { name: <?php echo $block->getAttributeInputNameKO('convert', true)?> + '[' + $index() + '][to]',
+	    									 id: 'convert_row_to_' + $parentContext.$index()  +  '_' + $index() }"
+			            	 		class=" input-text admin__control-text">
+							</span>
+						</td>
+						<td class="col-delete">
+							<button data-bind="click: function(){ $parent.removeCustomAttributeRow(this, $parent); }" id="convert_row_delete_button" class="action- scalable delete icon-btn delete-product-option" type="button" title="<?= /* @escapeNotVerified */  __('Delete Rewrite')?>">
+								<span><?= /* @escapeNotVerified */  __('Delete')?></span>
+							</button><!-- $parent.removeConvertRow -->
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+				    <tr>
+				        <td class="col-actions-add" colspan="6">
+				        	<button data-bind="click: addCustomAttributeRow" class="action-default scalable add" type="button" title="<?= /* @escapeNotVerified */  __('Add Attribute')?>" id="add_rewrite_button">
+				        		<span><?= /* @escapeNotVerified */  __('Add Attribute')?></span>
+							</button>
+						</td>
+			    	</tr>
+				</tfoot>
+			</table>
+	    </div>
+		
+		                             
+	    <div data-role="custom-attribute-settings-dialog" id="custom-attribute-settings-dialog"
+	         class="no-display">
+	         
+	          <!-- Attribute Settings -->
+			<div class="entry-edit" data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+				<!-- ko if: (attributes().length > 0) -->
+		        	<?php echo $block->getChildHtml('attributes_table_grid_modal_custom_settings');?>
+		        <!-- /ko -->
+			</div>
+	    </div>
+	<?php endif;?>
+</fieldset>
+<?php if ($block->exportCustomAttributes()):?>
+	<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
+                        "component": "Nostress_Koongo/js/channel/profile/editgeneral/attributes",
+						"attributeSource": <?php echo $block->getCustomAttributesJson(); ?>
+                    }
+                }
+            }
+        }
+    }
+	</script>
+	
+		<script type="text/javascript">
+    // init modal after knockout data binding
+require([
+         "jquery",
+         'mage/template',
+         'text!Nostress_Koongo/templates/tooltip.html',
+         "Magento_Ui/js/modal/modal"
+     ], function($, mageTemplate, tooltipTemplate){
+
+         var channelLabel = '<?php echo $block->getChannelLabel(); ?>';
+         var tooltipSettingsUrl =  '<?php echo $block->getHelp('attributes_mapping_custom_attributes'); ?>';
+
+         var tooltipHtml = tooltipSettingsUrl ? mageTemplate( tooltipTemplate, { url: tooltipSettingsUrl}) : '';
+	 	
+	
+        $('#custom-attribute-settings-dialog').modal({
+        	title: channelLabel + ' ' + $.mage.__('Attribute') + ": <strong class='settings-title-suffix'></strong>" + tooltipHtml,
+            type: 'slide',
+            buttons: [
+              {
+                  text: $.mage.__('Done'),
+                  class: 'primary',
+                  click: function () {
+                  	this.closeModal();
+                  }
+              }
+            ]
+        });
+    });
+</script>
+<?php endif;?>

@@ -1,0 +1,82 @@
+<!--
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+-->
+<!-- ko if: $col.isSingle($row()._rowIndex) -->
+<a
+    class="action-menu-item"
+    data-bind="
+        repeat: {
+            foreach: $col.getVisibleActions($row()._rowIndex),
+            item: '$action'
+        }"
+    data-repeat-bind="
+        attr: {
+            href: $action().href
+        },
+        click: $col.getActionHandler($action()),
+        text: $action().label"
+    ></a>
+<!-- /ko -->
+
+<!-- ko if: $col.isMultiple($row()._rowIndex) -->
+<div
+    class="action-select-wrap relative"
+    data-bind="collapsible">   
+    
+    <div class="actions-split" title="Profile Execution" id="profile_run_actions">    
+	    <button class="action-default primary add" id="profile_run_actions-button" data-bind="	                   
+	                    text: $col.getVisibleActions($row()._rowIndex)[0].label,	                    
+	                    click: function() { location.href = $col.getVisibleActions($row()._rowIndex)[0].href;} , 
+	                    title: $col.getVisibleActions($row()._rowIndex)[0].label,
+	                    attr: { disabled: !$col.isLicenseValid($row())}">
+	        <span>Attributes</span>
+	    </button>
+        <button class="action-toggle primary add" data-bind="toggleCollapsible, attr: { disabled: !$col.isLicenseValid($row())}">
+        	<span data-bind="i18n: 'Select'"></span>
+		</button>
+		<!-- ko if: $col.isLicenseValid($row()) -->
+	    <ul
+	        class="dropdown-menu"
+	        data-bind="
+	            css: {'_active': $collapsible.opened} ">
+	        <li
+	            data-bind="
+	                repeat: {
+	                    foreach: $col.getVisibleActions($row()._rowIndex),
+	                    item: '$action'
+	                },
+	                ">
+           	                
+	            <a
+	                class="action-menu-item profile-run-menu-item"
+	                data-bind="	                	
+	                    attr: {
+	                        href: $action().href,
+	                        id: 'profile-run-menu-item' + $action().index
+	                    },
+	                    click: $col.getActionHandler($action()),
+	                    text: $action().label,	                    
+	                    visible: $action().index != 'run_profile'"></a>	       
+	        </li>        
+	    </ul>
+	    <!-- /ko -->
+    </div>
+</div>
+<!-- /ko -->

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Nostress_Koongo::koongo" title="Koongo" module="Nostress_Koongo" sortOrder="25" dependsOnModule="Nostress_Koongo" resource="Nostress_Koongo::koongo"/>
+        <add id="Nostress_Koongo::koongo_overview" title="Getting Started" module="Nostress_Koongo" sortOrder="5" dependsOnModule="Nostress_Koongo" parent="Nostress_Koongo::koongo" action="koongo/overview/" resource="Nostress_Koongo::koongo"/>
+        <add id="Nostress_Koongo::koongo_connector" title="Connector" module="Nostress_Koongo" sortOrder="10" dependsOnModule="Nostress_Koongo" parent="Nostress_Koongo::koongo" resource="Nostress_Koongo::koongo_connector"/>
+        <add id="Nostress_Koongo::koongo_channel_profile" title="Export Profiles" module="Nostress_Koongo" sortOrder="10" parent="Nostress_Koongo::koongo_connector" action="koongo/channel_profile/" resource="Nostress_Koongo::koongo_channel_profile"/>        
+        <add id="Nostress_Koongo::koongo_configuration" title="Configuration" module="Nostress_Koongo" sortOrder="50" parent="Nostress_Koongo::koongo_connector" action="adminhtml/system_config/edit/section/koongo_config/" resource="Nostress_Koongo::configuration"/>
+        <add id="Nostress_Koongo::koongo_license" title="License" module="Nostress_Koongo" sortOrder="100" parent="Nostress_Koongo::koongo_connector" action="adminhtml/system_config/edit/section/koongo_license/" resource="Nostress_Koongo::license"/>               
+        <add id="Nostress_Koongo::koongo_service" title="Service" module="Nostress_Koongo" sortOrder="200" dependsOnModule="Nostress_Koongo" parent="Nostress_Koongo::koongo" resource="Nostress_Koongo::koongo_service"/>
+        <add id="Nostress_Koongo::service_api_connection_wizard" title="Connection Wizard" module="Nostress_Koongo" sortOrder="230" parent="Nostress_Koongo::koongo_service" action="koongo/service_connection/" resource="Nostress_Koongo::service_api_connection"/>       
+        <add id="Nostress_Koongo::koongo_service_api_webhooks" title="API Webhooks" module="Nostress_Koongo" sortOrder="250" parent="Nostress_Koongo::koongo_service" action="koongo/service_webhook/" resource="Nostress_Koongo::service_api_webhooks"/>
+    </menu>
+</config>

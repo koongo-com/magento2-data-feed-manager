@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp/etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="connect-src">
+            <values>
+                <value id="connect-src-koongo-com" type="host">*.koongo.com</value>
+            </values>
+        </policy>	
+
+        <policy id="img-src">
+            <values>
+                <value id="img-src-koongo-com" type="host">*.koongo.com</value>
+            </values>
+        </policy>
+
+        <policy id="style-src">
+            <values>
+                <value id="style-src-darkula" type="host">cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/darkula.min.css</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

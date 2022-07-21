@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <head>
+    	<css src="Nostress_Koongo::css/Koongo.css"/>
+	</head>
+    <body>    	
+        <referenceContainer name="content">
+            <block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit" name="nostress_koongo_channel_profile_edit_general"/>
+        </referenceContainer>
+        <referenceContainer name="left">        	
+            <block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tabs" name="nostress_koongo_channel_profile_general_edit_tabs">            		
+            	<container label="Main" name="main">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main" name="nostress_koongo_channel_profile_general_edit_tab_main"/>              		
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Attributes" name="nostress_koongo_channel_profile_general_edit_tab_main_attributes">
+            			<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Grid" name="attributes.grid" as="attributes_table_grid"/>
+            			<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Attributes\Info" name="nostress_koongo_channel_profile_general_edit_tab_main_attributes_info" as="attributes_table_grid_modal_info"/>
+            			<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Attributes\Settings" name="nostress_koongo_channel_profile_general_edit_tab_main_attributes_settings" as="attributes_table_grid_modal_settings">
+            				<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Attributes\Info" name="nostress_koongo_channel_profile_general_edit_tab_main_attributes_settings_info" as="attributes_table_grid_modal_settings_info">
+            					<action method="setTitle">
+        							<argument name="text" translate="true" xsi:type="string">Info</argument>
+    							</action>
+            				</block>
+            			</block>            			
+            		</block> 
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Customattributes" name="nostress_koongo_channel_profile_general_edit_tab_main_custom_attributes">            			            			
+            			<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Attributes\Settings" name="nostress_koongo_channel_profile_general_edit_tab_main_custom_attributes_settings" as="attributes_table_grid_modal_custom_settings"/>      				            			
+            		</block>           			            		
+            	</container>
+            	<container label="Shipping Cost" name="shipping_cost">
+                	<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Shippingcost" name="nostress_koongo_channel_profile_general_edit_tab_shippingcost"/>
+                	<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Shippingcost\Intervals" name="nostress_koongo_channel_profile_general_edit_tab_shippingcost_intervals" as="shipping_intervals"/> 
+                </container>
+                <container label="Stock" name="stock">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Stock" name="nostress_koongo_channel_profile_general_edit_tab_stock"/>
+            	</container>             
+            	<container label="Price and Date" name="price">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Price" name="nostress_koongo_channel_profile_general_edit_tab_price"/>
+            	</container>
+            	<container label="Feed File" name="file">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\File" name="nostress_koongo_channel_profile_general_edit_tab_file"/>
+            	</container>
+            	<container label="Sort Products" name="sort">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Sort" name="nostress_koongo_channel_profile_general_edit_tab_sort"/>
+            	</container>
+            	<container label="Category" name="category">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Category" name="nostress_koongo_channel_profile_general_edit_tab_category"/>
+            	</container>
+            </block>
+        </referenceContainer>        
+        <referenceContainer name="js">
+            <block class="Magento\Backend\Block\Template" name="shippingcost_table_js" template="Nostress_Koongo::koongo/channel/profile/general/shipping/js.phtml"/>
+        </referenceContainer>        
+    </body>
+</page>

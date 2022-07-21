@@ -1,0 +1,115 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\CustomAttributes */
+?>
+
+	<fieldset class="fieldset admin__fieldset" id="channel_profile_cron_rules_table_fieldset" data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+    	<legend class="admin__legend legend">
+    	   <span>
+    	       <?php /* @escapeNotVerified */ echo __('Profile Schedule Execution Rules') ?>
+    	       <?php echo $block->getTooltip(); ?>
+    	   </span>
+    	</legend>
+	    
+	    <div id="manage-mapping-table">
+	    
+			<table id="convert_table" class="data-grid admin__control-table convert_table">
+				<thead>
+				    <tr>
+				        <th class="data-grid-th col-index"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('#')?></span></th>
+				        <th class="data-grid-th col-day"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('Days Interval')?></span></th>
+				        <th class="data-grid-th col-time"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('Time Interval')?></span></th>
+				        <th class="data-grid-th col-enabled"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('Enabled')?></span></th>
+				        <th class="data-grid-th col-duplicate"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('Action')?></span></th>
+				        <th class="data-grid-th col-delete"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('')?></span></th>
+				    </tr>
+				</thead>
+			
+				<!-- rules are empty -->
+				<!-- ko if: (rules().length <= 0) -->
+					<input type="hidden" id="rules_empty" name="<?php echo $block->getRulesInputName()?>" value=""/>
+				<!-- /ko -->
+				<tbody id="convert_container" data-bind="foreach: rules()">
+					
+					<tr class="data-row" data-bind="css: { '_odd-row': !!($index() % 2)}" data-repeat-index="0">
+						<td class="col-index">
+						 	<span data-bind="text: $index()+1"></span>
+						</td>						
+						<td class="col-day">
+							<?php echo $block->getDaysSelectHtml();?>
+						</td>						
+						<td class="col-time">
+							<?php echo $block->getTimesSelectHtml();?>
+							<div data-bind="visible: times_interval() == 'every_24h'">
+								<br>
+								<?= /* @escapeNotVerified */  __('At')?> &nbsp; <?php echo $block->getHoursSelectHtml();?> : <?php echo $block->getMinutesSelectHtml()?>
+							</div>
+						</td>						
+						<td class="col-enabled">	
+							<input type="checkbox" id="rule_enabled" data-bind="checked: enabled, attr: { name: <?php echo $block->getInputNameKO('enabled')?> }" />						
+						</td>
+						<td class="col-duplicate">
+							<button data-bind="click: function(){ $parent.duplicateRuleTableRow(this, $parent, $index()); }" id="rule_row_duplicate_button" class="action- scalable delete icon-btn duplicate-product-option" type="button" title="<?= /* @escapeNotVerified */  __('Duplicate')?>">
+								<span><?= /* @escapeNotVerified */  __('Duplicate')?></span>
+							</button>
+						</td>
+						<td class="col-delete">
+							<button data-bind="click: function(){ $parent.removeRuleTableRow(this, $parent); }" id="rule_row_delete_button" class="action- scalable delete icon-btn delete-product-option" type="button" title="<?= /* @escapeNotVerified */  __('Delete')?>">
+								<span><?= /* @escapeNotVerified */  __('X')?></span>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+				    <tr>
+				        <td class="col-actions-add" data-bind="click: addRuleTableRow" colspan="6">
+				        	
+				        	<span style="float: right; font-size: 1.1em">
+							     <?php echo __("Adjust schedule for automatic profile execution.")?>
+							</span>
+				        	
+				        	<button  class="action-primary scalable add" type="button" title="<?= /* @escapeNotVerified */  __('Add Schedule Rule')?>" id="add_schedule_rule_button">
+				        		<span><?= /* @escapeNotVerified */  __('Add Schedule Rule')?></span>
+							</button>
+							
+						</td>
+			    	</tr>
+				</tfoot>
+			</table>
+	    </div>						    
+	    	  
+	</fieldset>
+	<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
+                        "component": "Nostress_Koongo/js/channel/profile/editcron/rulestable",
+						"ruleSource": <?php echo json_encode($block->getCronRules());?>                                             
+                    }
+                }
+            }
+        }
+    }
+	</script>

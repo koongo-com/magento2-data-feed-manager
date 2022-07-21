@@ -1,0 +1,40 @@
+<?php
+$licenseHelper = $this->helper('Nostress\Koongo\Helper\Version');
+$containerID = $licenseHelper::LICENSE_STATUS_CONTAINER;
+?>
+
+<script>
+require(['prototype'], function () {
+
+    window.koongoCheckLicense = function(url) {
+
+      var button = $('koongo_license_check_button');
+        
+      if(button.hasClassName('disabled')) {
+        return;
+      }
+      
+      button.addClassName('disabled');
+      new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxLicenseCheckUrl() ?>', {
+        // method:    'get',
+        onSuccess: function(response){
+          if (response.responseText){
+            var json = response.responseText.evalJSON(true);
+
+            if(json.license_status) {
+              $('<?php echo $containerID; ?>').update(json.license_status);
+            }
+            
+            if(json.valid) {
+               button.remove();
+            } else {
+         	   button.removeClassName('disabled');
+            }
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<?php echo $block->getButtonsHtml() ?>

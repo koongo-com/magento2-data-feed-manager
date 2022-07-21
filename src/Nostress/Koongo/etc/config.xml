@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+		<koongo_config>
+			<basic>				
+				<allow_excluded_images_export>1</allow_excluded_images_export>
+				<allow_placeholder_images_export>1</allow_placeholder_images_export>
+				<allow_inactive_categories_export>1</allow_inactive_categories_export>
+				<debug_mode>0</debug_mode>
+				<show_kaas_info>1</show_kaas_info>
+				<show_blog_news>1</show_blog_news>
+			</basic>
+			<general>				
+				<image_folder>catalog/product</image_folder>
+				<temp_file_prefix>temp-</temp_file_prefix>
+				<customer_group_code>NOT LOGGED IN</customer_group_code>								
+				<batch_size>10000</batch_size>	
+				<include_pub_into_media_links>according_to_system</include_pub_into_media_links>			
+				<remove_illegal_chars_reg_expression>/[\x00-\x08\x0B\x0C\x0E-\x1F]+/</remove_illegal_chars_reg_expression>
+				<log_profile_events>1</log_profile_events>
+				<feeds_directory>koongo</feeds_directory>	
+				<category_lowest_level>2</category_lowest_level>		
+				<highlightjs_style>//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/darkula.min.css</highlightjs_style>		
+				<bundle_options_required_only>1</bundle_options_required_only>
+				<bundle_options_default_itmes_only>0</bundle_options_default_itmes_only>
+                <image_attribute_source>store_view_or_default</image_attribute_source>			
+			</general>	
+			<profile_log>				
+				<log_limit>200</log_limit>
+				<log_rest>50</log_rest>
+			</profile_log>					
+		</koongo_config> 
+        <payment>
+            <koongo>
+                <active>0</active>
+                <model>Nostress\Koongo\Model\Payment\Method\Koongo</model>
+                <order_status>pending</order_status>
+                <title>Koongo - Payment done at Marketplace</title>
+                <name>Koongo</name>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+            </koongo>
+        </payment> 
+        <carriers>
+            <koongo>
+                <active>0</active>                
+                <title>Koongo Shipping Carrier</title>
+                <name>Koongo</name>
+                <sort_order>500</sort_order>
+                <sallowspecific>0</sallowspecific>                
+                <model>Nostress\Koongo\Model\Carrier\Koongo</model>
+            </koongo>
+        </carriers>    
+    </default>
+</config>

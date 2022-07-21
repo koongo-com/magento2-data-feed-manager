@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <head>
+    	<css src="Nostress_Koongo::css/Koongo.css"/>
+	</head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit" name="nostress_koongo_channel_profile_edit_filter"/>            
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit\Tabs" name="nostress_koongo_channel_profile_filter_edit_tabs">            	            	 
+            	<container label="Main" name="main">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit\Tab\Main" name="nostress_koongo_channel_profile_filter_edit_tab_main"/>
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit\Tab\Main\Categories" name="nostress_koongo_channel_profile_filter_edit_tab_main_categories">
+            			<block class="Nostress\Koongo\Block\Adminhtml\Category\Checkboxes\Tree" name="nostress_koongo_channel_profile_filter_edit_tab_main_categories_tree" as="category_checkboxes_tree"/>            			
+            		</block>             			            		
+            	</container>
+            	<container label="Types and Variants" name="types">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit\Tab\Types" name="nostress_koongo_channel_profile_filter_edit_tab_types"/>
+            	</container>
+            	<container label="Visibility" name="visibility">
+            		<block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit\Tab\Visibility" name="nostress_koongo_channel_profile_filter_edit_tab_visibility"/>
+            	</container>
+            </block>
+        </referenceContainer>     
+    </body>
+</page>

@@ -1,0 +1,209 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\CustomAttributes */
+?>
+
+	<fieldset class="fieldset admin__fieldset" id="channel_profile_mapping_table_fieldset" data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+    	<legend class="admin__legend legend">
+    	   <span>
+    	       <?php /* @escapeNotVerified */ echo __('Category Mapping Rules') ?>
+    	   </span>
+    	</legend>
+	    
+	    <div id="manage-mapping-table">
+	    
+			<table id="convert_table" class="data-grid admin__control-table convert_table">
+				<thead>
+				    <tr>
+				        <th class="data-grid-th col-index"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('#')?></span></th>
+				        <th class="data-grid-th col-magento_categories"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('Magento Categories')?></span></th>
+				        <th class="data-grid-th col-channel_category"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('%1 Category', $block->getChannelLabel())?></span></th>
+				        <th class="data-grid-th col-settings"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('Settings')?></span></th>
+				        <th class="data-grid-th col-duplicate"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('Action')?></span></th>
+				        <th class="data-grid-th col-delete"><span class='data-grid-cell-content'><?= /* @escapeNotVerified */  __('')?></span></th>
+				    </tr>
+				</thead>
+			
+				<tbody id="convert_container" data-bind="foreach: rules()">
+					
+					<tr class="data-row" data-bind="css: { '_odd-row': !!($index() % 2)}" data-repeat-index="0">
+						<td class="col-index">
+						 	<span data-bind="text: $index()+1"></span>
+						</td>
+						<td class="col-magento_categories">
+							<input type="hidden" id="magento_categories" data-bind="value: magentoCategoryIds, attr: { name: <?php echo $block->getRuleInputNameKO('magento_categories')?> }" class=" input-text admin__control-text">
+							<!-- ko if: (magentoCategoryLabelsArray().length > 0) -->
+							<span data-bind="foreach: magentoCategoryLabelsArray">
+								<div  data-bind="if: $index() < 10">
+									<span data-bind="text: $data"></span><br>
+								</div>
+							</span>
+							<!-- /ko -->
+							<!-- ko if: (magentoCategoryLabelsArray().length > 10) -->
+								<span>...</span><br>
+								<a href="# "data-bind='click: function(){ $parent.openSettings($index()); }'><?= /* @escapeNotVerified */  __('See All Categories')?></a>
+							<!-- /ko -->
+							<!-- ko if: (magentoCategoryLabelsArray().length <= 0) -->
+								<span><?= /* @escapeNotVerified */  __('Empty - Magento categories not selected.')?></span>
+							<!-- /ko -->
+							
+						</td>
+						<td class="col-channel_category">
+							<!-- ko if: (channelCategoryId() != '' && $parent.channelCategories[channelCategoryId()]) -->
+								<span id="channel_category_label" data-bind="text: $parent.channelCategories[channelCategoryId()].path" ></span>
+							<!-- /ko -->
+							<!-- ko if: (channelCategoryId() == '') -->
+								<span><?= /* @escapeNotVerified */  __("Empty - %1 category not selected.", $block->getChannelLabel()) ?></span>
+							<!-- /ko -->
+							<!-- ko if: (channelCategoryId() != '' && !$parent.channelCategories[channelCategoryId()]) -->
+								<span><?= /* @escapeNotVerified */  __("%1 category doesn't exist for given id.", $block->getChannelLabel()) ?></span>
+							<!-- /ko -->
+							
+							<input type="hidden" id="channel_category_id" data-bind="value: channelCategoryId, attr: { name: <?php echo $block->getRuleInputNameKO('channel_category')?> }" class=" input-text admin__control-text">
+						</td>
+						<td class="col-settings">
+							<button id='rule_settings' data-bind='click: function(){ $parent.openSettings($index()); }' data-action='open-rule-settings' class='primary add'><?= /* @escapeNotVerified */  __('Edit')?></button>
+						</td>
+						<td class="col-duplicate">
+							<button data-bind="click: function(){ $parent.duplicateRuleTableRow(this, $parent, $index()); }" id="rule_row_duplicate_button" class="action- scalable delete icon-btn duplicate-product-option" type="button" title="<?= /* @escapeNotVerified */  __('Duplicate')?>">
+								<span><?= /* @escapeNotVerified */  __('Duplicate')?></span>
+							</button>
+						</td>
+						<td class="col-delete">
+							<button data-bind="click: function(){ $parent.removeRuleTableRow(this, $parent); }" id="rule_row_delete_button" class="action- scalable delete icon-btn delete-product-option" type="button" title="<?= /* @escapeNotVerified */  __('Delete')?>">
+								<span><?= /* @escapeNotVerified */  __('X')?></span>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+				    <tr>
+				        <td class="col-actions-add" data-bind="click: addRuleTableRow" colspan="6">
+				        	
+				        	<span style="float: right; font-size: 1.1em">
+							     <?php echo __("Map Magento categories to %1 categories.", $block->getChannelLabel())?>
+							</span>
+				        	
+				        	<button  class="action-primary scalable add" type="button" title="<?= /* @escapeNotVerified */  __('Add Mapping Rule')?>" id="add_mapping_rule_button">
+				        		<span><?= /* @escapeNotVerified */  __('Add Mapping Rule')?></span>
+							</button>
+							
+						</td>
+			    	</tr>
+				</tfoot>
+			</table>
+	    </div>
+		
+		<input id="current_channel_categories_locale" type="hidden" value="" name="current_channel_categories_locale"/>
+		
+	    <div data-role="mapping-table-settings-dialog" id="mapping-table-settings-dialog"
+	         
+	         class="no-display">
+	         
+	          <!-- Attribute Settings -->
+			<div class="entry-edit" data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+				 
+				 <div class="mag-category">
+				    <h2><?= /* @escapeNotVerified */  __('Magento Categories') ?></h2>
+				    <!-- ko if: (currentIndex() != '-1' && rules()[currentIndex()]) -->
+					   <input id="<?php echo $block->getCategoriesFilterInputId(); ?>" data-bind="value: rules()[currentIndex()].magentoCategoryIds" type="hidden" value="<?php echo $block->getCategoryIdsString(); ?>" name=<?php echo $block->getCategoriesFilterInputName();?>/>
+				    <!-- /ko -->
+				    <p class='cat-description'><?php echo __('Choose one or more magento categories.'); ?></p>
+	    		    <?php echo $block->getCategoryTreeHtml();?>
+	    		 </div>
+	    		 
+	    		 <div class="col-8">
+    	    		
+    	    		<h2><?= /* @escapeNotVerified */  __('%1 Category', $block->getChannelLabel()) ?></h2>
+    	    		<p class='cat-description'><?php echo __('Choose one %1 category.', $block->getChannelLabel()); ?></p>
+    			    <span data-bind="text: getChannelCategory(), css: getChannelCategoryClass()"></span>
+    				<br><br>
+    				<h3><?= /* @escapeNotVerified */  __("Search Box") ?></h3>
+    				<input placeholder="Search and choose from suggestions" type="text" data-bind="value: channelCategoriesSearchQuery, valueUpdate: 'keyup',event: { keyup: searchChannelCategories }" autocomplete="off" class=" input-text admin__control-text search-channel-category" id="<?php echo $block->getChannelCategoriesSaerchInputId(); ?>">
+    				<ul data-bind="foreach: channelCategoriesSearchItems()" class="suggestions">
+    					<li data-bind="css: { '_odd-row': !!($index() % 2)}">
+    				    	<a class='suggestion-value' href="#" data-bind="text: name, click: function(){ $parent.setChannelCategory(this, $parent); }"></a>
+    				    	<span class='suggestion-path' data-bind="foreach: pathitems">
+    				    		<!-- ko if: ($index() > 0) -->
+    				    			/
+    				    		<!-- /ko -->
+    				    		<!-- ko if: ($index() == 0) -->
+    				    		<span class='suggestion-dash'>-</span>
+    				    		<!-- /ko -->
+    				    		<a href="#" data-bind="text: $data, click: function(){ $parents[1].updateSearchChannelCategories($data, $parents[1],false); }"></a>
+    				    	</span>
+    				  	</li>
+    				</ul>
+	    		
+	    	     </div>
+			</div>
+	    </div>
+	    	  
+	</fieldset>
+	<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
+                        "component": "Nostress_Koongo/js/channel/profile/editcategories/mappingtable",
+						"magentoCategories": <?php echo $block->getCategoriesInfoJson();?>,
+                        "loadDataUrl": "<?= /* @escapeNotVerified */ $block->getUrl('*/*/loadcategories', [ 'entity_id'=>$this->getProfile()->getId()]); ?>",
+                        "previewUrl": "<?= /* @escapeNotVerified */ $block->getUrl('*/*/previewcategories', [ 'entity_id'=>$this->getProfile()->getId()]); ?>",
+                        "previewHelpUrl": "<?php echo $block->getHelp('category_mapping_preview'); ?>"
+                    }
+                }
+            }
+        }
+    }
+	</script>
+	
+<script type="text/javascript">
+    // init modal after knockout data binding
+    require([
+        "jquery",
+        'mage/template',
+        'text!Nostress_Koongo/templates/tooltip.html',
+        "Magento_Ui/js/modal/modal"
+    ], function($, mageTemplate, tooltipTemplate){
+
+        var channelLabel = '<?php echo $block->getChannelLabel(); ?>';
+        var tooltipSettingsUrl =  '<?php echo $block->getHelp('category_mapping_rules'); ?>';
+
+        var tooltipHtml = tooltipSettingsUrl ? mageTemplate( tooltipTemplate, { url: tooltipSettingsUrl}) : '';
+	
+        $('#mapping-table-settings-dialog').modal({
+            title: $.mage.__('Map Magento categories to '+ channelLabel + ' categories') + tooltipHtml,
+            type: 'slide',
+            buttons: [
+                {
+                    text: $.mage.__('Back to Category List'),
+                    class: 'primary',
+                    click: function () {
+                    	this.closeModal();
+                    }
+                }
+            ]
+        });
+    });
+</script>

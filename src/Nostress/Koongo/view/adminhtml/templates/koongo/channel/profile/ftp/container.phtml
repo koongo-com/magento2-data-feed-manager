@@ -1,0 +1,76 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Backend\Block\Widget\Form\Container */
+ ?>
+<?php /* @escapeNotVerified */ echo $block->getFormInitScripts() ?>
+<?php if ($block->getButtonsHtml('header')): ?>
+    <div class="page-form-actions" <?php /* @escapeNotVerified */ echo $block->getUiId('content-header') ?>><?php echo $block->getButtonsHtml('header') ?></div>
+<?php endif; ?>
+
+<div class="ftp_form_container">
+	<div class="form-col">
+		<?php echo $block->getFormHtml() ?>
+	</div>
+	<div class="client-col">
+	    <div id="client_container" data-bind="scope: 'profile.ftp.client'">
+	        <div class="feedfile"><b><?php /* @escapeNotVerified */ echo __('Feed File') ?>: </b><?php echo $this->getProfile()->getFilename(); ?></div>
+	        <h2><span data-bind="i18n: '<?php /* @escapeNotVerified */ echo __('FTP Client') ?>'"></span> - <span data-bind="text: path()"></span></h2>
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+	</div>
+</div>
+
+<?php if ($block->hasFooterButtons()): ?>
+    <div class="content-footer">
+        <p class="form-buttons"><?php echo $block->getButtonsHtml('footer') ?></p>
+    </div>
+<?php endif; ?>
+<script>
+require([
+    'jquery',
+    'mage/backend/form',
+    'mage/backend/validation'
+], function($){
+
+    $('#edit_form').form()
+        .validation({
+            validationUrl: '<?php /* @escapeNotVerified */ echo $block->getValidationUrl() ?>',
+            highlight: function(element) {
+                var detailsElement = $(element).closest('details');
+                if (detailsElement.length && detailsElement.is('.details')) {
+                    var summaryElement = detailsElement.find('summary');
+                    if (summaryElement.length && summaryElement.attr('aria-expanded') === "false") {
+                        summaryElement.trigger('click');
+                    }
+                }
+                $(element).trigger('highlight.validate');
+            }
+        });
+
+});
+</script>
+<?php /* @escapeNotVerified */ echo $block->getFormScripts() ?>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "profile.ftp.client": {
+                    "component": "Nostress_Koongo/js/channel/profile/ftp/client",
+                    "loadUrl": "<?= /* @escapeNotVerified */ $block->getUrl('*/channel_profile_ftp/client', [ 'entity_id'=>$block->getProfile()->getId()]); ?>",
+                    "template": "Nostress_Koongo/ui/ftp/client",
+                    "feedfile": "<?php echo $this->getProfile()->getFilename(); ?>"
+                }
+            }
+        }
+    }
+}
+</script>
+

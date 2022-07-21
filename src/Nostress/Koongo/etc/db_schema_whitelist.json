@@ -1,0 +1,319 @@
+{
+    "nostress_koongo_cache_product": {
+        "column": {
+            "product_id": true,
+            "store_id": true,
+            "min_price": true,
+            "price": true,
+            "qty": true,
+            "main_category_id": true,
+            "main_category_max_level": true,
+            "media_gallery": true,
+            "categories": true,
+            "category_ids": true,
+            "stock_status": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_CACHE_PRODUCT_QTY": true,
+            "NOSTRESS_KOONGO_CACHE_PRODUCT_MIN_PRICE": true,
+            "NOSTRESS_KOONGO_CACHE_PRODUCT_PRICE": true,
+            "NOSTRESS_KOONGO_CACHE_PRODUCT_MAIN_CATEGORY_ID": true,
+            "NOSTRESS_KOONGO_CACHE_PRODUCT_MAIN_CATEGORY_MAX_LEVEL": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_tax": {
+        "column": {
+            "tax_class_id": true,
+            "store_id": true,
+            "tax_percent": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_categorypath": {
+        "column": {
+            "category_id": true,
+            "store_id": true,
+            "category_path": true,
+            "category_root_name": true,
+            "category_root_id": true,
+            "ids_path": true,
+            "level": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_profilecategory": {
+        "column": {
+            "profile_id": true,
+            "product_id": true,
+            "main_category_id": true,
+            "main_category_max_level": true,
+            "categories": true,
+            "category_ids": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_CACHE_PROFILECATEGORY_MAIN_CATEGORY_ID": true,
+            "NOSTRESS_KOONGO_CACHE_PROFILECATEGORY_MAIN_CATEGORY_MAX_LEVEL": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_C2FE65DEDC0C9D70E42E801AA4EC28CA": true
+        }
+    },
+    "nostress_koongo_cache_weee": {
+        "column": {
+            "product_id": true,
+            "website_id": true,
+            "total": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_channel_profile": {
+        "column": {
+            "entity_id": true,
+            "store_id": true,
+            "name": true,
+            "filename": true,
+            "url": true,
+            "feed_code": true,
+            "config": true,
+            "status": true,
+            "message": true,
+            "created_time": true,
+            "update_time": true,
+            "last_run_time": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_channel_feed": {
+        "column": {
+            "entity_id": true,
+            "code": true,
+            "link": true,
+            "channel_code": true,
+            "enabled": true,
+            "type": true,
+            "country": true,
+            "file_type": true,
+            "taxonomy_code": true,
+            "layout": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_CHANNEL_FEED_CODE": true,
+            "NOSTRESS_KOONGO_CHANNEL_FEED_LINK": true,
+            "NOSTRESS_KOONGO_CHANNEL_FEED_CHANNEL_CODE": true,
+            "NOSTRESS_KOONGO_CHANNEL_FEED_TYPE": true,
+            "NOSTRESS_KOONGO_CHANNEL_FEED_FILE_TYPE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cron": {
+        "column": {
+            "entity_id": true,
+            "profile_id": true,
+            "day_of_week": true,
+            "time": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_71B140250E7E2FA96463A9867318BEC3": true
+        }
+    },
+    "nostress_koongo_taxonomy_category": {
+        "column": {
+            "entity_id": true,
+            "taxonomy_code": true,
+            "locale": true,
+            "hash": true,
+            "name": true,
+            "id": true,
+            "path": true,
+            "ids_path": true,
+            "level": true,
+            "parent_name": true,
+            "parent_id": true,
+            "code1": true,
+            "code2": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_TAXONOMY_CATEGORY_HASH": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_taxonomy_setup": {
+        "column": {
+            "entity_id": true,
+            "name": true,
+            "code": true,
+            "type": true,
+            "setup": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_taxonomy_category_mapping": {
+        "column": {
+            "entity_id": true,
+            "taxonomy_code": true,
+            "locale": true,
+            "store_id": true,
+            "config": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_channelcategory": {
+        "column": {
+            "profile_id": true,
+            "product_id": true,
+            "hash": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_CACHE_CHANNELCATEGORY_HASH": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_983A07987C4013C59905306284F5B4D9": true
+        }
+    },
+    "nostress_koongo_cache_price": {
+        "column": {
+            "product_id": true,
+            "store_id": true,
+            "customer_group_id": true,
+            "min_price": true,
+            "price": true,
+            "tier_prices": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_CACHE_PRICE_MIN_PRICE": true,
+            "NOSTRESS_KOONGO_CACHE_PRICE_PRICE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_mediagallery": {
+        "column": {
+            "product_id": true,
+            "store_id": true,
+            "value_id": true,
+            "value": true,
+            "label": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_pricetier": {
+        "column": {
+            "product_id": true,
+            "store_id": true,
+            "customer_group_id": true,
+            "qty": true,
+            "unit_price": true,
+            "discount_percent": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_CACHE_PRICETIER_QTY": true,
+            "NOSTRESS_KOONGO_CACHE_PRICETIER_UNIT_PRICE": true,
+            "NOSTRESS_KOONGO_CACHE_PRICETIER_DISCOUNT_PERCENT": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_webhook": {
+        "column": {
+            "entity_id": true,
+            "topic": true,
+            "url": true,
+            "store_id": true,
+            "secret": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_WEBHOOK_TOPIC": true,
+            "NOSTRESS_KOONGO_WEBHOOK_URL": true,
+            "NOSTRESS_KOONGO_WEBHOOK_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_webhook_event": {
+        "column": {
+            "entity_id": true,
+            "topic": true,
+            "webhook_id": true,
+            "product_id": true,
+            "order_id": true,
+            "params": true,
+            "status": true,
+            "message": true,
+            "parent_event_id": true,
+            "duplicity_counter": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_WEBHOOK_EVENT_TOPIC": true,
+            "NOSTRESS_KOONGO_WEBHOOK_EVENT_WEBHOOK_ID": true,
+            "NOSTRESS_KOONGO_WEBHOOK_EVENT_PRODUCT_ID": true,
+            "NOSTRESS_KOONGO_WEBHOOK_EVENT_ORDER_ID": true,
+            "NOSTRESS_KOONGO_WEBHOOK_EVENT_STATUS": true,
+            "NOSTRESS_KOONGO_WEBHOOK_EVENT_PARENT_EVENT_ID": true,
+            "NOSTRESS_KOONGO_WEBHOOK_EVENT_DUPLICITY_COUNTER": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_review": {
+        "column": {
+            "product_id": true,
+            "store_id": true,
+            "reviews": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "nostress_koongo_cache_stock": {
+        "column": {
+            "product_id": true,
+            "store_id": true,
+            "qty": true,
+            "stock_status": true,
+            "type_id": true,
+            "salable_qty": true,
+            "sku": true
+        },
+        "index": {
+            "NOSTRESS_KOONGO_CACHE_STOCK_QTY": true,
+            "NOSTRESS_KOONGO_CACHE_STOCK_STOCK_STATUS": true,
+            "NOSTRESS_KOONGO_CACHE_STOCK_SALABLE_QTY": true,
+            "NOSTRESS_KOONGO_CACHE_STOCK_SKU": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

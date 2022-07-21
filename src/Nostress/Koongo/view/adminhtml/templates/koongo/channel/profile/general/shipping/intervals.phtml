@@ -1,0 +1,122 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Shippingcost\Intervals */
+?>
+
+<fieldset class="fieldset">
+    <legend class="legend"><span><?php /* @escapeNotVerified */ echo __(' Manage Shipping Cost Intervals ') ?></span></legend>
+    
+    <!-- Class must be selected-type-options because of Magento_Catalog/js/options -->
+    <div id="manage-options-panel" class="selected-type-options"> 
+        <table class="admin__control-table">
+            <thead>
+                <tr id="attribute-options-table">
+                    <th class="col-draggable"></th>
+                    <!-- <th class="col-default control-table-actions-th"><?php /* @escapeNotVerified */ echo __('Is Default') ?></th> -->
+                    <th id="shipping_table_column_from"><?php echo __("Dependent Attrib. Value From") ?></th>  
+                    <th id="shipping_table_column_to"><?php echo __("Dependent Attrib. Value To") ?></th>   
+                    <th id="shipping_table_column_cost"><?php echo __("Shipping Cost") ?></th>                   
+                    <th class="col-delete">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody data-role="options-container" class="ignore-validate"></tbody>
+            <tfoot>
+            <tr>
+                <th colspan="5" class="validation">
+                    <input type="hidden" class="required-dropdown-attribute-entry" name="dropdown_attribute_validation"/>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="5" class="col-actions-add">
+           			<button id="add_new_option_button" title="<?php /* @escapeNotVerified */ echo __('Add New Interval'); ?>"
+                            type="button" onmouseup="fillNewRow()" class="action- scalable add">
+                    	<span><?php /* @escapeNotVerified */ echo __('Add New Interval'); ?></span>
+                	</button>                   
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+        <input type="hidden" id="option-count-check" value="" />
+    </div>
+    <script id="row-template" type="text/x-magento-template">		
+         <tr class="interval_row">
+            <td class="col-draggable">                
+                    <div data-role="draggable-handle" class="draggable-handle" title="<?php /* @escapeNotVerified */ echo __('Sort Option'); ?>"></div>
+                <input data-role="order" type="hidden" name="<?php echo $block->getShippingConfigPath(); ?>[cost_setup][<%- data.sort_order %>][order]"  value="<%- data.sort_order %>" />
+            </td>            
+            <td class="col-<%- data.id %>"><input id="shipping_attrib_from_<%- data.id %>" name="<?php echo $block->getShippingConfigPath(); ?>[cost_setup][<%- data.sort_order %>][price_from]" value="<%- data.price_from %>" class="input-text" type="text" /></td>
+			<td class="col-<%- data.id %>"><input id="shipping_attrib_to_<%- data.id %>" name="<?php echo $block->getShippingConfigPath(); ?>[cost_setup][<%- data.sort_order %>][price_to]" value="<%- data.price_to %>" class="input-text" type="text" /></td>
+			<td class="col-<%- data.id %>"><input id="shipping_cost_<%- data.id %>"name="<?php echo $block->getShippingConfigPath(); ?>[cost_setup][<%- data.sort_order %>][cost]" value="<%- data.cost %>" class="input-text" type="text" /></td>
+            
+
+            <td id="delete_button_container_<%- data.id %>" class="col-delete">
+                <input type="hidden" class="delete-flag" name="<?php echo $block->getShippingConfigPath(); ?>[cost_setup][<%- data.sort_order %>][delete]" value="" />
+                    <button id="delete_button_<%- data.id %>" title="<?php /* @escapeNotVerified */ echo __('Delete') ?>" type="button"
+                        class="action- scalable delete delete-option"
+                        >
+                        <span><?php /* @escapeNotVerified */ echo __('Delete') ?></span>
+                    </button>
+            </td>
+        </tr>
+    </script>
+    <?php  $values = $block->getCostIntervals();  ?>
+    <script type="text/x-magento-init">        
+		{
+            "*": {
+                "Magento_Catalog/js/options": {                   
+					"attributesData": <?php /* @escapeNotVerified */ echo json_encode($values); ?>,
+                    "isSortable":  <?php echo "1"; ?>,
+                    "isReadOnly": <?php echo "0"; ?>
+                }
+            }
+        }
+    </script>
+    
+    <script type="text/javascript">
+		//Update column labels
+		function updateShippingTable(selectElement)
+		{			
+	    	$('shipping_table_column_from').update(selectElement[selectElement.selectedIndex].text+' <?php echo __("From") ?>');
+	    	$('shipping_table_column_to').update(selectElement[selectElement.selectedIndex].text+' <?php echo __("To") ?>');
+	 	}	
+
+		function fillNewRow()
+	 	{	 	
+	 		var rowCount = jQuery('.interval_row').length;	 		
+
+	 		var newRowIndex = rowCount;
+	 		var lastRowIndex = rowCount - 1;			
+
+			var shippingAttribFromValue = "0.0";
+			 if(lastRowIndex >= 0)
+				shippingAttribFromValue = jQuery('#shipping_attrib_to_option_'+lastRowIndex).val();
+			
+			setTimeout( function(){ 
+				jQuery('#shipping_attrib_from_option_'+newRowIndex).val(shippingAttribFromValue);	
+				jQuery('#shipping_attrib_to_option_'+newRowIndex).val("1000000.0");	
+				jQuery('#shipping_cost_option_'+newRowIndex).val("0.0");					
+			  }  , 10 );		
+			
+	 	};	 	
+	</script>    
+</fieldset>

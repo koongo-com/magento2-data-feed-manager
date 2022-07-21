@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+        <tab id="koongo" translate="label" sortOrder="110">
+			<label>Koongo Connector</label>
+		</tab>
+ 
+		<section id="koongo_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Settings</label>
+            <tab>koongo</tab>
+            <resource>Nostress_Koongo::nostress_koongo_settings</resource>
+           
+            <group id="basic" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<!-- Group configs -->
+				<label>Koongo Connector - Basic Settings</label>
+				<attribute type="expanded">1</attribute>
+				<comment><![CDATA[See documentation at <a href="https://docs.koongo.com/display/koongo/Connector+Configuration+-+M2" target="_blank" style="color:orange;"><font size="4px">Koongo Docs</font></a> for more information.]]></comment>								
+								
+				<field id="show_blog_news" translate="label" type="select" sortOrder="30" showInDefault="1" >
+					<label>Show Koongo Blog News</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[]]></comment>
+				</field>
+				<!-- 
+				<field id="show_kaas_info" translate="label" type="select" sortOrder="31" showInDefault="1" >
+					<label>Show Koongo as a Service info message</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[]]></comment>
+				</field>
+				 -->					                       
+				<field id="allow_placeholder_images_export" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Allow Placeholder Image Export</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Enable export of placeholder image for missing base, small or thumbnail image.]]></comment>
+				</field>
+				<field id="allow_excluded_images_export" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Allow Hidden Product Image Export </label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Product image is hidden if it's setting "Hide from Product Page" is checked.]]></comment>
+				</field>
+				<field id="allow_inactive_categories_export" translate="label" type="select" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Allow Inactive Categories Export </label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Enable export of inactive categories and export of products from these categories.]]></comment>
+				</field>				
+				<field id="debug_mode" translate="label" type="select" sortOrder="200" showInDefault="1" >
+					<label>Allow Debug Mode</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Enable or disable advanced debuging of Koongo plugin.</comment>
+				</field>
+			</group>
+			<group id="general" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+				<!-- Group configs -->
+				<label>Koongo Connector - Advanced Settings</label>
+				<attribute type="expanded">1</attribute>				
+				
+				<field id="batch_size" translate="label" type="select" sortOrder="50" showInDefault="1">
+					<label>Number of Products Loaded from Db in One Batch</label>
+					<source_model>Nostress\Koongo\Model\Config\Source\Productgroupsize</source_model>
+					<comment> If you run Magento on low-memory server, then you may need to decrease this value.</comment>
+				</field>
+				<field id="include_pub_into_media_links" translate="label" type="select" sortOrder="70"  showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Include PUB into Media Links</label>
+                    <source_model>Nostress\Koongo\Model\Config\Source\Includepub</source_model>
+                    <comment>Include or exclude subdirectory PUB into base media url. It is utilized for image links and exported feed url.</comment>
+                </field>
+				<field id="log_profile_events" translate="label" type="select" sortOrder="100" showInDefault="1" >
+					<label>Provide Feed Usage Log</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Please help us to find out which Feed Authorities are the most popular among Koongo users. More information you may find <a target="_blank" href="https://docs.koongo.com/display/koongo/Feed+Usage+Tracking">here</a>.]]></comment>
+				</field>								
+				<field id="image_folder" translate="label" type="text" sortOrder="150"  showInDefault="1" >
+                    <label>Product Image Folder</label>
+                    <comment>Default value "catalog/product" is in the most case appropriate. Export process uses the value for an image url construction.</comment>
+                </field>	
+                <field id="category_lowest_level" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Category Lowest Level</label>
+					<source_model>Nostress\Koongo\Model\Config\Source\Categorylevel</source_model>
+					<comment><![CDATA[The lowest level of exported category. Applied only if multiple categories are exported per product.]]></comment>
+				</field>		
+				<field id="remove_illegal_chars_reg_expression" translate="label" type="text" sortOrder="250"  showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Regular Expression for Illegal Characters Removal</label>
+                    <comment>This reg. expression will be used for removal of illegal characters from product data during export process. Illegal cahracters can cause errors during export process.</comment>
+                </field>
+                <field id="bundle_options_required_only" translate="label" type="select" sortOrder="300"  showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bundle product export - only required options</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Fetch only required options during bundle product stock and price calculation.</comment>
+                </field>
+                <field id="bundle_options_default_itmes_only" translate="label" type="select" sortOrder="350"  showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bundle product export - only default option items</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Fetch only default option items during bundle product stock and price calculation.</comment>
+                </field>
+                <field id="image_attribute_source" translate="label" type="select" sortOrder="400"  showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image attribute source</label>
+                    <source_model>Nostress\Koongo\Model\Config\Source\Imageattributesource</source_model>
+                    <comment>Load image attributes (labels, enabled/disabled, etc. ) from given store view or default values. Option "Store view or Default values" means that if value for store is not defined, then default value is selected.</comment>
+                </field>
+			</group>			
+        </section>  
+        <section id="koongo_license" translate="label" type="text" sortOrder="20" showInDefault="1">
+            <label>License</label>
+            <tab>koongo</tab>            
+            <resource>Nostress_Koongo::nostress_koongo_license</resource>
+           	<group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+				<!-- Group configs -->
+				<label>Koongo Connector - License</label>
+				<attribute type="expanded">0</attribute>
+				<!-- <comment><![CDATA[See documentation at <a href="http://www.koongo.com">Koongo Docs</a>.]]></comment> -->
+				
+				<field id="server_id" translate="label" type="label" sortOrder="10"  showInDefault="1">
+                    <label>Server Id</label>
+                    <comment></comment>
+                    <frontend_model>Nostress\Koongo\Block\Adminhtml\System\Config\Serverid</frontend_model>
+                </field>                
+                <field id="module_version" translate="label" type="label" sortOrder="15"  showInDefault="1">
+                    <label>Module Version</label>
+                    <comment></comment>
+                    <frontend_model>Nostress\Koongo\Block\Adminhtml\System\Config\Moduleversion</frontend_model>
+                </field>				
+				<field id="license_key" translate="label" type="text" sortOrder="20"  showInDefault="1">
+                    <label>License Key</label>
+                    <backend_model>Nostress\Koongo\Model\Config\Backend\License</backend_model>
+                    <comment></comment>
+                </field>
+                <field id="license_status" translate="label" type="label" sortOrder="40"  showInDefault="1">
+                    <label>License Status</label>
+                    <comment></comment>
+                    <frontend_model>Nostress\Koongo\Block\Adminhtml\System\Config\Licensestatus</frontend_model>                    
+                </field>
+                <field id="check_license_status" translate="label comment" type="button" sortOrder="50" showInDefault="1">
+                    <label></label>
+                    <frontend_model>Nostress\Koongo\Block\Adminhtml\System\Config\Checklicensebutton</frontend_model>
+                </field> 				
+				
+				
+				
+                <!-- Export Products -->
+				<!-- 
+                <field id="export_products" translate="label comment" type="button" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Export Products</label>
+                    <frontend_model>Pixlee\Pixlee\Block\Adminhtml\System\Config\Export</frontend_model>
+                </field> 
+                -->
+			</group>	
+        </section>
+        <section id="payment" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1"> 
+            <group id="koongo" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Koongo</label>
+                <comment>Payment Method for Order Import</comment>
+                <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Title</label>
+                </field>
+                <field id="name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Name</label>
+                </field>                
+            </group>
+        </section>  
+        <section id="carriers">
+            <group id="koongo" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Koongo</label>
+                <comment>Shopping Method for Order Import</comment>
+                <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Title</label>
+                </field>
+                 <field id="name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Name</label>
+                </field>
+            </group>
+        </section>        		
+	</system>
+</config>

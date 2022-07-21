@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="nostress_koongo_cache_product" resource="default" engine="innodb" comment="Cache table for product attributes">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="decimal" name="min_price" scale="4" precision="12" unsigned="false" nullable="true" comment="Sale or minimal product price" disabled="true"/>
+    <column xsi:type="decimal" name="price" scale="4" precision="12" unsigned="false" nullable="true" comment="Standard or maximal product price" disabled="true"/>
+    <column xsi:type="int" name="qty" padding="11" unsigned="false" nullable="true" identity="false" comment="Qty"/>
+    <column xsi:type="int" name="main_category_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Category Id"/>
+    <column xsi:type="smallint" name="main_category_max_level" padding="6" unsigned="false" nullable="true" identity="false" default="null" comment="Category max Level"/>
+    <column xsi:type="text" name="media_gallery" nullable="true" comment="Media_gallery"/>
+    <column xsi:type="text" name="categories" nullable="true" comment="Categories"/>
+    <column xsi:type="varchar" name="category_ids" nullable="true" length="255" comment="Category_ids"/>
+    <column xsi:type="smallint" name="stock_status" padding="4" unsigned="true" nullable="true" identity="false" comment="Stock status or Is salable from Inventory_stock_X tables"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="store_id"/>
+    </constraint>
+    <index referenceId="CACHE_PRODUCT_QTY" indexType="btree">
+      <column name="qty"/>
+    </index>
+    <index referenceId="CACHE_PRODUCT_MIN_PRICE" indexType="btree" disabled="true">
+      <column name="min_price"/>
+    </index>
+    <index referenceId="CACHE_PRODUCT_PRICE" indexType="btree" disabled="true">
+      <column name="price"/>
+    </index>
+    <index referenceId="CACHE_PRODUCT_MAIN_CATEGORY_ID" indexType="btree">
+      <column name="main_category_id"/>
+    </index>
+    <index referenceId="CACHE_PRODUCT_MAIN_CATEGORY_MAX_LEVEL" indexType="btree">
+      <column name="main_category_max_level"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_cache_tax" resource="default" engine="innodb" comment="Cache table for product tax percent">
+    <column xsi:type="smallint" name="tax_class_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Tax Class Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="decimal" name="tax_percent" scale="4" precision="12" unsigned="false" nullable="true" comment="Tax percent"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="tax_class_id"/>
+      <column name="store_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_cache_categorypath" resource="default" engine="innodb" comment="Cache table for category path">
+    <column xsi:type="int" name="category_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Category Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="text" name="category_path" nullable="true" comment="Category_path"/>
+    <column xsi:type="varchar" name="category_root_name" nullable="true" length="255" comment="Category_root_name"/>
+    <column xsi:type="int" name="category_root_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Root Category Id"/>
+    <column xsi:type="varchar" name="ids_path" nullable="false" length="255" comment="Ids_path"/>
+    <column xsi:type="smallint" name="level" padding="6" unsigned="false" nullable="false" identity="false" comment="Category Level"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="category_id"/>
+      <column name="store_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_cache_profilecategory" resource="default" engine="innodb" comment="Cache table for profile product categories">
+    <column xsi:type="int" name="profile_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Profile Id"/>
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="int" name="main_category_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Category Id"/>
+    <column xsi:type="smallint" name="main_category_max_level" padding="6" unsigned="false" nullable="true" identity="false" default="null" comment="Category max Level"/>
+    <column xsi:type="text" name="categories" nullable="true" comment="Categories"/>
+    <column xsi:type="varchar" name="category_ids" nullable="true" length="255" comment="Category_ids"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="profile_id"/>
+      <column name="product_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_C2FE65DEDC0C9D70E42E801AA4EC28CA" table="nostress_koongo_cache_profilecategory" column="profile_id" referenceTable="nostress_koongo_channel_profile" referenceColumn="entity_id" onDelete="CASCADE"/>
+    <index referenceId="CACHE_PROFILECATEGORY_MAIN_CATEGORY_ID" indexType="btree">
+      <column name="main_category_id"/>
+    </index>
+    <index referenceId="CACHE_PROFILECATEGORY_MAIN_CATEGORY_MAX_LEVEL" indexType="btree">
+      <column name="main_category_max_level"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_cache_weee" resource="default" engine="innodb" comment="Cache table for fixed product tax">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="smallint" name="website_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Website Id"/>
+    <column xsi:type="decimal" name="total" scale="2" precision="12" unsigned="false" nullable="false" default="0" comment="Total product fixed tax"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="website_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_channel_profile" resource="default" engine="innodb" comment="Channel profiles table.">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Profile Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Store Id"/>
+    <column xsi:type="varchar" name="name" nullable="false" length="255" default="" comment="Name"/>
+    <column xsi:type="varchar" name="filename" nullable="true" length="255" comment="Filename"/>
+    <column xsi:type="varchar" name="url" nullable="true" length="255" comment="Url"/>
+    <column xsi:type="varchar" name="feed_code" nullable="false" length="255" default="" comment="Feed_code"/>
+    <column xsi:type="text" name="config" nullable="false" comment="Config"/>
+    <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="true" identity="false" default="0" comment="0 = NEW, 1 = RUNNING, 2 = INTERRUPTED, 3 = ERROR, 4 = FINISHED , 5 = ENABLED, 6 = DISABLED"/>
+    <column xsi:type="text" name="message" nullable="true" comment="Message"/>
+    <column xsi:type="timestamp" name="created_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+    <column xsi:type="timestamp" name="update_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Update Time"/>
+    <column xsi:type="datetime" name="last_run_time" on_update="false" nullable="true" comment="Last_run_time"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_channel_feed" resource="default" engine="innodb" comment="Feed layouts table">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="varchar" name="code" nullable="false" length="255" comment="Code"/>
+    <column xsi:type="varchar" name="link" nullable="false" length="255" comment="Link"/>
+    <column xsi:type="varchar" name="channel_code" nullable="true" length="255" comment="Channel_code"/>
+    <column xsi:type="boolean" name="enabled" nullable="false" default="true" comment="Enabled"/>
+    <column xsi:type="varchar" name="type" nullable="true" length="255" comment="Type"/>
+    <column xsi:type="varchar" name="country" nullable="false" length="255" default="INTERNATIONAL" comment="Country"/>
+    <column xsi:type="varchar" name="file_type" nullable="false" length="255" default="xml" comment="File_type"/>
+    <column xsi:type="varchar" name="taxonomy_code" nullable="true" length="255" comment="Taxonomy_code"/>
+    <column xsi:type="mediumtext" name="layout" nullable="false" comment="Layout"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+    <index referenceId="FEED_CODE" indexType="btree">
+      <column name="code"/>
+    </index>
+    <index referenceId="FEED_LINK" indexType="btree">
+      <column name="link"/>
+    </index>
+    <index referenceId="FEED_CHANNEL_CODE" indexType="btree">
+      <column name="channel_code"/>
+    </index>
+    <index referenceId="FEED_TYPE" indexType="btree">
+      <column name="type"/>
+    </index>
+    <index referenceId="FEED_FILE_TYPE" indexType="btree">
+      <column name="file_type"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_cron" resource="default" engine="innodb" comment="Cron for scheduled profiles execution">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="int" name="profile_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Profile Id"/>
+    <column xsi:type="smallint" name="day_of_week" padding="6" unsigned="false" nullable="true" identity="false" default="1" comment="Day of week '1','2','3','4','5','6','7'"/>
+    <column xsi:type="int" name="time" padding="11" unsigned="false" nullable="false" identity="false" comment="Time"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_71B140250E7E2FA96463A9867318BEC3" table="nostress_koongo_cron" column="profile_id" referenceTable="nostress_koongo_channel_profile" referenceColumn="entity_id" onDelete="CASCADE"/>
+  </table>
+  <table name="nostress_koongo_taxonomy_category" resource="default" engine="innodb" comment="Taxonomy categories table">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="varchar" name="taxonomy_code" nullable="false" length="255" comment="Taxonomy code"/>
+    <column xsi:type="varchar" name="locale" nullable="false" length="255" default="en_UK" comment="Locale"/>
+    <column xsi:type="varchar" name="hash" nullable="false" length="255" comment="Taxonomy category path hash"/>
+    <column xsi:type="varchar" name="name" nullable="false" length="255" default="" comment="Taxonomy category name"/>
+    <column xsi:type="bigint" name="id" padding="20" unsigned="false" nullable="true" identity="false" default="null" comment="Taxonomy category id"/>
+    <column xsi:type="text" name="path" nullable="false" comment="Taxonomy category path"/>
+    <column xsi:type="varchar" name="ids_path" nullable="false" length="255" comment="Taxonomy category ids path"/>
+    <column xsi:type="smallint" name="level" padding="6" unsigned="false" nullable="false" identity="false" default="null" comment="Taxonomy category Level"/>
+    <column xsi:type="varchar" name="parent_name" nullable="true" length="255" default="" comment="Taxonomy parent category name"/>
+    <column xsi:type="bigint" name="parent_id" padding="20" unsigned="false" nullable="true" identity="false" default="null" comment="Taxonomy parent category id"/>
+    <column xsi:type="varchar" name="code1" nullable="true" length="255" comment="Taxonomy category code1"/>
+    <column xsi:type="varchar" name="code2" nullable="true" length="255" comment="Taxonomy category code2"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+    <index referenceId="TAXONOMY_CATEGORY_HASH" indexType="btree">
+      <column name="hash"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_taxonomy_setup" resource="default" engine="innodb" comment="Taxonomy categories setup">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Taxonomy name"/>
+    <column xsi:type="varchar" name="code" nullable="false" length="255" comment="Taxonomy code"/>
+    <column xsi:type="varchar" name="type" nullable="true" length="255" comment="Taxonomy type"/>
+    <column xsi:type="text" name="setup" nullable="false" comment="Taxonomy setup"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_taxonomy_category_mapping" resource="default" engine="innodb" comment="Taxonomy categories mapping rules table">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="varchar" name="taxonomy_code" nullable="false" length="255" comment="Taxonomy code"/>
+    <column xsi:type="varchar" name="locale" nullable="false" length="255" default="en_UK" comment="Locale"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Store Id"/>
+    <column xsi:type="text" name="config" nullable="false" comment="Config"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_cache_channelcategory" resource="default" engine="innodb" comment="Cache table for profile channel categories">
+    <column xsi:type="int" name="profile_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Profile Id"/>
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="varchar" name="hash" nullable="false" length="255" comment="Taxonomy category path hash"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="profile_id"/>
+      <column name="product_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_983A07987C4013C59905306284F5B4D9" table="nostress_koongo_cache_channelcategory" column="profile_id" referenceTable="nostress_koongo_channel_profile" referenceColumn="entity_id" onDelete="CASCADE"/>
+    <index referenceId="CACHE_CHANNELCATEGORY_HASH" indexType="btree">
+      <column name="hash"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_cache_price" resource="default" engine="innodb" comment="Cache table for product price">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="smallint" name="customer_group_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Customer Group Id"/>
+    <column xsi:type="decimal" name="min_price" scale="4" precision="12" unsigned="false" nullable="true" comment="Sale or minimal product price"/>
+    <column xsi:type="decimal" name="price" scale="4" precision="12" unsigned="false" nullable="true" comment="Standard or maximal product price"/>
+    <column xsi:type="text" name="tier_prices" nullable="true" comment="Tier prices"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="store_id"/>
+      <column name="customer_group_id"/>
+    </constraint>
+    <index referenceId="CACHE_PRODUCT_MIN_PRICE" indexType="btree">
+      <column name="min_price"/>
+    </index>
+    <index referenceId="CACHE_PRODUCT_PRICE" indexType="btree">
+      <column name="price"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_cache_mediagallery" resource="default" engine="innodb" comment="Cache table for media gallery">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="int" name="value_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Value Id"/>
+    <column xsi:type="varchar" name="value" nullable="true" length="255" comment="Value"/>
+    <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Label"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="store_id"/>
+      <column name="value_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_cache_pricetier" resource="default" engine="innodb" comment="Cache table for tier price">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="smallint" name="customer_group_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Customer Group Id"/>
+    <column xsi:type="int" name="qty" padding="11" unsigned="false" nullable="false" identity="false" comment="Qty"/>
+    <column xsi:type="decimal" name="unit_price" scale="2" precision="12" unsigned="false" nullable="true" comment="Unit product price"/>
+    <column xsi:type="decimal" name="discount_percent" scale="2" precision="5" unsigned="false" nullable="true" comment="Discount percent"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="store_id"/>
+      <column name="customer_group_id"/>
+      <column name="qty"/>
+    </constraint>
+    <index referenceId="CACHE_PRICETIER_QTY" indexType="btree">
+      <column name="qty"/>
+    </index>
+    <index referenceId="CACHE_PRICETIER_UNIT_PRICE" indexType="btree">
+      <column name="unit_price"/>
+    </index>
+    <index referenceId="CACHE_PRICETIER_DISCOUNT_PERCENT" indexType="btree">
+      <column name="discount_percent"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_webhook" resource="default" engine="innodb" comment="Table for webhooks definition.">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="varchar" name="topic" nullable="true" length="40" comment="Topic"/>
+    <column xsi:type="varchar" name="url" nullable="true" length="255" comment="Url"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="varchar" name="secret" nullable="true" length="40" comment="Secret"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+    <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Update Time"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+    <index referenceId="WEBHOOK_TOPIC" indexType="btree">
+      <column name="topic"/>
+    </index>
+    <index referenceId="WEBHOOK_URL" indexType="btree">
+      <column name="url"/>
+    </index>
+    <index referenceId="WEBHOOK_STORE_ID" indexType="btree">
+      <column name="store_id"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_webhook_event" resource="default" engine="innodb" comment="Table for webhook events.">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="varchar" name="topic" nullable="true" length="40" comment="Topic"/>
+    <column xsi:type="int" name="webhook_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Webhoo Id"/>
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Product Id"/>
+    <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Real Order Id"/>
+    <column xsi:type="text" name="params" nullable="true" comment="Params"/>
+    <column xsi:type="varchar" name="status" nullable="true" length="40" comment="Status"/>
+    <column xsi:type="varchar" name="message" nullable="true" length="255" comment="Message"/>
+    <column xsi:type="int" name="parent_event_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Parent Event Id"/>
+    <column xsi:type="int" name="duplicity_counter" padding="10" unsigned="true" nullable="true" identity="false" default="0" comment="Duplicity_counter"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+    <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Update Time"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+    <index referenceId="WEBHOOK_EVENT_TOPIC" indexType="btree">
+      <column name="topic"/>
+    </index>
+    <index referenceId="WEBHOOK_EVENT_WEBHOOK_ID" indexType="btree">
+      <column name="webhook_id"/>
+    </index>
+    <index referenceId="WEBHOOK_EVENT_PRODUCT_ID" indexType="btree">
+      <column name="product_id"/>
+    </index>
+    <index referenceId="WEBHOOK_EVENT_ORDER_ID" indexType="btree">
+      <column name="order_id"/>
+    </index>
+    <index referenceId="WEBHOOK_EVENT_STATUS" indexType="btree">
+      <column name="status"/>
+    </index>
+    <index referenceId="WEBHOOK_EVENT_PARENT_EVENT_ID" indexType="btree">
+      <column name="parent_event_id"/>
+    </index>
+    <index referenceId="WEBHOOK_EVENT_DUPLICITY_COUNTER" indexType="btree">
+      <column name="duplicity_counter"/>
+    </index>
+  </table>
+  <table name="nostress_koongo_cache_review" resource="default" engine="innodb" comment="Cache table for reviews.">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="text" name="reviews" nullable="true" comment="Reviews"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="store_id"/>
+    </constraint>
+  </table>
+  <table name="nostress_koongo_cache_stock" resource="default" engine="innodb" comment="Cache table for stock">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="int" name="qty" padding="11" unsigned="false" nullable="true" identity="false" comment="Qty"/>
+    <column xsi:type="smallint" name="stock_status" padding="5" unsigned="true" nullable="true" identity="false" comment="Stock status or Is salable from Inventory_stock_X tables"/>
+    <column xsi:type="varchar" name="type_id" nullable="false" length="32" default="simple" comment="Product type."/>
+    <column xsi:type="int" name="salable_qty" padding="10" unsigned="false" nullable="true" identity="false" comment="Salable quantity."/>
+    <column xsi:type="varchar" name="sku" nullable="true" length="64" comment="Sku."/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="store_id"/>
+    </constraint>
+    <index referenceId="CACHE_STOCK_QTY" indexType="btree">
+      <column name="qty"/>
+    </index>
+    <index referenceId="CACHE_STOCK_STOCK_STATUS" indexType="btree">
+      <column name="stock_status"/>
+    </index>
+    <index referenceId="CACHE_STOCK_SALABLE_QTY" indexType="btree">
+      <column name="salable_qty"/>
+    </index>
+    <index referenceId="CACHE_STOCK_SKU" indexType="btree">
+      <column name="sku"/>
+    </index>
+  </table>
+</schema>

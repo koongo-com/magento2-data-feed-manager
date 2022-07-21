@@ -1,0 +1,63 @@
+[
+	{
+		"id": 3,
+		"operator_conditions": "or",
+		"conditions": [
+			{
+				"id": 222,
+				"operator_conditions": "and",
+				"value": null,
+				"path": null,
+				"cond": null,
+				"conditions": [
+					{
+						"id": 333,
+						"value": 22,
+						"path": "@attribute[height]",
+						"cond": "eq",
+						"conditions": null,
+						"operator_conditions": null
+					},{
+						"id": 333,
+						"value": 22,
+						"path": "B",
+						"cond": "eq",
+						"conditions": null,
+						"operator_conditions": null
+					}
+				]
+			},
+			{
+				"id": 333,
+				"value": 1100,
+				"path": "category",
+				"cond": "eq",
+				"conditions": null,
+				"operator_conditions": null
+			},
+			{
+				"id": 333,
+				"value": 1100,
+				"path": "B",
+				"cond": "eq"
+			}
+		],
+		"taxonomy": {
+			"hash": "620620a67aa1ccce2b3e35649eb99e51"
+		}
+	},
+	{
+		"id": 2,
+		"operator_conditions": "and",
+		"conditions": [
+			{
+				"path": "category",
+				"cond": "eq",
+				"value": 1100
+			}
+		],
+		"taxonomy": {
+			"hash": "620620a67aa1ccce2b3e35649eb99e51"
+		}
+	}
+]

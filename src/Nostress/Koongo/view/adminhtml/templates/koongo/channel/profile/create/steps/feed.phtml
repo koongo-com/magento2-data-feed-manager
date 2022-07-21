@@ -1,0 +1,70 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Nostress\Koongo\Block\Adminhtml\Channel\Profile\Create\Steps\Feed */
+?>
+<div data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+    <h2 class="steps-wizard-title"><?= /* @escapeNotVerified */  __('Step 2: Feed Type') ?></h2>
+    <div class="steps-wizard-info">
+    	<span><?= /* @escapeNotVerified */  __('Select Feed Type for new export profile.') ?></span>
+    </div>
+   <div class="steps-wizard-section">
+        <div data-role="section">
+        	<div class="steps-wizard-section-title">
+        		<span data-bind="text: feedTypeSectionName"></span>
+        	</div>
+       	    <div class="channel_list_container">
+            	<ul class="steps-wizard-section-list" data-bind="foreach: feedList">
+    	        	<li>
+    	                <div class="admin__field admin__field-option">
+    			           	<input type="radio" name="feed_code" class="admin__control-radio"
+    			           	     data-bind="checked: $parent.isFeedChecked, value: code, attr: { id: id}" />
+    	                    <label class="admin__field-label" data-bind="attr: { for: id}">
+    	                    	<span data-bind="text: label"></span>
+    			        	</label>
+    			     	</div>
+    			     </li>
+                </ul>
+            </div>
+            <div class="channel_info_container" data-bind="html: channelManual()">
+            </div>
+		</div>
+	</div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
+                        "component": "Nostress_Koongo/js/createprofile/steps/feed",
+                        "appendTo": "<?= /* @escapeNotVerified */  $block->getParentComponentName()?>",
+						"feedsByLink": <?php echo $block->getFeedsByLink()?>,
+						"createProfileUrl": "<?= /* @escapeNotVerified */  $block->getUrl('*/*/create')?>",
+                        "manualsByCode": <?php echo json_encode($block->getChannelManualList()); ?>
+                    }
+                }
+            }
+        }
+    }
+</script>

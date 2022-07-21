@@ -1,0 +1,40 @@
+<div class='steps-wizard'>
+	<h2 class="steps-wizard-title">Submission Info</h2>
+				
+	<div class="steps-wizard-section col-6">
+       	<div class="steps-wizard-section-title">
+       		<span>1. Almost done</span>
+       	</div>
+       	
+       	<p>Navigate to your <%- channel %> merchant account or create a new account.</p>
+    </div>	
+    
+    <div class="steps-wizard-section col-6">
+       	<div class="steps-wizard-section-title">
+       		<span>2. Copy and paste URL of the feed file into Your <%- channel %> account.</span>
+       	</div>
+       	
+       	<form>
+       		<input name='url' class="input-feed-url input-text admin__control-text no-cursor" type="text" value="<%- feed_url %>" readonly=readonly />
+    	</form>
+    	
+    	<br />
+    	
+    	<p class="ftp_submission">or adjust <button class="primary" type="button" onclick="<%- edit_url %>"><span>FTP Submission</span></button></p>
+    </div>
+    
+    <div class='clear'></div>	
+        
+    <div class="modal-tabs">
+	    <ul class='tabs-horiz'>
+			<li data-role="title"><a href="#tabs-preview"><%- feed_file_type %> Feed Preview</a></li>
+			<li data-role="title"><a href="#tabs-manual">Submission Manual</a></li>
+	    </ul>
+        <div id="tabs-preview" class='feed-preview' data-role="content" style="display:none">
+        	<div class='tab-content'></div>            
+        </div>
+        <div id="tabs-manual" class='feed-manual' data-role="content" style="display:none">
+        	<div class='tab-content'></div>            
+        </div>
+	</div>
+</div>

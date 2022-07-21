@@ -1,0 +1,240 @@
+///**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+///**
+// * Abstract Model for Koongo connector cache model
+// *
+// * @category Nostress
+// * @package Nostress_Koongo
+// *
+// */
+
+//
+//  UI -> Data Grid
+//  _____________________________________________
+
+img.admin__control-thumbnail{
+	width: 10rem;
+}
+
+.data-grid .data-grid-thumbnail-cell img {    
+    width: 10rem;
+	max-width: inherit;
+}
+
+.data-grid td .action-select-wrap.relative {
+	position: relative;
+}
+
+.channel_list_container {
+	float: left;
+	width: 20%;
+	margin-right: 4%;
+	max-height: 350px; 
+	overflow-y: auto;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+.channel_list_container.single-store {
+	max-height: 550px;
+}
+
+.channel_list_container ul {
+	position: relative;
+}
+
+.channel_info_container {
+	float: left;
+	width: 75%;
+}
+
+.channel_info_container img.logo {
+	height: 80px;
+	float: left;
+	margin-bottom: 10px;
+}
+
+.channel_info_container .label {
+	font-weight: bold;
+    font-size: 1.5em;
+    float: left;
+    margin-left: 20px;
+    margin-top: 23px;
+}
+
+.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10,.col-11,.col-12 {
+	padding-right: 5%;
+	float: left;
+}
+.col-12{width:100%;} 
+.col-11{width:91.66666666666666%;} 
+.col-10{width:83.33333333333334%;} 
+.col-9{width:75%;} 
+.col-8{width:66.66666666666666%;} 
+.col-7{width:58.333333333333336%;} 
+.col-6{width:50%;} 
+.col-5{width:41.66666666666667%;} 
+.col-4{width:33.33333333333333%;} 
+.col-3{width:25%;} 
+.col-2{width:16.666666666666664%;} 
+.col-1{width:8.333333333333332%;}
+
+.steps-wizard .steps-wizard-section.col-6  {
+	padding-right: 5%;
+}
+
+.clear {
+	clear: both;
+}
+
+.input-feed-url {
+	width: 100%;
+}
+
+pre.noformat {
+	white-space: pre-wrap;
+	margin: 0;
+}
+
+.modal-tabs .tab-content {
+	max-height: 650px;
+	overflow: auto;
+}
+
+.ftp_submission {
+	font-size: 1.3em;
+	margin-left: 10px;
+}
+.ftp_submission button {
+	font-size: 1.0em;
+}
+
+.ftp_form_container .form-col {
+	width: 33%;
+	float: left;
+}
+
+.form-col .admin__fieldset > .admin__field > .admin__field-control {
+	width: calc( (100%) * 0.6 - 30px );
+}
+
+.ftp_form_container .client-col {
+	width: 65%;
+	float: right;
+}
+
+.client-col .feedfile {
+	float: right;
+	font-size: 1.2em;
+}
+
+.data-grid tr.active td {
+    background-color: #e0ffa8;
+}
+
+.feed-manual .manual-content {
+	padding-right: 10px;
+}
+
+.side-col-block {
+	margin-top: 11px;
+	margin-bottom: 25px;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.side-col-block ul {
+	margin: 0;
+	padding: 0;
+}
+.side-col-block li, .feed-manual li {
+	padding: 0;
+	margin-left: 20px;
+}
+
+/* page-columns in modal slide window */
+.page-layout-admin-2columns-left .page-columns.dialog-columns {
+    margin-left: 0px;
+}
+.page-layout-admin-2columns-left .page-columns.dialog-columns .main-col {
+    width: calc( (100%) * 0.75 );
+}
+.page-layout-admin-2columns-left .page-columns.dialog-columns .side-col {
+    margin-left: 0px;
+}
+
+.modal-tabs .ui-tabs-panel {
+	border-top: 1px solid #adadad;
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.modal-slide.no-inner-scroll {
+	overflow-y: hidden;
+}
+
+.mag-category {
+	border-right: 1px dashed #aaa;
+    min-width: 25%;
+    float: left;
+    margin-right: 5%;
+}
+
+ul.suggestions {
+	top: -1px;
+    position: relative;
+    margin: 0;
+    border: 1px solid #adadad;
+    background-color: #fdfdfd;
+	display: none;
+}
+ul.suggestions li { list-style: none; padding: 4px 16px;}
+ul.suggestions li._odd-row { background-color: #f4f4f4;}
+.suggestion-value { font-weight: bold;}
+.suggestion-dash{ padding: 0 5px;}
+
+
+.search-channel-category { width: 50%; }
+.channel-category { font-weight: bold; color: red; }
+.channel-category.selected { color: green; }
+.cat-description {
+	position: relative;
+    top: -15px;
+    left: 15px;
+    margin-bottom: 5px;
+}
+
+fieldset legend .admin__field-tooltip, h1 .admin__field-tooltip {
+	margin-top: -1px;
+}
+
+button .admin__field-tooltip {
+	margin-top: -1px;
+	margin-right: 1em;
+}
+
+button .admin__field-tooltip .admin__field-tooltip-action {
+	margin-left: 0;
+}
+
+.admin__data-grid-wrap {
+    padding-bottom: 7rem;
+}

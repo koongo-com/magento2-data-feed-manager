@@ -1,0 +1,118 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Nostress\Koongo\Block\Adminhtml\Channel\Profile\Create\Steps\Channel */
+?>
+<?php
+    $storeOptions = $block->getStoreNamesWithWebsite();
+    $singleStore = $block->isSingleStore();
+    $storeId = key($storeOptions);
+    if ($singleStore) {
+        $title = __('Step 1: Channel');
+        $info = __('Select Channel for new export profile.');
+    } else {
+        $title = __('Step 1: Store & Channel');
+        $info = __('Select Store View and Channel for new export profile.');
+    }
+?>
+<div data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+    <h2 class="steps-wizard-title"><?= /* @escapeNotVerified */ $title; ?></h2>
+    <div class="steps-wizard-info">
+        <span><?= /* @escapeNotVerified */ $info; ?></span>
+    </div>
+    
+    <?php if ($singleStore) { ?>
+    <input type="hidden" name="store_view" value="<?php echo $storeId;?>" />
+	
+    <?php } else {?>
+    <div class="steps-wizard-section">
+        <div data-role="section">
+        	<div class="steps-wizard-section-title">
+        		<span><?= /* @escapeNotVerified */  __('Store View') ?></span>
+        	</div>
+        	<select name="store_view" class="select admin__control-select"
+        	   data-bind="options: stores, value: storeId, optionsText: 'label', optionsValue: 'value'"></select>
+        </div>
+    </div>
+    <?php } ?>
+    
+    <div class="steps-wizard-section">
+        <div data-role="section">
+            <div class="steps-wizard-section-title">
+        		<?php if (!$singleStore) { ?><span><?= /* @escapeNotVerified */  __('Channel') ?></span><?php } ?>
+        	</div>
+        	<div class="channel_list_container <?php if ($singleStore) {
+    echo 'single-store';
+} ?>">
+            	<ul class="steps-wizard-section-list">
+            		<?php $firstItemLink = "";?>
+                    <?php $channelOptions = $block->getChannelLinkOptions();?>
+                    <?php foreach ($channelOptions as $id => $item):?>
+                    	<?php if (empty($firstItemLink)) {
+    $firstItemLink = $item['label'];
+}?>
+                    	<li>
+                        	<div class="admin__field admin__field-option">
+                        	    <input
+                        	       type="radio"
+                        	       id="channel_link-radio_<?php echo $id; ?>"
+                        	       name="channel_link"
+                        	       data-bind="checked: isChecked"
+                        	       class="admin__control-radio"
+                        	       value="<?php echo $item['label'];?>"
+                        	    />
+    	                        <label for="channel_link-radio_<?php echo $id; ?>" class="admin__field-label">
+    	                            <span><?php  echo $item['label']; ?></span>
+    	                        </label>
+                        	</div>
+                    	</li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+            <div class="channel_info_container">
+                <img class='logo' data-bind="attr: { src: channel().logo, alt: channel().link} " />
+                <span class='label' data-bind="html: channel().label"></span>
+                <div class='clear'></div>
+                <div class='description' data-bind="html: channel().description"></div>
+            </div>
+		</div>
+	</div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
+                        "component": "Nostress_Koongo/js/createprofile/steps/channel",
+                        "appendTo": "<?= /* @escapeNotVerified */  $block->getParentComponentName()?>",
+						"feedLink": "<?= /* @escapeNotVerified */  $firstItemLink?>",
+						"storeId": "<?= /* @escapeNotVerified */  $storeId?>",
+                        "channelsByLink": <?php echo json_encode($block->getChannelsList()); ?>,
+                        "stores": <?php echo $block->getStoresEncoded(); ?>
+                    }
+                }
+            }
+        }
+    }
+</script>

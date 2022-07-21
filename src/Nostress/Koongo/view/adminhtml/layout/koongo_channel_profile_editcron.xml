@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <head>
+    	<css src="Nostress_Koongo::css/Koongo.css"/>
+	</head>
+    <body>
+    	<referenceContainer name="page.main.actions">
+            <block class="Nostress\Koongo\Block\Adminhtml\Help\Tooltip" name="help" as="help">
+            	<action method="setKey">
+                    <argument name="params" xsi:type="string">schedule</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Cron\Edit" name="nostress_koongo_channel_profile_edit_cron">
+		        <block class="Nostress\Koongo\Block\Adminhtml\Channel\Profile\Cron\Edit\Rulestable" name="nostress_koongo_channel_profile_cron_edit_rules_table" as="cron_rules_table"/>		          			        
+	        </block>
+        </referenceContainer>   
+    </body>
+</page>

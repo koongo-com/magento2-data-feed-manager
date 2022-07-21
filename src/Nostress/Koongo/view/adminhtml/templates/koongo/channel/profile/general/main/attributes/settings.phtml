@@ -1,0 +1,173 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Attributes\Settings */
+?>
+<div class="page-columns dialog-columns" id="page:main-container">
+	<div id="page:left" class="side-col">
+		<?php echo $leftCol = $block->getChildHtml("attributes_table_grid_modal_settings_info");?>
+	</div>
+	<div <?php echo empty($leftCol) ? '' : 'class="main-col"'; ?> id="container">
+		<div data-role="group-fields-attribute-details-wrapper" id="group-fields-attribute-details-wrapper" class="fieldset-wrapper admin__collapsible-block-wrapper opened">
+	        <div class="fieldset-wrapper-title admin__fieldset-wrapper-title">
+	            <strong data-target="#group-fields-attribute-details-content" data-toggle="collapse" class="admin__collapsible-title">
+	                <span><?= /* @escapeNotVerified */  __('Exported Value')?></span>
+	            </strong>
+			</div>
+	        <div data-role="group-fields-attribute-details-content" id="group-fields-attribute-details-content" class="fieldset-wrapper-content admin__fieldset-wrapper-content in collapse">
+				<fieldset id="channel_profile_base_fieldset" class="fieldset admin__fieldset ">
+				   	<span><?= /* @escapeNotVerified */  __('Adjust value, which is exported into element/column ')?><strong data-bind="text: attributes()[currentAttributeIndex()].label"></strong>.</span>
+					<br>
+					<br>
+			 		<div class="admin__field field field-magento_attribute  with-note">
+				        <label for="channel_profile_magento_attribute" class="label admin__field-label"><span><?= /* @escapeNotVerified */  __('Magento Attribute')?></span></label>
+						<div class="admin__field-control control">
+				    		<?php echo $block->getAttributeSelectHtml(); ?>
+				    		<div id="magento_attribute-note" class="note"><?= /* @escapeNotVerified */  __('The value of selected Magento product attribute is exported as feed attribute value.')?></div>
+				    	</div>
+				    </div>
+				    
+				    <div class="admin__field field field-eppav  with-note">
+				        <label for="channel_profile_eppav" class="label admin__field-label"><span><?= /* @escapeNotVerified */  __('Export Parent Product Attribute Value')?></span></label>
+						<div class="admin__field-control control">
+				    		<select class=" select admin__control-select" data-bind="value: attributes()[currentAttributeIndex()].eppav" title="<?= /* @escapeNotVerified */  __('Export Parent Product Attribute Value')?>" name="attribute_settings_modal_eppav" id="channel_profile_eppav">
+								<option value="0"><?= /* @escapeNotVerified */  __('No')?></option>
+								<option value="1"><?= /* @escapeNotVerified */  __('Yes')?></option>
+								<option value="2"><?= /* @escapeNotVerified */  __('If empty')?></option>
+								
+							</select>
+				    		<div id="eppav-note" class="note"><?= /* @escapeNotVerified */  __(' Export the parent product attribute value instead of Magento attribute value of given child product.')?></div>
+				    	</div>
+				    </div>
+			   	 
+				 	<div class="admin__field field field-default_value">
+						<label for="channel_profile_default_value" class="label admin__field-label"><span><?= /* @escapeNotVerified */  __('Default Value')?></span></label>
+						<div class="admin__field-control control">
+					    	<input type="text" class="input-text admin__control-text" data-bind="value: attributes()[currentAttributeIndex()].constant" title="<?= /* @escapeNotVerified */  __('Default Value')?>"  name="attribute_settings_modal_default_value" id="attribute_settings_modal_default_value">
+					    	<div id="default_value-note" class="note"><?= /* @escapeNotVerified */  __('Defined value is the same for all products. This value is exported in case that Magento attribute is not chosen or its value is empty.')?></div>
+					    </div>
+					</div>
+					
+					<div class="admin__field field field-composed_value">
+						<label for="channel_profile_composed_value" class="label admin__field-label"><span><?= /* @escapeNotVerified */  __('Attribute Composition')?></span></label>
+						
+						<div class="admin__field-control control">
+							<?php echo $block->getCompositionSelectHtml();?>
+							<br>
+							<button data-bind="click: addSelectionToComposedValue" class="action-default scalable add" type="button" title="<?= /* @escapeNotVerified */  __('Add Selected Attribute/Macro to Composition')?>" id="add_selection_button">
+								<span><?= /* @escapeNotVerified */  __('Add Attribute/Macro')?></span>
+							</button>
+							<br>
+							<br>
+							<textarea cols="15" rows="2" style="width: 725px; height: 60px;" data-bind="value: attributes()[currentAttributeIndex()].composed_value" class="textarea" id="composed_value_editor" title="<?= /* @escapeNotVerified */  __('Attribute Composition')?>" name="composed_value_editor" aria-hidden="true">
+							</textarea>
+							<div id="composed_value-note" class="note"><?= /* @escapeNotVerified */  __('You can combine attribute values with text values or define math operations and conditions. Select available macros to see example statements.')?></div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div data-role="group-fields-attribute_transform-details-wrapper" id="group-fields-attribute_transform-details-wrapper" class="fieldset-wrapper admin__collapsible-block-wrapper opened">
+	        <div class="fieldset-wrapper-title admin__fieldset-wrapper-title">
+	            <strong data-target="#group-fields-attribute_transform-details-content" data-toggle="collapse" class="admin__collapsible-title">
+	                <span><?= /* @escapeNotVerified */  __('Dynamic Transformation')?></span>
+	            </strong>
+			</div>
+	        <div data-role="group-fields-attribute_transform-details-content" id="group-fields-attribute_transform-details-content" class="fieldset-wrapper-content admin__fieldset-wrapper-content in collapse">
+				<fieldset id="channel_profile_base_fieldset" class="fieldset admin__fieldset ">
+					<span><?= /* @escapeNotVerified */  __('Adjust transformation of exported value during export process.')?></span>
+					<br>
+					<br>
+				 
+					<div class="admin__field field field-char_limit">
+						<label for="channel_profile_char_limit" class="label admin__field-label"><span><?= /* @escapeNotVerified */  __('Character Limit')?></span></label>
+						<div class="admin__field-control control">
+					    	<input type="text" class="input-text admin__control-text" data-bind="value: attributes()[currentAttributeIndex()].limit" title="<?= /* @escapeNotVerified */  __('Character Limit')?>"  name="attribute_settings_modal_char_limit" id="attribute_settings_modal_char_limit">
+					    	<div id="char_limit-note" class="note"><?= /* @escapeNotVerified */  __('Exported value is cropped to defined number of characters.')?></div>
+					    </div>
+					</div>
+					
+					<div class="admin__field field field-convert">
+						<label for="channel_profile_convert" class="label admin__field-label"><span><?= /* @escapeNotVerified */  __('Rewrite Value')?></span></label>
+						<div class="admin__field-control control">
+						
+							<table id="convert_table" class="admin__control-table convert_table">
+					            <thead>
+					                <tr>
+					                    <th class="col-from"><?= /* @escapeNotVerified */  __('Rewrite From')?></th>
+					                    <th class="col-to"><?= /* @escapeNotVerified */  __('Rewrite To')?></th>
+					                    <th class="col-delete"><?= /* @escapeNotVerified */  __('Action')?></th>
+					                </tr>
+					            </thead>
+					            
+					            <tbody id="convert_container" data-bind="foreach: attributes()[currentAttributeIndex()].convert">
+					            	<tr>
+										<td class="col-from">
+											<input type="text" id="convert_row_from" data-bind="value: from" name="attribute_settings_modal_convert_row_from" class=" input-text admin__control-text">
+										</td>
+										<td class="col-to">
+											<input type="text" id="convert_row_to" data-bind="value: to" name="attribute_settings_modal_convert_row_from" class=" input-text admin__control-text">
+										</td>
+					            		<td class="col-delete">
+					            			<button data-bind="click: function(){ $parent.removeConvertRow(this, $parent); }" id="convert_row_delete_button" class="action- scalable delete icon-btn delete-product-option" type="button" title="<?= /* @escapeNotVerified */  __('Delete Rewrite')?>">
+					            				<span><?= /* @escapeNotVerified */  __('Delete')?></span>
+					            			</button><!-- $parent.removeConvertRow -->
+					            		</td>
+					            	</tr>
+					            </tbody>
+					            <tfoot>
+					                <tr>
+					                    <td class="col-actions-add" colspan="3">
+					                    	<button data-bind="click: addConvertRow" class="action-default scalable add" type="button" title="<?= /* @escapeNotVerified */  __('Add Rewrite')?>" id="add_rewrite_button">
+										    	<span><?= /* @escapeNotVerified */  __('Add Rewrite')?></span>
+											</button>
+										</td>
+					                </tr>
+					            </tfoot>
+					        </table>
+					    	<!-- <input type="text" class="input-text admin__control-text" data-bind="value: attributes()[currentAttributeIndex()].limit" title="<?= /* @escapeNotVerified */  __('Rewrite Value')?>"  name="attribute_settings_modal_convert" id="attribute_settings_modal_convert"> -->
+					    	<div id="convert-note" class="note"><?= /* @escapeNotVerified */  __('Rewrite exported value (e.g. from "L" to "Large", from "Male" to "M"). You can use regular expression to match and convert substring of the exported value.')?></div>
+					    </div>
+					</div>
+					
+					<div class="admin__field field field-postproc">
+						<label for="channel_profile_postproc" class="label admin__field-label"><span><?= /* @escapeNotVerified */  __('Post-Process Action')?></span></label>
+						<div class="admin__field-control control">
+					    	<div class="attribute-options">
+					    		<?php foreach ($block->getPostprocOptions() as $value => $label):?>
+					    	
+					    		<div class="attribute-option" data-attribute-option-title="<?= htmlentities($label)?>">
+			                        <div class="admin__field admin__field-option">
+			                            <input type="checkbox" value="<?= /* @escapeNotVerified */  $value?>" data-bind="checked: attributes()[currentAttributeIndex()].postproc" name="attribute_settings_modal_postproc" id="attribute_settings_modal_postproc_<?= /* @escapeNotVerified */  $value?>" class="admin__control-checkbox">
+			                            <label class="admin__field-label" for="attribute_settings_modal_postproc_<?= /* @escapeNotVerified */  $value?>"><?= htmlentities($label)?></label>
+			                        </div>
+			                    </div>
+			                    <?php endforeach;?>
+					    	</div>
+					    	<div id="postproc-note" class="note"><?= /* @escapeNotVerified */  __('Text processing functions for an exported value. The value is processed as a text string.')?></div>
+					    </div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</div>

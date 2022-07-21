@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce). 
+ * With the purchase, download of the software or the installation of the software 
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Nostress\Koongo\Model\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Nostress\Koongo\Model\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">KoongoLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Nostress\Koongo\Model\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>        
+
+   <!-- Doplnit tridu Nostress\Koongo\Model\ResourceModel\Channel\Profile\Grid\Collection podle CMS page
+    Kod vcetne Grid collection - asi se bude hodit, taky funguje-->
+    
+    <!--Webhook API interface-->
+    <preference for="Nostress\Koongo\Api\Data\WebhookInterface" type="Nostress\Koongo\Model\Webhook" />   
+    <preference for="Nostress\Koongo\Api\Data\WebhookSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Nostress\Koongo\Api\WebhookRepositoryInterface" type="Nostress\Koongo\Model\WebhookRepository"/> 
+
+    <!--Reservation Repository API interface-->   
+    <preference for="Nostress\Koongo\Api\ReservationRepositoryInterface" type="Nostress\Koongo\Model\ReservationRepository"/> 
+    <preference for="Nostress\Koongo\Api\ReservationKoongoInterface" type="Nostress\Koongo\Model\ReservationKoongo"/> 
+
+    <!-- Webhook grid-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="koongo_service_webhook_listing_data_source" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Webhook\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Nostress\Koongo\Model\ResourceModel\Webhook\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">nostress_koongo_webhook</argument>
+            <argument name="resourceModel" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Webhook</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Webhook event grid-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="koongo_service_webhook_event_listing_data_source" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Webhook\Event\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Nostress\Koongo\Model\ResourceModel\Webhook\Event\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">nostress_koongo_webhook_event</argument>
+            <argument name="resourceModel" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Webhook\Event</argument>
+        </arguments>
+    </virtualType>
+
+    <!--Config Management API interface-->    
+    <preference for="Nostress\Koongo\Api\ConfigManagementInterface" type="Nostress\Koongo\Model\ConfigManagement"/>  
+
+    <!--Stock Cache API interface-->        
+    <preference for="Nostress\Koongo\Api\Cache\Data\StockInterface" type="Nostress\Koongo\Model\Cache\Stock" />   
+    <preference for="Nostress\Koongo\Api\Cache\Data\StockSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Nostress\Koongo\Api\Cache\StockRepositoryInterface" type="Nostress\Koongo\Model\Cache\StockRepository"/>    
+
+    <!-- Profile grid-->
+    <preference for="Nostress\Koongo\Api\Data\Channel\ProfileSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Nostress\Koongo\Api\Data\Channel\ProfileInterface" type="Nostress\Koongo\Model\Channel\Profile" />           
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+    	<arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="koongo_channel_profile_listing_data_source" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Channel\Profile\Grid\Collection</item>                
+            </argument>
+        </arguments>
+    </type>
+    <type name="Nostress\Koongo\Model\ResourceModel\Channel\Profile\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">nostress_koongo_channel_profile</argument>
+            <argument name="eventPrefix" xsi:type="string">koongo_channel_profile_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_profile_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Channel\Profile</argument>
+        </arguments>
+    </type>
+    
+    <virtualType name="KoongoGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ChannelProfileGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Nostress\Koongo\Model\ResourceModel\Channel\Profile\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">KoongoGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    
+    
+    
+    
+     <!-- 
+    <preference for="Nostress\Koongo\Api\Data\Channel\ProfileInterface" type="Nostress\Koongo\Model\Channel\Profile" />
+    <virtualType name="KoongoGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ChannelProfileGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Nostress\Koongo\Model\ResourceModel\Channel\Profile\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">KoongoGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Nostress\Koongo\Model\ResourceModel\Channel\Profile\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">nostress_koongo_channel_profile</argument>
+            <argument name="resourceModel" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Channel\Profile</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="koongo_channel_profile_listing_data_source" xsi:type="string">Nostress\Koongo\Model\ResourceModel\Channel\Profile\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>-->
+    
+    
+    <!-- 
+    <preference for="Ashsmith\Blog\Api\Data\PostInterface" type="Ashsmith\Blog\Model\Post" />
+    <virtualType name="BlogGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PostGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Ashsmith\Blog\Model\Resource\Post\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">BlogGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Ashsmith\Blog\Model\ResourceModel\Post\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ashsmith_blog_post</argument>
+            <argument name="resourceModel" xsi:type="string">Ashsmith\Blog\Model\ResourceModel\Post</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="blog_post_listing_data_source" xsi:type="string">Ashsmith\Blog\Model\ResourceModel\Post\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type> -->
+</config>

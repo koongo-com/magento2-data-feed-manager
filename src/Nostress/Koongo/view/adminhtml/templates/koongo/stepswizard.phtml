@@ -1,0 +1,108 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Nostress\Koongo\Block\Component\StepsWizard */
+?>
+    <div data-role="steps-wizard-main" class="steps-wizard" data-bind="scope: '<?= /* @escapeNotVerified */  $block->getComponentName()?>'">
+        <div data-role="messages" class="messages"></div>
+
+        <div data-role="steps-wizard-controls" class="steps-wizard-navigation">
+            <ul class="nav-bar">
+                <?php foreach ($block->getSteps() as $step) { ?>
+                    <li data-role="collapsible" data-bind="css: { 'active': selectedStep() == '<?= /* @escapeNotVerified */  $step->getComponentName() ?>'}">
+                        <a href="#<?= /* @escapeNotVerified */  $step->getComponentName() ?>"
+                           data-bind="click: showSpecificStep">
+                            <?= /* @escapeNotVerified */  $step->getCaption() ?>
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+            <div class="nav-bar-outer-actions">
+            	<?php if ($block->isVersionEqualorGreater210()):?>
+	            	<div class="action-wrap" data-role="closeBtn">
+	                    <button type="button"
+	                            class="action-cancel action-tertiary" data-bind="click: close">
+	                        <span><?= /* @escapeNotVerified */  __('Cancel') ?></span>
+	                    </button>
+	                </div>
+	                <div class="action-wrap action-wrap-prev" data-role="step-wizard-prev">
+	                    <button type="button"
+	                            class="action-default action-back-step"
+	                            data-bind="click: back, css: { 'disabled': disabled}">
+	                        <span><?= /* @escapeNotVerified */  __('Back') ?></span>
+	                    </button>
+	                </div>
+	                <div class="action-wrap action-wrap-next" data-role="step-wizard-next">
+	                    <button type="button"
+	                            class="action-default action-primary action-next-step" data-bind="click: next">
+	                        <span><?= /* @escapeNotVerified */  __('Next') ?></span>
+	                    </button>
+	                </div>
+                <?php else:?>                        
+	                <div class="action-wrap action-wrap-next" data-role="step-wizard-next">
+	                    <button type="button"
+	                            class="action-default action-primary action-next-step" data-bind="click: next">
+	                        <span><?= /* @escapeNotVerified */  __('Next') ?></span>
+	                    </button>
+	                </div>
+	                <div class="action-wrap action-wrap-prev" data-role="step-wizard-prev">
+	                    <button type="button"
+	                            class="action-default action-back-step"
+	                            data-bind="click: back, css: { 'disabled': disabled}">
+	                        <span><?= /* @escapeNotVerified */  __('Back') ?></span>
+	                    </button>
+	                </div>
+	                <div class="action-wrap" data-role="closeBtn">
+	                    <button type="button"
+	                            class="action-cancel action-tertiary" data-bind="click: close">
+	                        <span><?= /* @escapeNotVerified */  __('Cancel') ?></span>
+	                    </button>
+	                </div>
+	        	<?php endif;?>
+            </div>
+        </div>
+        <div data-role="steps-wizard-tab">
+            <?php foreach ($block->getSteps() as $step) { ?>
+            <div data-bind="visible: selectedStep() == $element.id"
+                 class="content" id="<?= /* @escapeNotVerified */ $step->getComponentName() ?>"
+                 data-role="content">
+                <?= /* @escapeNotVerified */  $step->getContent() ?>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                        "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
+                            "component": "Nostress_Koongo/js/lib/step-wizard",
+                            "initData": <?= /* @escapeNotVerified */  $this->helper("Magento\Framework\Json\Helper\Data")->jsonEncode($block->getInitData()) ?>,
+                            "stepsNames": <?= /* @escapeNotVerified */  $this->helper("Magento\Framework\Json\Helper\Data")->jsonEncode($block->getStepComponents()) ?>
+                        }
+                    }
+                }
+            }
+    }
+</script>

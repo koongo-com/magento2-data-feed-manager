@@ -1,0 +1,50 @@
+    <table id="ftp_client_table" class="data-grid admin__control-table">
+    	<thead>
+    	    <tr>
+    	        <th class="data-grid-th col-type"><span class='data-grid-cell-content' data-bind="i18n: 'type'"></span></th>
+    	        <th class="data-grid-th col-name"><span class='data-grid-cell-content' data-bind="i18n: 'Name'"></span></th>
+    	        <th class="data-grid-th col-size"><span class='data-grid-cell-content' data-bind="i18n: 'Size'"></span></th>
+    	        <th class="data-grid-th col-last-change"><span class='data-grid-cell-content' data-bind="i18n: 'Last Change'"></span></th>
+    	        <th class="data-grid-th col-rights"><span class='data-grid-cell-content' data-bind="i18n: 'Rights'"></span></th>
+    	        <th class="data-grid-th col-owner"><span class='data-grid-cell-content' data-bind="i18n: 'Owner / Group'"></span></th>
+    	    </tr>
+    	</thead>
+    
+    	<tbody id="" data-bind="foreach: items()">
+    		
+    		<tr class="data-row" data-bind="css: { '_odd-row': !!($index() % 2), 'active': feedfile}, , click: function() { $parent.load( $index()); }" data-repeat-index="0">
+    			<td class="col-type">
+    				<span data-bind="text: type"></span>
+    			</td>
+    			<td class="col-name">
+    			    <!-- ko if: (type=='dir') -->
+    				<b><a href='#' data-bind="text: name"></a></b>
+    				<!-- /ko -->
+    				
+    				<!-- ko if: (type=='file') -->
+    				<a href='#' data-bind="text: name"></a>
+    				<!-- /ko -->
+    			</td>
+    			<td class="col-size">
+    			    <!-- ko if: (type=='file') -->
+    				<span data-bind="text: size + ' b'"></span>
+    				<!-- /ko -->
+    			</td>
+    			<td class="col-last-change">
+    			    <!-- ko if: $data.hasOwnProperty("mtime") -->
+    			    <span data-bind="text: mtime"></span>
+    			    <!-- /ko -->
+    			</td>
+    			<td class="col-rights">
+    			    <!-- ko if: $data.hasOwnProperty("permissions") -->
+    				<span data-bind="text: permissions"></span>
+    				<!-- /ko -->
+    			</td>
+    			<td class="col-owner">
+    			    <!-- ko if: $data.hasOwnProperty("uid") -->
+    				<span data-bind="text: uid + ' / ' + gid"></span>
+    				<!-- /ko -->
+    			</td>
+    		</tr>
+    	</tbody>
+    </table>

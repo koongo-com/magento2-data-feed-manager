@@ -1,0 +1,57 @@
+<?php
+/**
+ * Magento Module developed by NoStress Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is licensed under the Koongo software licence (by NoStress Commerce).
+ * With the purchase, download of the software or the installation of the software
+ * in your application you accept the licence agreement. The allowed usage is outlined in the
+ * Koongo software licence which can be found under https://docs.koongo.com/display/koongo/License+Conditions
+ *
+ * Any modification or distribution is strictly forbidden. The license
+ * grants you the installation in one application. For multiuse you will need
+ * to purchase further licences at https://store.koongo.com/.
+ *
+ * See the Koongo software licence agreement for more details.
+ * @copyright Copyright (c) 2017 NoStress Commerce (http://www.nostresscommerce.cz, http://www.koongo.com/)
+ *
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Nostress\Koongo\Block\Adminhtml\Channel\Profile\General\Edit\Tab\Main\Attributes\Info */
+?>
+    <?php $title = $block->getTitle();?>
+    <div class='side-col-block'>
+    <?php if (empty($title)): ?>
+		<h1><?= /* @escapeNotVerified */  $block->getChannelLabel() . " " . __('Attribute') . " ";?><strong data-bind="text: attributes()[currentAttributeIndex()].label">Attribute Label</strong></h1>
+	<?php else: ?>
+		<h3><?php echo $title;?></h3>
+	<?php endif;?>
+   	    <p data-bind="text: attributes()[currentAttributeIndex()].description.text">Attribute Description</p>
+   	    <p data-bind="visible: attributes()[currentAttributeIndex()].description.text == ''"><?= /* @escapeNotVerified */  __('Attribute description not available.');?></p>
+   	</div>
+         	
+   	<div class='side-col-block' data-bind="visible: attributes()[currentAttributeIndex()].description.example">
+		<h3><?= /* @escapeNotVerified */  __('Example') ?></h3>
+        <p data-bind="text: attributes()[currentAttributeIndex()].description.example">Attribute Example</p>
+    </div>
+    
+    <div class='side-col-block' data-bind="visible: attributes()[currentAttributeIndex()].description.options">
+    	<h3><?= /* @escapeNotVerified */  __('Options') ?></h3>
+    	
+    	<ul data-bind="foreach: attributes()[currentAttributeIndex()].description.option_array">
+	   		<li>
+	           	<div class="admin__field admin__field-option">
+		            <label class="admin__field-label">
+		            	<span data-bind="text: value_label"/>
+				    </label>
+			   	</div>
+			</li>
+     	</ul>
+    </div>
+
+
+
+
