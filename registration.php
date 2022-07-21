@@ -23,5 +23,5 @@ use Magento\Framework\Component\ComponentRegistrar;
 ComponentRegistrar::register(
     ComponentRegistrar::MODULE,
     'Nostress_Koongo',
-    __DIR__
+    __DIR__ . '/src/Nostress/Koongo'
 );

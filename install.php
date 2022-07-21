@@ -1,5 +1,5 @@
 <?php
-$source = __DIR__ . "/lib/*";
+$source = __DIR__ . "/lib/";
 $dest = getcwd() . "/lib";
 
 if (!file_exists($dest)) {
@@ -8,9 +8,10 @@ if (!file_exists($dest)) {
 }
 
 foreach ($iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source, FilesystemIterator::SKIP_DOTS),RecursiveIteratorIterator::SELF_FIRST) as $item) {
-	if ($item->isDir()) {
-		mkdir($dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
-	} else {
-		copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
+	$destDir = sprintf('%s%s%s', $dest, DIRECTORY_SEPARATOR, $iterator->getSubPathname());
+	if ($item->isDir() && !file_exists($destDir)) {
+		mkdir($destDir);
+	} elseif (!$item->isDir()) {
+		copy($item, $destDir);
 	}
 }
