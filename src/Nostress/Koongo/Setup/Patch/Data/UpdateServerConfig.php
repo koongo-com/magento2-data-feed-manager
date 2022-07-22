@@ -26,8 +26,15 @@ use Nostress\Koongo\Model\Api\Client\Simple;
 
 class UpdateServerConfig implements DataPatchInterface
 {
-    protected Simple $client;
-    protected ModuleDataSetupInterface $moduleDataSetup;
+    /**
+     * @var Simple
+     */
+    protected $client;
+
+    /**
+     * @var ModuleDataSetupInterface
+     */
+    protected $moduleDataSetup;
 
     /**
      * @param Simple $client
