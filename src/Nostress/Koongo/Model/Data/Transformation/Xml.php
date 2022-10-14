@@ -493,8 +493,9 @@ class Xml extends \Nostress\Koongo\Model\Data\Transformation
                 $value = $this->getValue($data, $parent);
             }
 
-            $data = str_replace('"', '\"', $value);
+            $data = $value !== null ? str_replace('"', '\"', $value) : '';
         }
+
         return str_replace(array_keys($vars), array_values($vars), $string);
     }
 
