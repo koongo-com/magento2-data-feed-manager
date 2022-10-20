@@ -71,7 +71,8 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
                 'title' => __('Stock & Conditions'),
                 'active' => true,
                 'group_code' => self::BASIC_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('main')
+                'content' => $this->getChildHtml('main'),
+                'class' => ''
             ]
         );
 
@@ -80,9 +81,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Variants & Types'),
                 'title' => __('Variants & Types'),
-//     			'active' => true,
                 'group_code' => self::ADVANCED_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('types')
+                'content' => $this->getChildHtml('types'),
+                'class' => ''
             ]
         );
 
@@ -91,10 +92,10 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Visibility'),
                 'title' => __('Visibility'),
-//     			'active' => true,
                 'group_code' => self::BASIC_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('visibility')
-                ]
+                'content' => $this->getChildHtml('visibility'),
+                'class' => ''
+            ]
         );
 
         return parent::_beforeToHtml();

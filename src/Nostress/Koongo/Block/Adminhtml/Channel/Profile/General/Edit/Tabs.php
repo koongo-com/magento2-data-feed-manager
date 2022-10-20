@@ -71,7 +71,8 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
                 'title' => __('Attributes Mapping'),
                 'active' => true,
                 'group_code' => self::BASIC_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('main')
+                'content' => $this->getChildHtml('main'),
+                'class' => ''
             ]
         );
         $this->addTab(
@@ -79,9 +80,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Shipping Cost'),
                 'title' => __('Shipping Cost'),
-                //'active' => true,
                 'group_code' => self::BASIC_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('shipping_cost')
+                'content' => $this->getChildHtml('shipping_cost'),
+                'class' => ''
             ]
         );
 
@@ -90,9 +91,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Stock Status Values'),
                 'title' => __('Stock Status Values'),
-                //'active' => true,
                 'group_code' => self::ADVANCED_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('stock')
+                'content' => $this->getChildHtml('stock'),
+                'class' => ''
             ]
         );
 
@@ -101,9 +102,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Price and Date'),
                 'title' => __('Price and Date'),
-                //'active' => true,
                 'group_code' => self::ADVANCED_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('price')
+                'content' => $this->getChildHtml('price'),
+                'class' => ''
             ]
         );
 
@@ -112,9 +113,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Feed File'),
                 'title' => __('Feed File'),
-                //'active' => true,
                 'group_code' => self::ADVANCED_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('file')
+                'content' => $this->getChildHtml('file'),
+                'class' => ''
             ]
         );
 
@@ -123,9 +124,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Sort Products'),
                 'title' => __('Sort Products'),
-                //'active' => true,
                 'group_code' => self::ADVANCED_TAB_GROUP_CODE,
-                'content' => $this->getChildHtml('sort')
+                'content' => $this->getChildHtml('sort'),
+                'class' => ''
             ]
         );
 
@@ -134,9 +135,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Category'),
                 'title' => __('Category'),
-                //'active' => true,
                 'content' => $this->getChildHtml('category'),
-                'group_code' => self::ADVANCED_TAB_GROUP_CODE
+                'group_code' => self::ADVANCED_TAB_GROUP_CODE,
+                'class' => ''
             ]
         );
 
