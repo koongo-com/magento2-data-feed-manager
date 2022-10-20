@@ -34,19 +34,28 @@ php bin/magento cache:flush
 ### Cache Refresh
 Navigate to System → Cache Management and refresh ALL cache.
 
-### Enable Flat Catalog
-Koongo Connector uses Flat Product and Flat Category data, so please make sure you have enabled these two settings. You can enable Flat by clicking on the link in the note or navigate to Stores -> Settings -> Configuration → System → Catalog → Storefront.
+### Version with Enabled Flat Catalog
+Koongo Connector can uses Flat Product and Flat Category data, so please make sure you have enabled these two settings. You can enable Flat by clicking on the link in the note or navigate to Stores -> Settings -> Configuration → System → Catalog → Storefront.
 #### On Catalog page you must set this options:
 
 * Use Flat Catalog Category = Yes
 * Use Flat Catalog Product = Yes
 
 
-### Reindex Product and Category Flat Catalog
+#### Reindex Product and Category Flat Catalog
 If your server cron job runs properly, Product and Category Flat Catalog will be re-indexed automatically.
 
 If you'd like to turn the Flat Catalog off, you can force re-index via ssh by following command in your Magento 2 installation folder:
 
 ```shell
 php bin/magento indexer:reindex
+```
+
+### Version without enabled Flat Catalog
+You can use Magento 2 Connector with disabled Flat catalog.
+
+#### If you want to deactivate the Flat Catalog, please add the command below into CRON:
+
+```shell
+php bin/magento koongo:flat:reindex
 ```
