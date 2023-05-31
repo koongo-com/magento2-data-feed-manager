@@ -28,30 +28,31 @@
 
 namespace  Nostress\Koongo\Ui\Component\Listing\Column;
 
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Ui\Component\Listing\Columns\Column;
+use Nostress\Koongo\Model\Channel as ChannelModel;
 
-class Channel extends \Magento\Ui\Component\Listing\Columns\Column
+class Channel extends Column
 {
     const NAME = 'channel_code';
 
     const ALT_FIELD = 'link';
+    protected ChannelModel $channel;
+    protected UrlInterface $urlBuilder;
 
     /**
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param \Magento\Catalog\Helper\Image $imageHelper
-     * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
      */
     public function __construct(
-        ContextInterface $context,
+        ContextInterface   $context,
         UiComponentFactory $uiComponentFactory,
-        \Nostress\Koongo\Model\Channel $channel,
-        \Magento\Framework\UrlInterface $urlBuilder,
-        array $components = [],
-        array $data = []
+        ChannelModel       $channel,
+        UrlInterface       $urlBuilder,
+        array              $components = [],
+        array              $data = []
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->channel = $channel;

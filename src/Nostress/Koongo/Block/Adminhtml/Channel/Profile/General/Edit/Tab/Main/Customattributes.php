@@ -37,6 +37,7 @@ class Customattributes extends \Nostress\Koongo\Block\Adminhtml\Channel\Profile\
      * @var string
      */
     protected $_template = 'Nostress_Koongo::koongo/channel/profile/general/main/custom_attributes.phtml';
+    private ?array $_magentoAttributeOptions = null;
 
     public function exportCustomAttributes()
     {
@@ -117,7 +118,7 @@ class Customattributes extends \Nostress\Koongo\Block\Adminhtml\Channel\Profile\
      */
     public function getSelectHtmlWithValue()
     {
-        if (!isset($this->_magentoAttributeOptions)) {
+        if ($this->_magentoAttributeOptions === null) {
             $this->_magentoAttributeOptions = $this->attributeSource->toIndexedArray($this->profile->getStoreId(), $this->profile->getTaxonomyLabel());
         }
 

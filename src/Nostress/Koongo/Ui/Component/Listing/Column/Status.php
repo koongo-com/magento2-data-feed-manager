@@ -28,39 +28,30 @@
 
 namespace  Nostress\Koongo\Ui\Component\Listing\Column;
 
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Ui\Component\Listing\Columns\Column;
+use Nostress\Koongo\Model\Translation;
+use Nostress\Koongo\Ui\Component\Listing\Column\Status\Options;
 
-class Status extends \Magento\Ui\Component\Listing\Columns\Column
+class Status extends Column
 {
 
-    /**
-     * \Nostress\Koongo\Ui\Component\Listing\Column\Status\Options
-     */
-    protected $statusOptions;
+    protected Options $statusOptions;
+    protected Translation $translation;
+	protected UrlInterface $urlBuilder;
 
-    /**
-     *
-     * @var \Nostress\Koongo\Model\Translation
-     */
-    protected $translation;
-
-    /**
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param \Magento\Catalog\Helper\Image $imageHelper
-     * @param \Magento\Framework\UrlInterface $urlBuilder
-     * @param \Nostress\Koongo\Ui\Component\Listing\Column\Status\Options $statusOptions
-     * @param \Nostress\Koongo\Model\Translation $translation
+	/**
      * @param array $components
      * @param array $data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        \Magento\Framework\UrlInterface $urlBuilder,
-        \Nostress\Koongo\Ui\Component\Listing\Column\Status\Options $statusOptions,
-        \Nostress\Koongo\Model\Translation $translation,
+        UrlInterface $urlBuilder,
+        Options $statusOptions,
+        Translation $translation,
         array $components = [],
         array $data = []
     ) {

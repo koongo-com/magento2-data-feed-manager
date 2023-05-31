@@ -28,11 +28,22 @@
 
 namespace Nostress\Koongo\Model\ResourceModel;
 
+use Magento\Framework\Model\ResourceModel\Db\Context;
+use Nostress\Koongo\Helper\Data\Loader;
+
 abstract class AbstractResourceModel extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     const TIME = 'time';
     const DATE = 'date';
     const DATE_TIME = 'date_time';
+
+    protected Loader $helper;
+
+    public function __construct(Loader $helper, Context $context, $connectionName = null)
+    {
+        parent::__construct($context, $connectionName);
+        $this->helper = $helper;
+    }
 
     protected function runQuery($queryString, $tableName = "", $message = "", $useTransaction = true)
     {

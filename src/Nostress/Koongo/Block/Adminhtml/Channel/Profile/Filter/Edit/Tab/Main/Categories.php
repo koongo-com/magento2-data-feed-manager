@@ -27,6 +27,8 @@
  */
 namespace Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit\Tab\Main;
 
+use Magento\Backend\Block\Template\Context;
+use Magento\Framework\Registry;
 use Nostress\Koongo\Model\Channel\Profile;
 
 class Categories extends \Magento\Backend\Block\Template
@@ -42,15 +44,16 @@ class Categories extends \Magento\Backend\Block\Template
      *  @var $model \Nostress\Koongo\Model\Channel\Profile
      **/
     protected $profile;
+    private Registry $_registry;
 
     /**
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry $registry
+     * @param Context $context
+     * @param Registry $registry
      * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
+        Context $context,
+        Registry $registry,
         array $data = []
     ) {
         parent::__construct($context, $data);

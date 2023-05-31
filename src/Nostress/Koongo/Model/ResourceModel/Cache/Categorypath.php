@@ -71,9 +71,6 @@ class Categorypath extends \Nostress\Koongo\Model\ResourceModel\Cache
 
         $maxLevel = $this->getCategoryMaxLevel();
         $this->getCategoryPathUpdateSql($maxLevel, $firstLevelToInclude);
-//     	echo $sql."<br>";
-//     	exit();
-        //$this->runQuery($sql);
     }
 
     protected function getCategoryPathUpdateSql($maxLevel, $firstLevelToInclude)

@@ -30,31 +30,28 @@ namespace Nostress\Koongo\Controller\Adminhtml\Channel\Profile;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\LayoutFactory;
 use Magento\Framework\View\Result\PageFactory;
+use Nostress\Koongo\Helper\Version;
+use Nostress\Koongo\Model\Channel\Profile\Manager;
+use Nostress\Koongo\Model\Channel\ProfileFactory;
+use Nostress\Koongo\Model\Translation;
 
 class Previewcategories extends SaveAbstract
 {
-    /**
-     * Core registry
-     *
-     * @var \Magento\Framework\Registry
-     */
-    protected $_coreRegistry = null;
+    protected Registry $_coreRegistry;
+    private LayoutFactory $resultLayoutFactory;
 
-    /**
-     * @param Context $context
-     * @param Filter $filter
-     * @param CollectionFactory $collectionFactory
-     */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
-        \Nostress\Koongo\Helper\Version $helper,
-        \Nostress\Koongo\Model\Channel\Profile\Manager $manager,
-        \Nostress\Koongo\Model\Channel\ProfileFactory $profileFactory,
-        \Nostress\Koongo\Model\Translation $translation,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory
+        Version $helper,
+        Manager $manager,
+        ProfileFactory $profileFactory,
+        Translation $translation,
+        Registry $registry,
+        LayoutFactory $resultLayoutFactory
     ) {
         $this->_coreRegistry = $registry;
         $this->resultLayoutFactory = $resultLayoutFactory;
@@ -77,7 +74,6 @@ class Previewcategories extends SaveAbstract
             $this->_sendAjaxError('wrong data format');
         }
 
-        $resultLayout = $this->resultLayoutFactory->create();
-        return $resultLayout;
+        return $this->resultLayoutFactory->create();
     }
 }

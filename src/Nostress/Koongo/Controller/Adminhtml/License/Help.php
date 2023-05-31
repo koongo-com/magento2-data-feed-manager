@@ -28,31 +28,21 @@
 
 namespace Nostress\Koongo\Controller\Adminhtml\License;
 
+use Exception;
 use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\Mail\Message;
+use Magento\Framework\Mail\Transport;
+use Nostress\Koongo\Helper\Version;
 
 class Help extends \Nostress\Koongo\Controller\Adminhtml\License
 {
-    /**
-     *
-     * @var \Nostress\Koongo\Helper\Version
-     */
-    protected $helper;
+    protected Message $message;
+    protected Version $version;
 
-    /**
-     * @var \Magento\Framework\Mail\Message
-     */
-    protected $message;
-
-    /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Nostress\Koongo\Helper\Version $helper
-     * @param \Magento\Framework\Mail\Message $message
-     */
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Nostress\Koongo\Helper\Version $helper,
-        \Magento\Framework\Mail\Message $message
-    ) {
+    public function __construct(Context $context, Version $helper, Message $message)
+    {
         $this->version = $helper;
         $this->message = $message;
 
@@ -80,17 +70,17 @@ class Help extends \Nostress\Koongo\Controller\Adminhtml\License
                     ->setBody($data['message'])
                     ->setSubject($data['subject'])
                     ->setFrom($data['email']);
-                $transport =  new \Magento\Framework\Mail\Transport($this->message);
+                $transport =  new Transport($this->message);
                 $transport->sendMessage();
 
                 $this->messageManager->addSuccess(__('Your inquiry has been submitted and we should respond within 24 hours. Thank you for contacting Koongo Support.'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addError(__('Unable to submit your request. Please, contact Koongo support desk via email address %1', $toEmail));
                 $this->messageManager->addError(__('Error: ') . $e->getMessage());
             }
         }
 
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
 
         $redirectUrlKey = $this->getRequest()->getParam('redirect_url_key');

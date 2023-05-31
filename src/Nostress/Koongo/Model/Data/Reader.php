@@ -25,6 +25,12 @@
 */
 namespace Nostress\Koongo\Model\Data;
 
+use Exception;
+use Nostress\Koongo\Helper\Data;
+use Nostress\Koongo\Model\Data\Reader\Common;
+use Nostress\Koongo\Model\Data\Reader\Common\Csv;
+use Nostress\Koongo\Model\Data\Reader\Common\Text;
+
 class Reader extends \Nostress\Koongo\Model\AbstractModel
 {
     const SOURCE_ENCODING = "src_encoding";
@@ -45,19 +51,13 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
     protected $_readerCsv;
     protected $_readerTxt;
     protected $_readerDefault;
+    protected Reader\Common\Text $_readerText;
 
-    /**
-     * Construct
-     * @param \Nostress\Koongo\Model\Data\Reader\Common\TextFactory $readerTextFactory
-     * @param \Nostress\Koongo\Model\Data\Reader\Common\CsvFactory $readerCsvFactory
-     * @param \Nostress\Koongo\Model\Data\Reader\CommonFactory $readerDefaultFactory
-     * @param \Nostress\Koongo\Helper\Data
-     */
     public function __construct(
-        \Nostress\Koongo\Model\Data\Reader\Common\Text $readerText,
-        \Nostress\Koongo\Model\Data\Reader\Common\Csv $readerCsv,
-        \Nostress\Koongo\Model\Data\Reader\Common $readerDefault,
-        \Nostress\Koongo\Helper\Data $helper
+        Text $readerText,
+        Csv $readerCsv,
+        Common $readerDefault,
+        Data $helper
     ) {
         $this->_readerCsv = $readerCsv;
         $this->_readerText = $readerText;
@@ -194,14 +194,15 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         $this->downloadFile($this->_filePath, $this->_tmpFilePath);
     }
 
+    /**
+     * @throws Exception
+     */
     public function downloadFile($fileUrl, $localFilename)
     {
-        $err_msg = '';
-
         $out = fopen($localFilename, "wb");
         if (!$out) {
             $message = __("Can't open file %1 for writing", $localFilename);
-            throw new \Exception($message);
+            throw new Exception($message);
         }
 
         $ch = curl_init();
@@ -218,23 +219,24 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         if ($httpCode == 404) {
             /* Handle 404 here. */
             $message = __("File %1 doesn't exist. The file url location returns error 404.", $fileUrl);
-            throw new \Exception($message);
+            throw new Exception($message);
         }
 
         $error = curl_error($ch);
         if (!empty($error)) {
             $message = __("Can't download file %1 Following error occurs: %2", $fileUrl, $error);
-            throw new \Exception($message);
+            throw new Exception($message);
         }
 
         curl_close($ch);
         fclose($out);
-    }//end function
+    }
 
+    /**
+     * @throws Exception
+     */
     public function downloadFileToString($fileUrl)
     {
-        $err_msg = '';
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -248,18 +250,17 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         if ($httpCode == 404) {
             /* Handle 404 here. */
             $message = __("File %1 doesn't exist. The file url location returns error 404.", $fileUrl);
-            throw new \Exception($message);
+            throw new Exception($message);
         }
 
         $error = curl_error($ch);
         if (!empty($error)) {
             $message = __("Can't download file %1", $fileUrl);
-            throw new \Exception($message);
+            throw new Exception($message);
         }
 
         curl_close($ch);
-        fclose($out);
 
         return $data;
-    }//end function
+    }
 }

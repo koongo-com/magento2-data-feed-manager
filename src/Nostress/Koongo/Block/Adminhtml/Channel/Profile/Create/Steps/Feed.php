@@ -28,21 +28,22 @@
 
 namespace Nostress\Koongo\Block\Adminhtml\Channel\Profile\Create\Steps;
 
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Store\Model\System\Store;
+use Nostress\Koongo\Model\Channel\Feed as FeedModel;
+
 class Feed extends \Magento\Ui\Block\Component\StepsWizard\StepAbstract
 {
     /**
      * \Nostress\Koongo\Model\Channel\Feed
      */
     protected $_feedSource;
+    private Store $_systemStore;
 
-    /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Store\Model\System\Store $storeModel
-     */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Store\Model\System\Store $systemStore,
-        \Nostress\Koongo\Model\Channel\Feed $feedSource
+        Context   $context,
+        Store $systemStore,
+        FeedModel $feedSource
     ) {
         parent::__construct($context);
         $this->_systemStore = $systemStore;
@@ -59,8 +60,8 @@ class Feed extends \Magento\Ui\Block\Component\StepsWizard\StepAbstract
 
     public function getFeedsByLink($jsonEncode = true)
     {
-        $filter = [\Nostress\Koongo\Model\Channel\Feed::COL_ENABLED => "1"];
-        $collection = $this->_feedSource->getFeedCollection($filter, null, \Nostress\Koongo\Model\Channel\Feed::COL_TYPE);
+        $filter = [FeedModel::COL_ENABLED => "1"];
+        $collection = $this->_feedSource->getFeedCollection($filter, null, FeedModel::COL_TYPE);
 
         $feedsByLink = [];
         foreach ($collection as $item) {

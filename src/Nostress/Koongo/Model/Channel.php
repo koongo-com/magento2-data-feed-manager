@@ -34,6 +34,7 @@ class Channel extends \Nostress\Koongo\Model\AbstractModel
     const CHANNEL_LOGO_FILE = "logo.png";
     const CHANNEL_MANUAL_FILE = "manual.html";
     const CHANNEL_DESCRIPTION_FILE = "short_description.html";
+    protected ?string $_channelCacheDirUrl = null;
 
     public function getLogoUrl()
     {
@@ -70,8 +71,7 @@ class Channel extends \Nostress\Koongo\Model\AbstractModel
             $this->_channelCacheDirUrl = $this->getPresentationResourcesUrl() . self::CHANNEL_CACHE_DIR . "/";
         }
 
-        $url = $this->_channelCacheDirUrl . $this->getChannelCode() . "/";
-        return $url;
+        return $this->_channelCacheDirUrl . $this->getChannelCode() . "/";
     }
 
     public function getUrlCode()

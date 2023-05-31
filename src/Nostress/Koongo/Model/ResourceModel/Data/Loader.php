@@ -29,6 +29,12 @@
 namespace Nostress\Koongo\Model\ResourceModel\Data;
 
 use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
+use Magento\Framework\DB\Select;
+use Magento\Framework\Model\ResourceModel\Db\Context;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Tax\Model\Config;
+use Magento\Weee\Helper\Data;
+use Nostress\Koongo\Model\Config\Source\Datetimeformat;
 
 /**
  * Blog post mysql resource
@@ -130,7 +136,7 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
     protected $_data;
     /* @var Array for image placeholders */
     protected $_placeholders;
-    /** @var \Magento\Store\Model\StoreManagerInterface */
+    /** @var StoreManagerInterface */
     protected $storeManager;
 
     /*
@@ -162,21 +168,16 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
     * @var int
     */
     protected $_profileId;
-    /*
-     * Loader Helper
-     * @var \Nostress\Koongo\Helper\Data\Loader
-     */
-    protected $helper;
 
     /**
      * Tax helper
      *
-     * @var \Magento\Tax\Model\Config
+     * @var Config
      */
     protected $_taxConfig;
 
     /**
-     * @var \Magento\Weee\Helper\Data
+     * @var Data
      */
     protected $weeeData;
 
@@ -186,29 +187,27 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
     protected ?bool $contentStagingAvailable;
 
     /**
-     * Construct
-     *
-     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
-     * @param \Nostress\Koongo\Helper\Data\Loader $helper
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param Config $taxConfig
-     * @param string|null $resourcePrefix
+     * @var int|mixed|null
      */
+    private $_stockId;
+    protected ?array $_columns = [];
+    protected ?int $_offset = null;
+    private ?Select $_select = null;
+
     public function __construct(
-        \Magento\Framework\Model\ResourceModel\Db\Context $context,
-        \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeformat,
+        Context $context,
+        Datetimeformat $datetimeformat,
         \Nostress\Koongo\Helper\Data\Loader $helper,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Tax\Model\Config $taxConfig,
-        \Magento\Weee\Helper\Data $weeeData,
-        $resourcePrefix = null
+        StoreManagerInterface $storeManager,
+        Config $taxConfig,
+        Data $weeeData,
+        ?string $resourcePrefix = null
     ) {
         $this->_datetimeformat = $datetimeformat;
-        $this->helper = $helper;
         $this->storeManager = $storeManager;
         $this->_taxConfig = $taxConfig;
         $this->weeeData = $weeeData;
-        parent::__construct($context, $resourcePrefix);
+        parent::__construct($helper, $context, $resourcePrefix);
     }
     /**
      * Initialize resource model
@@ -222,7 +221,7 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
 
     /**
      * Is content staging module present?
-     * @return void
+     * @return bool
      */
     public function isContentStagingAvailable()
     {
@@ -312,15 +311,16 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
         //$this->dispatchDefineColumnsEvent();
     }
 
-    public function getSelect()
+    public function getSelect(): Select
     {
-        if (!isset($this->_select)) {
+        if ($this->_select === null) {
             $this->_select = $this->getEmptySelect();
         }
+
         return $this->_select;
     }
 
-    protected function getEmptySelect()
+    protected function getEmptySelect(): Select
     {
         $select = $this->getConnection()->select();
         $res = clone $select;
@@ -828,7 +828,7 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
 
     protected function getSqlTimestampFormat($type = self::DATE_TIME)
     {
-        return $this->_datetimeformat->getSqlFormat($this->getData(self::DATETIME_FORMAT, \Nostress\Koongo\Model\Config\Source\Datetimeformat::STANDARD), $type);
+        return $this->_datetimeformat->getSqlFormat($this->getData(self::DATETIME_FORMAT, Datetimeformat::STANDARD), $type);
     }
 
     protected function _isTableColumnPresent($table, $columnName)

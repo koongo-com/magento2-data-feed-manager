@@ -28,7 +28,15 @@
 
 namespace Nostress\Koongo\Model\Api\Client;
 
-class Simple extends \Nostress\Koongo\Model\AbstractModel
+use Magento\Framework\App\CacheInterface;
+use Nostress\Koongo\Helper\Version;
+use Nostress\Koongo\Model\AbstractModel;
+use Nostress\Koongo\Model\Channel\Feed\Manager as FeedManager;
+use Nostress\Koongo\Model\Channel\Profile\Manager as ProfileManager;
+use Nostress\Koongo\Model\Data\Reader;
+use Nostress\Koongo\Model\Taxonomy\Setup\Manager as SetupManager;
+
+class Simple extends AbstractModel
 {
     const RESPONSE_FEED = 'feed';
     const RESPONSE_TAXONOMY = 'taxonomy';
@@ -84,40 +92,29 @@ class Simple extends \Nostress\Koongo\Model\AbstractModel
     const CACHE_KEY_VERSION_PLUGINS_INFO = 'koongo_version_plugins_info';
 
     const LICENSE_NOT_VALID = "License invalid";
+    protected CacheInterface $cache;
+    protected Reader $reader;
 
-    /**
-     *
-     * @var \Nostress\Koongo\Helper\Version
-     */
-    public $helper;
+    protected FeedManager $feedManager;
+    protected ProfileManager $profileManager;
+    protected SetupManager $taxonomySetupManager;
 
-    /**
-     * @var Magento\Framework\App\CacheInterface
-     */
-    protected $cache;
-
-    /**
-     * @var \Nostress\Koongo\Model\Data\Reader
-     */
-    protected $reader;
-
-    /**
-     * @param \Nostress\Koongo\Helper\Version $versionHelper
-     * @param Magento\Framework\App\CacheInterface $cache
-     * @param \Nostress\Koongo\Model\Data\Reader
-     */
     public function __construct(
-        \Nostress\Koongo\Helper\Version $versionHelper,
-        \Magento\Framework\App\CacheInterface $cache,
-        \Nostress\Koongo\Model\Data\Reader $reader
-    ) {
-        $this->helper = $versionHelper;
+        Version         $helper,
+        CacheInterface $cache,
+        Reader $reader,
+        ProfileManager  $profileManager,
+        SetupManager    $taxonomySetupManager,
+        FeedManager $feedManager
+    )
+    {
+        $this->helper = $helper;
         $this->cache = $cache;
         $this->reader = $reader;
     }
 
     /**
-     * @return \Nostress\Koongo\Helper\Version
+     * @return Version
      */
     public function getHelper()
     {
@@ -283,10 +280,6 @@ class Simple extends \Nostress\Koongo\Model\AbstractModel
         if (empty($info)) {
             return;
         }
-
-        $pluginInfo = [];
-        // 		if(isset($info[self::RESPONSE_PLUGIN]))
-        // 			$pluginInfo = $info[self::RESPONSE_PLUGIN];
 
         $moduleInfo = [];
         if (isset($info[self::RESPONSE_MODULE])) {

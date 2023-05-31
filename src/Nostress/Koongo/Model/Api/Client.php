@@ -28,53 +28,37 @@
 
 namespace Nostress\Koongo\Model\Api;
 
+use Magento\Framework\App\CacheInterface;
+use Nostress\Koongo\Helper\Version;
+use Nostress\Koongo\Model\Channel\Feed\Manager as FeedManager;
+use Nostress\Koongo\Model\Channel\Profile\Manager as ProfileManager;
+use Nostress\Koongo\Model\Data\Reader;
+use Nostress\Koongo\Model\Taxonomy\Category\Manager as CategoryAlias;
+use Nostress\Koongo\Model\Taxonomy\Setup\Manager as TaxonomyManager;
+
 class Client extends \Nostress\Koongo\Model\Api\Client\Simple
 {
     const LINK_BATCH_SIZE = 10;
 
-    /*
-     * @var \Nostress\Koongo\Model\Channel\Feed\Manager
-     */
-    protected $feedManager;
-
-    /*
-     * @var \Nostress\Koongo\Model\Channel\Profile\Manager
-     */
-    protected $profileManager;
-
-    /*
-     * @var \Nostress\Koongo\Model\Taxonomy\Setup\Manager
-    */
-    protected $taxonomySetupManager;
-
     /**
-     * @var \Nostress\Koongo\Model\Taxonomy\Category\Manager
+     * @var CategoryAlias
      */
     protected $taxonomyCategoryManager;
 
     /**
-     * @param \Nostress\Koongo\Helper\Version $versionHelper
-     * @param Magento\Framework\App\CacheInterface $cache
-     * @param \Nostress\Koongo\Model\Data\Reader
-     * @param \Nostress\Koongo\Model\Channel\Feed\Manager
-     * @param \Nostress\Koongo\Model\Channel\Profile\Manager
-     * @param \Nostress\Koongo\Model\Taxonomy\Category\Manager
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        \Nostress\Koongo\Helper\Version $versionHelper,
-        \Magento\Framework\App\CacheInterface $cache,
-        \Nostress\Koongo\Model\Data\Reader $reader,
-        \Nostress\Koongo\Model\Channel\Feed\Manager $feedManager,
-        \Nostress\Koongo\Model\Channel\Profile\Manager $profileManager,
-        \Nostress\Koongo\Model\Taxonomy\Setup\Manager $taxonomySetupManager,
-        \Nostress\Koongo\Model\Taxonomy\Category\Manager $taxonomyCategoryManager
+        Version       $versionHelper,
+        CacheInterface $cache,
+        Reader    $reader,
+        FeedManager                           $feedManager,
+        ProfileManager                        $profileManager,
+        TaxonomyManager                       $taxonomySetupManager,
+        CategoryAlias                         $taxonomyCategoryManager
     ) {
-        parent::__construct($versionHelper, $cache, $reader);
+        parent::__construct($versionHelper, $cache, $reader, $profileManager, $taxonomySetupManager, $feedManager);
 
-        $this->feedManager = $feedManager;
-        $this->profileManager = $profileManager;
-        $this->taxonomySetupManager = $taxonomySetupManager;
         $this->taxonomyCategoryManager = $taxonomyCategoryManager;
     }
 
