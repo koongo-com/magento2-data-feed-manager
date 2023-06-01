@@ -7,6 +7,9 @@
 	"require": {
 		"php": "~7.4.0|~7.5.0|~8.0.0|~8.1.0|~8.2.0"
 	},
+	"require": {
+		"magento/magento-composer-installer": "*"
+	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "~3.3.1",
 		"lusitanian/oauth": "~0.8.10",
@@ -20,5 +23,13 @@
 		"psr-4": {
 			"Nostress\\": "src/Nostress"
 		}
+	},
+	"extra": {
+		"map": [
+			[
+				"lib/web/fonts/Nostress_Koongo",
+				"../../lib/web/fonts/Nostress_Koongo"
+			]
+		]
 	}
 }
