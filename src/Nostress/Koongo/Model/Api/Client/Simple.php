@@ -111,6 +111,9 @@ class Simple extends AbstractModel
         $this->helper = $helper;
         $this->cache = $cache;
         $this->reader = $reader;
+        $this->feedManager = $feedManager;
+        $this->profileManager = $profileManager;
+        $this->taxonomySetupManager = $taxonomySetupManager;
     }
 
     /**
