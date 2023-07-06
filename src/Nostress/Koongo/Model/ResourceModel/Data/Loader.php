@@ -190,7 +190,7 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
      * @var int|mixed|null
      */
     private $_stockId;
-    protected ?array $_columns = [];
+    protected ?array $_columns = null;
     protected ?int $_offset = null;
     private ?Select $_select = null;
 
@@ -262,7 +262,7 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
 
     public function getAllColumns()
     {
-        if (!isset($this->_columns)) {
+        if (empty($this->_columns)) {
             $this->defineColumns();
         }
 
