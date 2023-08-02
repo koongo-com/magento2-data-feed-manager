@@ -293,6 +293,7 @@ class Product extends \Nostress\Koongo\Model\ResourceModel\Cache
 
             $columns["qty"] = $this->helper->getRoundSql("{$catInvStockStatusAlias}.qty", 0);
             $columns["stock_status"] = "{$catInvStockStatusAlias}.stock_status";
+            $columns["qty_decimal"] = "{$catInvStockStatusAlias}.qty";
 
             $select->from([$mainTableAlias => $mainTable], $columns);
 
@@ -306,6 +307,7 @@ class Product extends \Nostress\Koongo\Model\ResourceModel\Cache
             $inventoryStock = $this->getTable('inventory_stock_' . $stockId);
             $columns["qty"] = $this->helper->getRoundSql("IFNULL({$inventoryStockAlias}.quantity,0)", 0);
             $columns["stock_status"] = "IFNULL({$inventoryStockAlias}.is_salable,0)";
+            $columns["qty_decimal"] = "IFNULL({$inventoryStockAlias}.quantity,0)";
             $select->from([$mainTableAlias => $mainTable], $columns);
 
             $select->joinLeft(

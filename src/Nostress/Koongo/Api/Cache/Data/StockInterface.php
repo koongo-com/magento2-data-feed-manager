@@ -40,6 +40,7 @@ interface StockInterface
     const QTY = 'qty';
     const SALABLE_QTY = 'salable_qty';
     const STOCK_STATUS = 'stock_status';
+    const QTY_DECIMAL = 'qty_decimal';
 
     /**
      * Gets the ID for the Product.
@@ -82,6 +83,13 @@ interface StockInterface
      * @return int Salable Qty
      */
     public function getSalableQty();
+
+    /**
+     * Gets the Salable Qty for the stock record.
+     *
+     * @return float Salable Qty
+     */
+    public function getQtyDecimal();
 
     /**
      * Gets the Stock Status for the stock record.
@@ -139,4 +147,11 @@ interface StockInterface
      * @return $this
      */
     public function setStockStatus($stockStatus);
+
+    /**
+     * Gets the Salable Qty for the stock record.
+     *
+     * @return int Salable Qty
+     */
+    public function setQtyDecimal();
 }
