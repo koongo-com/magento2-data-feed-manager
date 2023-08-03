@@ -10,14 +10,6 @@ composer require koongo-com/magento2-data-feed-manager
 
 or download package from [releases](https://github.com/koongo-com/magento2-data-feed-manager/tags) 
 
-## Install static files
-Via script or copy files
-```shell
-php vendor/koongo-com/magento2-data-feed-manager install.php
-# or
-cp -R vendor/koongo-com/magento2-data-feed-manager/lib/* lib/
-```
-
 ## Download source
 
 ```shell
