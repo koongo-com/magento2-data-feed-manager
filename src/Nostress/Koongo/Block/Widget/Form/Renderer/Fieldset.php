@@ -41,4 +41,9 @@ class Fieldset extends \Magento\Backend\Block\Widget\Form\Renderer\Fieldset
      * @var string
      */
     protected $_template = 'Nostress_Koongo::widget/form/renderer/fieldset.phtml';
+
+    /**
+     * @var string
+     */
+    protected $_nameInLayout = 'stock';
 }
