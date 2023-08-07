@@ -323,6 +323,7 @@
     <column xsi:type="varchar" name="type_id" nullable="false" length="32" default="simple" comment="Product type."/>
     <column xsi:type="int" name="salable_qty" padding="10" unsigned="false" nullable="true" identity="false" comment="Salable quantity."/>
     <column xsi:type="varchar" name="sku" nullable="true" length="64" comment="Sku."/>
+    <column xsi:type="decimal" name="qty_decimal" unsigned="false" nullable="true" comment="Decimal quantity." scale="2" precision="12" />
     <constraint xsi:type="primary" referenceId="PRIMARY">
       <column name="product_id"/>
       <column name="store_id"/>

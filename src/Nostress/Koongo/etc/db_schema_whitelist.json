@@ -304,7 +304,8 @@
             "stock_status": true,
             "type_id": true,
             "salable_qty": true,
-            "sku": true
+            "sku": true,
+            "qty_decimal": true
         },
         "index": {
             "NOSTRESS_KOONGO_CACHE_STOCK_QTY": true,
