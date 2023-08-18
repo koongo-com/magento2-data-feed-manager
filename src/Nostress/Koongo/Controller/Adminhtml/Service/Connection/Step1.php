@@ -30,6 +30,7 @@ namespace Nostress\Koongo\Controller\Adminhtml\Service\Connection;
 
 use Magento\Backend\App\Action;
 use Magento\Framework\View\Result\PageFactory;
+use Laminas\Http\Client as Client;
 
 class Step1 extends \Magento\Backend\App\Action
 {
@@ -65,7 +66,6 @@ class Step1 extends \Magento\Backend\App\Action
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\Registry $registry,
      * @param \Magento\Framework\Escaper $escaper,
-     * @param \Nostress\Koongo\Helper\Data\Service $helper
      */
     public function __construct(
         Action\Context $context,
@@ -73,7 +73,7 @@ class Step1 extends \Magento\Backend\App\Action
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Escaper $escaper,
         \Nostress\Koongo\Helper\Data\Service $serviceHelper,
-        \Magento\Framework\HTTP\ZendClient $httpClient
+        Client $httpClient
     ) {
         $this->_coreRegistry = $registry;
         $this->resultPageFactory = $resultPageFactory;

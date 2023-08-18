@@ -32,6 +32,7 @@ use Magento\Backend\App\Action;
 use Magento\Framework\Oauth\Exception;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Integration\Model\Integration as IntegrationModel;
+use Laminas\Http\Client as Client;
 
 class Step2 extends \Magento\Backend\App\Action
 {
@@ -64,7 +65,7 @@ class Step2 extends \Magento\Backend\App\Action
      */
     protected $escaper;
     /**
-     * @var \Magento\Framework\HTTP\ZendClient
+     * @var Client;
      */
     protected $_httpClient;
 
@@ -87,7 +88,7 @@ class Step2 extends \Magento\Backend\App\Action
      * @param \Magento\Framework\Registry $registry,
      * @param \Magento\Integration\Model\IntegrationFactory $integrationFactory
      * @param \Magento\Framework\Escaper $escaper
-     * @param \Magento\Framework\HTTP\ZendClient $httpClient
+     * @param Client $httpClient
      * @param \Magento\Integration\Model\OauthService $oauthService
      * @param \Nostress\Koongo\Helper\Data\Service $serviceHelper
      */
@@ -97,7 +98,7 @@ class Step2 extends \Magento\Backend\App\Action
         \Magento\Framework\Registry $registry,
         \Magento\Integration\Model\IntegrationFactory $integrationFactory,
         \Magento\Framework\Escaper $escaper,
-        \Magento\Framework\HTTP\ZendClient $httpClient,
+        Client $httpClient,
         \Magento\Integration\Model\OauthService $oauthService,
         \Nostress\Koongo\Helper\Data\Service $serviceHelper
     ) {
@@ -168,7 +169,8 @@ class Step2 extends \Magento\Backend\App\Action
 
                 $this->_httpClient->setUri($integration->getIdentityLinkUrl());
                 $this->_httpClient->setParameterPost($result);
-                $this->_httpClient->request(\Magento\Framework\HTTP\ZendClient::POST);
+                $this->_httpClient->setMethod('POST');
+                $this->_httpClient->send();
             } catch (Exception $e) {
                 $integration->setStatus(0);
                 $integration->save();
