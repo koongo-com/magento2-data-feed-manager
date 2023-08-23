@@ -23,95 +23,15 @@
  *
  * @category Nostress
  * @package Nostress_Koongo
- *
  */
 
 namespace Nostress\Koongo\Model\Webhook\Event;
 
-class Processor extends \Nostress\Koongo\Model\AbstractModel
+use Nostress\Koongo\Model\Webhook;
+use Nostress\Koongo\Model\Webhook\Event;
+
+final class Processor extends AbstractProcessor
 {
-    /** Check events in processing state in given period */
-    const EVENT_PROCESSING_CHECK_PERIOD = "-1 hours";
-    /** Check and remove events older than diven number of days */
-    const EVENT_REMOVAL_CHECK_PERIOD = "-14 days";
-    /** Maximum number of event renews */
-    const EVENT_RENEWAL_COUNTER_LIMIT = 5;
-    /** Maximum amount of events processed in one run.  */
-    const EVENT_PROCESSING_MAX_AMOUNT = 5000;
-
-    /**
-     * Webhook event factory
-     *
-     * @var \Nostress\Koongo\Model\Webhook\EventFactory
-     */
-    protected $_eventFactory;
-
-    /**
-     * Webhook factory
-     *
-     * @var \Nostress\Koongo\Model\WebhookFactory
-     */
-    protected $_webhookFactory;
-
-    /**
-     * Kaas api client
-     *
-     * @var \Nostress\Koongo\Model\Api\Restclient\Kaas
-     */
-    protected $_apiClient;
-
-    /**
-     * Webhook event manager
-     *
-     * @var \Nostress\Koongo\Model\Webhook\Event\Manager
-     */
-    protected $_webhookEventManager;
-
-    /**
-     * Sales order factory
-     *
-     *  @var \Magento\Sales\Model\OrderFactory
-     */
-    protected $_orderFactory;
-
-    /**
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Nostress\Koongo\Helper\Data $helper
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Nostress\Koongo\Model\Translation $translation
-     * @param \Nostress\Koongo\Model\Webhook\EventFactory $eventFactory
-     * @param \Nostress\Koongo\Model\WebhookFactory $webhookFactory
-     * @param \Nostress\Koongo\Model\Api\Restclient\Kaas $apiClient
-     * @param \Nostress\Koongo\Model\Webhook\Event\Manager $eventManager
-     * @param \Magento\Sales\Model\OrderFactory $orderFactory
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
-     * @param array $data
-     */
-    public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Nostress\Koongo\Helper\Data $helper,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Nostress\Koongo\Model\Translation $translation,
-        \Nostress\Koongo\Model\Webhook\EventFactory $eventFactory,
-        \Nostress\Koongo\Model\WebhookFactory $webhookFactory,
-        \Nostress\Koongo\Model\Api\Restclient\Kaas $apiClient,
-        \Nostress\Koongo\Model\Webhook\Event\Manager $webhookEventManager,
-        \Magento\Sales\Model\OrderFactory $orderFactory,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = []
-    ) {
-        $this->_eventFactory = $eventFactory;
-        $this->_webhookFactory = $webhookFactory;
-        $this->_apiClient = $apiClient;
-        $this->_webhookEventManager = $webhookEventManager;
-        $this->_orderFactory = $orderFactory;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
-    }
-
     /**
      * Proces events
      * @return void
@@ -134,6 +54,61 @@ class Processor extends \Nostress\Koongo\Model\AbstractModel
         $this->_renewProcessingEvents();
         $this->_removeOldEvents();
         $this->_renewErrorEvents();
+    }
+
+    protected function _processEvents(array $eventIds = null, bool $pendingOnly = true)
+    {
+        $eventCollection = $this->_eventFactory->create()->getCollection();
+        $select = $eventCollection->getSelect();
+
+        if ($pendingOnly) {
+            $select->where('status = ?', Event::STATUS_PENDING);
+        }
+
+        if (isset($eventIds) && !empty($eventIds)) {
+            $select->where('entity_id IN (?)', $eventIds);
+        } else {
+            $select->limit(self::EVENT_PROCESSING_MAX_AMOUNT);
+        }
+
+        $select->where('topic IN (?)', [
+            Webhook::WEBHOOK_TOPIC_ADD_CREDITMEMO,
+            Webhook::WEBHOOK_TOPIC_ADD_SHIPMENT,
+            Webhook::WEBHOOK_TOPIC_CANCEL_ORDER,
+            Webhook::WEBHOOK_TOPIC_INVENTORY_UPDATE,
+            Webhook::WEBHOOK_TOPIC_PRODUCTS_CREATE,
+            Webhook::WEBHOOK_TOPIC_PRODUCTS_DELETE,
+            Webhook::WEBHOOK_TOPIC_PRODUCTS_UPDATE,
+            Webhook::WEBHOOK_TOPIC_PRODUCTS_BATCH_DELETE,
+        ]);
+
+        $eventCollection->load();
+
+        $webhooks = [];
+        foreach ($eventCollection as $event) {
+            $webhookId = $event->getWebhookId();
+            if (!isset($webhooks[$webhookId])) {
+                $webhook = $this->_webhookFactory->create()->load($webhookId);
+                if ($webhook->getId()) {
+                    $webhooks[$webhookId] = $webhook;
+                } else {
+                    $order = $this->_orderFactory->create()->load($event->getOrderId());
+                    if ($order->getId()) {
+                        //webhook is missing, try to add events to existing webhook
+                        $this->_getManager()->addWebhookEvents($event->getTopic(), $event->getProductId(), $event->getOrderId(), $order->getStoreId(), $event->getParams());
+                    }
+                    $message = __("Missing webhook for event. Events for new webhooks recreated, if webhooks available");
+
+                    $event->setDuplicityCounter(self::EVENT_RENEWAL_COUNTER_LIMIT);
+                    $event->updateStatus(Event::STATUS_ERROR, $message);
+                    continue;
+                }
+            } else {
+                $webhook = $webhooks[$webhookId];
+            }
+
+            $this->_runEvent($event, $webhook);
+        }
     }
 
     /**
@@ -201,54 +176,6 @@ class Processor extends \Nostress\Koongo\Model\AbstractModel
             }
         }
     }
-    /**
-     * Process pending webhook events
-     * @param Array $eventIds Event ids that should be processed (process all events if null)
-     * @param bool $pendingOnly Process pending events only
-     * @return void
-     */
-    protected function _processEvents($eventIds, $pendingOnly = true)
-    {
-        $eventCollection = $this->_eventFactory->create()->getCollection();
-        $select = $eventCollection->getSelect();
-
-        if ($pendingOnly) {
-            $select->where('status = ?', \Nostress\Koongo\Model\Webhook\Event::STATUS_PENDING);
-        }
-
-        if (isset($eventIds) && !empty($eventIds)) {
-            $select->where('entity_id IN (?)', $eventIds);
-        } else {
-            $select->limit(self::EVENT_PROCESSING_MAX_AMOUNT);
-        }
-        $eventCollection->load();
-
-        $webhooks = [];
-        foreach ($eventCollection as $event) {
-            $webhookId = $event->getWebhookId();
-            if (!isset($webhooks[$webhookId])) {
-                $webhook = $this->_webhookFactory->create()->load($webhookId);
-                if ($webhook->getId()) {
-                    $webhooks[$webhookId] = $webhook;
-                } else {
-                    $order = $this->_orderFactory->create()->load($event->getOrderId());
-                    if ($order->getId()) {
-                        //webhook is missing, try to add events to existing webhook
-                        $this->_getManager()->addWebhookEvents($event->getTopic(), $event->getProductId(), $event->getOrderId(), $order->getStoreId(), $event->getParams());
-                    }
-                    $message = __("Missing webhook for event. Events for new webhooks recreated, if webhooks available");
-
-                    $event->setDuplicityCounter(self::EVENT_RENEWAL_COUNTER_LIMIT);
-                    $event->updateStatus(\Nostress\Koongo\Model\Webhook\Event::STATUS_ERROR, $message);
-                    continue;
-                }
-            } else {
-                $webhook = $webhooks[$webhookId];
-            }
-
-            $this->_runEvent($event, $webhook);
-        }
-    }
 
     /**
      * Run event webhooks
@@ -268,25 +195,5 @@ class Processor extends \Nostress\Koongo\Model\AbstractModel
         } catch (\Exception $e) {
             $event->updateStatus(\Nostress\Koongo\Model\Webhook\Event::STATUS_ERROR, $e->getMessage());
         }
-    }
-
-    /**
-     * Load API client
-     *
-     * @return \Nostress\Koongo\Model\Api\Restclient\Kaas
-     */
-    protected function _getApiClient()
-    {
-        return $this->_apiClient;
-    }
-
-    /**
-     * Get Manager for events
-     *
-     * @return \Nostress\Koongo\Model\Webhook\Event\Manager
-     */
-    protected function _getManager()
-    {
-        return $this->_webhookEventManager;
     }
 }

@@ -32,6 +32,10 @@
         <job name="nostress_koongo_run_scheduled_webhook_events" instance="Nostress\Koongo\Model\Webhook\Event\Processor"
              method="processWebhookEvents">
             <schedule>* * * * *</schedule>
-        </job>               
+        </job>
+        <job name="nostress_koongo_run_scheduled_webhook_events_batch" instance="Nostress\Koongo\Model\Webhook\Event\BatchProcessor"
+             method="process">
+            <schedule>* * * * *</schedule>
+        </job>
     </group>
 </config>
