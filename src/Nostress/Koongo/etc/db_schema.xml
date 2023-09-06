@@ -12,6 +12,7 @@
     <column xsi:type="text" name="categories" nullable="true" comment="Categories"/>
     <column xsi:type="varchar" name="category_ids" nullable="true" length="255" comment="Category_ids"/>
     <column xsi:type="smallint" name="stock_status" padding="4" unsigned="true" nullable="true" identity="false" comment="Stock status or Is salable from Inventory_stock_X tables"/>
+    <column xsi:type="decimal" name="qty_decimal" unsigned="false" nullable="true" comment="Decimal quantity." scale="2" precision="12" />
     <constraint xsi:type="primary" referenceId="PRIMARY">
       <column name="product_id"/>
       <column name="store_id"/>
