@@ -11,7 +11,8 @@
             "media_gallery": true,
             "categories": true,
             "category_ids": true,
-            "stock_status": true
+            "stock_status": true,
+            "qty_decimal": true
         },
         "index": {
             "NOSTRESS_KOONGO_CACHE_PRODUCT_QTY": true,
