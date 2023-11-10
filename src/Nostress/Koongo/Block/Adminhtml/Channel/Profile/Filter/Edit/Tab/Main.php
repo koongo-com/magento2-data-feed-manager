@@ -64,7 +64,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
      * @param \Magento\Framework\Data\FormFactory $formFactory
      * @param \Magento\Rule\Block\Conditions $conditions
      * @param \Nostress\Koongo\Block\Widget\Form\Renderer\Fieldset $rendererFieldset
-     * @param \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldsetOriginal
+     * @param \Nostress\Koongo\Block\Widget\Form\Renderer\FieldsetOriginal $rendererFieldsetOriginal
      * @param \Nostress\Koongo\Model\Rule $rule
      * @param array $data
      */
@@ -75,7 +75,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Rule\Block\Conditions $conditions,
         \Nostress\Koongo\Block\Widget\Form\Renderer\Fieldset $rendererFieldset,
-        \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldsetOriginal,
+        \Nostress\Koongo\Block\Widget\Form\Renderer\FieldsetOriginal $rendererFieldsetOriginal,
         \Nostress\Koongo\Model\Rule $rule,
         array $data = []
     ) {

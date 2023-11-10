@@ -34,6 +34,7 @@ use Nostress\Koongo\Model\Webhook;
 use Nostress\Koongo\Model\Webhook\Event;
 use Zend_Db_Expr;
 use Zend_Db_Select;
+use Magento\Cron\Model\Schedule;
 
 /**
  * Batch processor for products.batch topic events
@@ -47,7 +48,7 @@ class BatchProcessor extends AbstractProcessor
      *
      * @return void
      */
-    public function process(bool $pendingOnly = true)
+    public function process(?Schedule $schedule = null, bool $pendingOnly = true)
     {
         $batches = $this->prepareBatch($pendingOnly);
 
