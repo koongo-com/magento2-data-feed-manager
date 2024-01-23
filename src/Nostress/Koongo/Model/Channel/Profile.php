@@ -921,7 +921,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
                     }
                 }
                 //Prepare custom columns header
-                $attribute[self::CONFIG_ATRIBUTE_TAG] = $this->helper->createCode($attribute[self::CONFIG_ATTRIBUTE_LABEL], "_", false, ":");
+                $attribute[self::CONFIG_ATRIBUTE_TAG] = $this->helper->createCode($attribute[self::CONFIG_ATTRIBUTE_LABEL], "_", false, ":-");
                 $customColumnsHeader[] = $attribute[self::CONFIG_ATTRIBUTE_LABEL];
                 //Prepare CDATA section elements
                 if (array_key_exists(self::CONFIG_ATRIBUTE_POST_PROCESS, $attribute) && strpos($attribute[self::CONFIG_ATRIBUTE_POST_PROCESS], self::CONFIG_ATRIBUTE_POST_PROCESS_CDATA) !== false) {
