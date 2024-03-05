@@ -18,5 +18,11 @@
                 <value id="style-src-darkula" type="host">cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/darkula.min.css</value>
             </values>
         </policy>
+
+        <policy id="script-src">
+            <values>
+                <value id="script-src-highlight" type="host">cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js</value>
+            </values>
+        </policy>
     </policies>
 </csp_whitelist>
