@@ -44,6 +44,6 @@ class KoongoReindexCommand extends Command
         $output->writeln('<info>Start recomputing categories!</info>');
         $this->flatCategory->executeFull();
         $output->writeln('<info>Finished recomputing categories!</info>');
-        return 1;
+        return \Magento\Framework\Console\Cli::RETURN_SUCCESS;
     }
 }
