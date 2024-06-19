@@ -46,7 +46,7 @@ class ReservationRepository implements ReservationRepositoryInterface
 
     public function __construct(ObjectManagerInterface $objectManager)
     {
-        if (class_exists("Magento\InventoryReservationsApi\Model\ReservationBuilderInterface")) {
+        if (interface_exists("Magento\InventoryReservationsApi\Model\ReservationBuilderInterface")) {
             $this->appendReservations = $objectManager->get("Magento\InventoryReservationsApi\Model\AppendReservationsInterface");
             $this->reservationBuilder = $objectManager->get("Magento\InventoryReservationsApi\Model\ReservationBuilderInterface");
         }
