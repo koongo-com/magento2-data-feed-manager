@@ -31,6 +31,9 @@ namespace Nostress\Koongo\Model\Cache;
 use Magento\Framework\Api\SortOrder;
 use Nostress\Koongo\Api\Cache\StockRepositoryInterface;
 use Nostress\Koongo\Model\ResourceModel\Cache\Stock\Collection;
+use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\App\Bootstrap;
 
 class StockRepository implements StockRepositoryInterface
 {
@@ -185,5 +188,37 @@ class StockRepository implements StockRepositoryInterface
 
         $result = ['status' => $status, 'message' => $message, 'item' => $itemData];
         return [$result];
+    }
+
+    /**
+     * Get product stock id by sku
+     * @param string $sku
+     * @return string|null
+     */
+    public function getStockId($sku)
+    {
+        $bootstrap = Bootstrap::create(BP, $_SERVER);
+        $objectManager = $bootstrap->getObjectManager();
+        $resource = $objectManager->get(ResourceConnection::class);
+
+        $sourceItemsBySku = $objectManager->get(GetSourceItemsBySkuInterface::class);
+        $sourceItems = $sourceItemsBySku->execute($sku);
+
+        $result = null;
+        foreach ($sourceItems as $sourceItem) {
+            $connection = $resource->getConnection();
+            $tableName = $resource->getTableName('inventory_source_stock_link');
+
+            $select = $connection->select()
+                ->from($tableName, ['stock_id'])
+                ->where('source_code = :source_code');
+
+            $sourceCode = $sourceItem->getSourceCode();
+            $bind = ['source_code' => $sourceCode];
+
+            $result = $connection->fetchOne($select, $bind);
+        }
+
+        return $result;
     }
 }
