@@ -1,7 +1,7 @@
 {
 	"name": "koongo-com/magento2-data-feed-manager",
 	"type": "magento2-module",
-	"version": "2.4.8.16",
+	"version": "2.4.8.17",
 	"license": "CC-BY-4.0",
 	"description": "Koongo is an ultimate product data feed management tool that streamlines the process of product data export from Magento 2 store to any of 500+ price comparison websites, online marketplaces, and affiliate networks worldwide. Koongo helps you upload your product data to selling channels like Google  Shopping, Shop.com, Facebook, Rakuten, Twenga, Bol.com, Beslist.nl, Bing Ads, and more.",
 	"require": {
