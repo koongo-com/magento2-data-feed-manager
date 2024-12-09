@@ -28,8 +28,18 @@
 
 namespace Nostress\Koongo\Model\Io;
 
+use Magento\Framework\Filesystem\DriverInterface;
+
 class Sftp extends \Magento\Framework\Filesystem\Io\Sftp implements Listable
 {
+    protected DriverInterface $driver;
+
+    public function __construct(DriverInterface $driver)
+    {
+        $this->driver = $driver;
+        parent::__construct();
+    }
+
     /**
      * Write a file
      *
@@ -40,7 +50,7 @@ class Sftp extends \Magento\Framework\Filesystem\Io\Sftp implements Listable
      */
     public function write($filename, $source, $mode = null)
     {
-        $mode = is_readable($source) ? 1 : 2;
+        $mode = $this->driver->isReadable($source) ? 1 : 2;
         return $this->_connection->put($filename, $source, $mode);
     }
 

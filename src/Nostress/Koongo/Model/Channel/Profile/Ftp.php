@@ -145,19 +145,19 @@ class Ftp extends \Nostress\Koongo\Model\AbstractModel
             // test prava zapisu
             $filename = "ftp_test.xml";
             $fullfilename = $this->_dir->getPath('var') . '/' . $filename;
-            file_put_contents($fullfilename, "FTP TEST"); // vytvori novy soubor
+            $this->driver->filePutContents($fullfilename, "FTP TEST"); // vytvori novy soubor
 
             $fullpath = rtrim($config['path'], '/') . '/' . $filename;
 
             //nahraje na FTP
-            if (!$ftp->write($fullpath, file_get_contents($fullfilename))) {
+        if (!$ftp->write($fullpath, $this->driver->fileGetContents($fullfilename))) {
                 throw new \Exception('Check write permissions!', self::CODE_ERROR);
             }
             // smaze z FTP
             if (!$ftp->rm($fullpath)) {
                 throw new \Exception('Check delete permissions!', self::CODE_ERROR);
             }
-            unlink($fullfilename); // smaze z disku
+            $this->driver->deleteFile($fullfilename); // smaze z disku
             $ftp->close();
             return [ 'error'=> false, 'message'=> __('Connection Successful!')];
         } catch (\Exception $e) {
@@ -186,7 +186,7 @@ class Ftp extends \Nostress\Koongo\Model\AbstractModel
 
         $fullpath = rtrim($config['path'], '/') . '/' . $filename;
 
-        if (!is_file($fullFilename)) {
+        if (!$this->driver->isFile($fullFilename)) {
             throw new \Exception('Feed file does not exists!', self::CODE_ERROR);
         }
 
