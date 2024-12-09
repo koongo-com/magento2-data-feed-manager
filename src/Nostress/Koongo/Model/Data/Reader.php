@@ -129,11 +129,16 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
 
     public function getFileContentAsString()
     {
-        $content = "";
         $record = $this->getRecord();
+        $content = "";
         while ($record != false) {
             $content .= $record;
-            $record = $this->getRecord();
+            try {
+                $record = $this->getRecord();
+            }
+            catch(\Magento\Framework\Exception\FileSystemException $e) {//Magento throws an exeception at the end of a file
+                $record = false;
+            }
         }
         return $content;
     }
