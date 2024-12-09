@@ -30,6 +30,7 @@ use Nostress\Koongo\Helper\Data;
 use Nostress\Koongo\Model\Data\Reader\Common;
 use Nostress\Koongo\Model\Data\Reader\Common\Csv;
 use Nostress\Koongo\Model\Data\Reader\Common\Text;
+use Magento\Framework\Filesystem\DriverInterface;
 
 class Reader extends \Nostress\Koongo\Model\AbstractModel
 {
@@ -52,17 +53,20 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
     protected $_readerTxt;
     protected $_readerDefault;
     protected Reader\Common\Text $_readerText;
+    protected DriverInterface $driver;
 
     public function __construct(
         Text $readerText,
         Csv $readerCsv,
         Common $readerDefault,
-        Data $helper
+        Data $helper,
+        DriverInterface $driver
     ) {
         $this->_readerCsv = $readerCsv;
         $this->_readerText = $readerText;
         $this->_readerDefault = $readerDefault;
         $this->helper = $helper;
+        $this->driver = $driver;
     }
 
     public function getRemoteFileContent($url)
@@ -74,9 +78,9 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         $filename = substr($url, $offset);
         $params = [self::FILE_PATH => $url,self::FILE_NAME => $filename];
         $this->initSimpleParams($params);
-        $this->openFile([]);
-        $result = $this->getFileContentAsString();
-        $this->closeFile();
+            $this->openFile([]);
+            $result = $this->getFileContentAsString();
+            $this->closeFile();
         return $result;
     }
 
@@ -125,11 +129,16 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
 
     public function getFileContentAsString()
     {
-        $content = "";
         $record = $this->getRecord();
+        $content = "";
         while ($record != false) {
             $content .= $record;
-            $record = $this->getRecord();
+            try {
+                $record = $this->getRecord();
+            }
+            catch(\Magento\Framework\Exception\FileSystemException $e) {//Magento throws an exeception at the end of a file
+                $record = false;
+            }
         }
         return $content;
     }
