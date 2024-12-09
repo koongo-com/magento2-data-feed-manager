@@ -60,10 +60,11 @@ class Ftp extends \Nostress\Koongo\Model\AbstractModel
         \Magento\Framework\Filesystem\DirectoryList $dir,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->_dir = $dir;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
     }
 
     public function uploadFeed(Profile $profile, $checkAutosubmit = false)
