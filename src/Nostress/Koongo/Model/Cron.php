@@ -76,10 +76,11 @@ class Cron extends \Nostress\Koongo\Model\AbstractModel
         \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeFormat,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->_datetimeFormat = $datetimeFormat;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
     }
 
     /**

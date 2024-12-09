@@ -41,13 +41,14 @@ class Csv extends Text
     {
         $this->initParam($this->_columnDelimiter, $params[self::DELIMITER]);
     }
+
     /**
      * Returns one record from file as array
      */
     public function getRecord()
     {
         if (isset($this->_handle)) {
-            return fgetcsv($this->_handle, null, $this->_columnDelimiter);
+            return $this->driver->fileGetCsv($this->_handle, 0, $this->_columnDelimiter);
         } else {
             return false;
         }
