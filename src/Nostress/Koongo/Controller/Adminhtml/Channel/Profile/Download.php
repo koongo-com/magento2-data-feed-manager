@@ -48,7 +48,7 @@ class Download extends SaveAbstract
                 $path = $profile->getFilename(true); //Get full file path
                 $fileName = $profile->getFilename();
 
-                $content = file_get_contents($path);
+                $content = $this->driver->fileGetContents($path);
 
                 $this->getResponse()
                     ->setHttpResponseCode(200)

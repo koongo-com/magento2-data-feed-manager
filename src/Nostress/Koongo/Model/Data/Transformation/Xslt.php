@@ -26,6 +26,8 @@
 */
 namespace Nostress\Koongo\Model\Data\Transformation;
 
+use Magento\Framework\Filesystem\DriverInterface;
+
 class Xslt extends \Nostress\Koongo\Model\Data\Transformation
 {
     const ENCODING_TAG = '{{encoding}}';
@@ -46,6 +48,14 @@ class Xslt extends \Nostress\Koongo\Model\Data\Transformation
     const DATA_COLUMNS_HEADER = 'columns_header';
     const DATA_BASIC_ATTRIBUTES_COLUMN_HEADER = 'basic_attributes_columns_header';
     const DATA_CUSTOM_COLUMNS_HEADER = 'custom_columns_header';
+
+    protected DriverInterface $driver;
+
+    public function __construct(DriverInterface $driver)
+    {
+        $this->driver = $driver;
+        parent::__construct();
+    }
 
     public function transform($data)
     {
@@ -93,7 +103,7 @@ class Xslt extends \Nostress\Koongo\Model\Data\Transformation
         if ($this->getIsDebugMode()) {
             $dir = $this->getDefaultDirectoryName();
             $dir = rtrim($dir, "/");
-            file_put_contents($dir . "/" . self::XSLT_FILE, $this->getXslt());
+            $this->driver->filePutContents($dir . "/" . self::XSLT_FILE, $this->getXslt());
         }
 
         // import the XSL styelsheet into the XSLT process
@@ -106,7 +116,7 @@ class Xslt extends \Nostress\Koongo\Model\Data\Transformation
     {
         $dir = $this->getDefaultDirectoryName();
         $dir = rtrim($dir, "/");
-        file_put_contents($dir . "/" . self::INPUT_FILE, $data);
+        $this->driver->filePutContents($dir . "/" . self::INPUT_FILE, $data);
     }
 
     protected function initData($data)

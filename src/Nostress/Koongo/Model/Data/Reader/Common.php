@@ -25,32 +25,47 @@
 */
 namespace Nostress\Koongo\Model\Data\Reader;
 
+use Nostress\Koongo\Helper\Data;
+
 class Common
 {
     protected $_recordField = [];
     protected $_handle;
 
+    protected Data $helper;
+
+    public function __construct(Data $helper)
+    {
+        $this->helper = $helper;
+    }
+
     public function openFile($filename, $params = [])
     {
         $this->initParams($params);
-        if (($this->_handle = fopen($filename, "r")) !== false) {
+        try {
+            $this->_handle = $this->helper->fileOpen($filename, 'r');
+        } catch (\Exception $e) {
+            throw new \Exception(__("Can't open file {$filename} for reading. Error: " . $e->getMessage()));
+        }
+
+        if ($this->_handle !== false) {
             return true;
         } else {
             throw new \Exception(__("Can't open file {$filename} for reading."));
-            return false;
         }
     }
 
     protected function initParams($params)
     {
     }
+
     /**
      * Returns one record from file as array
      */
     public function getRecord()
     {
         if (isset($this->_handle)) {
-            return fgets($this->_handle);
+            return $this->driver->fileReadLine($this->_handle, 0);
         } else {
             return false;
         }
@@ -58,6 +73,8 @@ class Common
 
     public function closeFile()
     {
-        fclose($this->_handle);
+        if (isset($this->_handle)) {
+            $this->driver->fileClose($this->_handle);
+        }
     }
 }

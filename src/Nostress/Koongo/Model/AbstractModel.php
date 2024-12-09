@@ -155,6 +155,11 @@ abstract class AbstractModel extends \Magento\Framework\Model\AbstractModel
     protected $translation;
 
     /**
+     * @var \Magento\Framework\Filesystem\DriverInterface
+     */
+    protected \Magento\Framework\Filesystem\DriverInterface $driver;
+
+    /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Nostress\Koongo\Helper\Data $helper
@@ -172,11 +177,13 @@ abstract class AbstractModel extends \Magento\Framework\Model\AbstractModel
         \Nostress\Koongo\Model\Translation $translation,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->helper = $helper;
         $this->storeManager = $storeManager;
         $this->translation = $translation;
+        $this->driver = $driver;
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
 

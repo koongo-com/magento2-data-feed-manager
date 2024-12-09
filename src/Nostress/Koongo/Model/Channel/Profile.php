@@ -676,7 +676,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         $newFilename = $this->getFilename(true, true);
         $this->helper->renameFile($currentFilename, $newFilename);
 
-        if (file_exists($currentFilenameCompressed)) {
+        if ($this->helper->fileExists($currentFilenameCompressed)) {
             $newFilenameCompressed = $this->getFilename(true, true, \Nostress\Koongo\Helper\Data::FILE_TYPE_ZIP);
             $this->helper->renameFile($currentFilenameCompressed, $newFilenameCompressed);
         }
@@ -841,7 +841,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
 
         if ($compress) {
             $zipFilename = $this->getFilename(true, true, \Nostress\Koongo\Helper\Data::FILE_TYPE_ZIP);
-            if (!file_exists($zipFilename)) {
+            if (!$this->helper->fileExists($zipFilename)) {
                 $fullFilename = $this->getFilename(true, true);
                 $filename = $this->getFilename(false, true);
                 $this->helper->createZip([$filename => $fullFilename], $zipFilename, true);
@@ -921,7 +921,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
                     }
                 }
                 //Prepare custom columns header
-                $attribute[self::CONFIG_ATRIBUTE_TAG] = $this->helper->createCode($attribute[self::CONFIG_ATTRIBUTE_LABEL], "_", false, ":");
+                $attribute[self::CONFIG_ATRIBUTE_TAG] = $this->helper->createCode($attribute[self::CONFIG_ATTRIBUTE_LABEL], "_", false, ":-");
                 $customColumnsHeader[] = $attribute[self::CONFIG_ATTRIBUTE_LABEL];
                 //Prepare CDATA section elements
                 if (array_key_exists(self::CONFIG_ATRIBUTE_POST_PROCESS, $attribute) && strpos($attribute[self::CONFIG_ATRIBUTE_POST_PROCESS], self::CONFIG_ATRIBUTE_POST_PROCESS_CDATA) !== false) {

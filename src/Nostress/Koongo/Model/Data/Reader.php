@@ -199,7 +199,7 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
      */
     public function downloadFile($fileUrl, $localFilename)
     {
-        $out = fopen($localFilename, "wb");
+        $out = $this->helper->fileOpen($localFilename, 'wb');
         if (!$out) {
             $message = __("Can't open file %1 for writing", $localFilename);
             throw new Exception($message);
@@ -219,17 +219,21 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         if ($httpCode == 404) {
             /* Handle 404 here. */
             $message = __("File %1 doesn't exist. The file url location returns error 404.", $fileUrl);
+            curl_close($ch);
+            $this->driver->fileClose($out);
             throw new Exception($message);
         }
 
         $error = curl_error($ch);
         if (!empty($error)) {
             $message = __("Can't download file %1 Following error occurs: %2", $fileUrl, $error);
+            curl_close($ch);
+            $this->driver->fileClose($out);
             throw new Exception($message);
         }
 
         curl_close($ch);
-        fclose($out);
+        $this->driver->fileClose($out);
     }
 
     /**
@@ -250,12 +254,14 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         if ($httpCode == 404) {
             /* Handle 404 here. */
             $message = __("File %1 doesn't exist. The file url location returns error 404.", $fileUrl);
+            curl_close($ch);
             throw new Exception($message);
         }
 
         $error = curl_error($ch);
         if (!empty($error)) {
             $message = __("Can't download file %1", $fileUrl);
+            curl_close($ch);
             throw new Exception($message);
         }
 

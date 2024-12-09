@@ -54,4 +54,12 @@ interface StockRepositoryInterface
      * @return string Json config.
      */
     public function getProductStock($storeId, $productId);
+
+    /**
+     * Get product stock id by sku
+     * @param string $sku
+     * @return string|null
+     */
+    public function getStockId($sku);
+
 }

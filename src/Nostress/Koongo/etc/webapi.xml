@@ -64,6 +64,12 @@
             <resource ref="Nostress_Koongo::service_api_webhooks" />
         </resources>
     </route>
+    <route url="/V1/koongo/stock/stockId/:sku" method="GET">
+        <service class="Nostress\Koongo\Api\Cache\StockRepositoryInterface" method="getStockId"/>
+        <resources>
+            <resource ref="Nostress_Koongo::service_api_webhooks" />
+        </resources>
+    </route>
     <route url="/V1/koongo/stock/:storeId/:productId" method="GET">
         <service class="Nostress\Koongo\Api\Cache\StockRepositoryInterface" method="getProductStock"/>
         <resources>
