@@ -54,7 +54,6 @@ class Xslt extends \Nostress\Koongo\Model\Data\Transformation
     public function __construct(DriverInterface $driver)
     {
         $this->driver = $driver;
-        parent::__construct();
     }
 
     public function transform($data)

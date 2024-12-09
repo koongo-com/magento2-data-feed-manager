@@ -26,6 +26,7 @@
 namespace Nostress\Koongo\Model\Data\Reader;
 
 use Nostress\Koongo\Helper\Data;
+use Magento\Framework\Filesystem\DriverInterface;
 
 class Common
 {
@@ -33,10 +34,12 @@ class Common
     protected $_handle;
 
     protected Data $helper;
+    protected DriverInterface $driver;
 
-    public function __construct(Data $helper)
+    public function __construct(Data $helper, DriverInterface $driver)
     {
         $this->helper = $helper;
+        $this->driver = $driver;
     }
 
     public function openFile($filename, $params = [])
