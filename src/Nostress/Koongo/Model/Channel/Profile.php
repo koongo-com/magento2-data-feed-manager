@@ -222,6 +222,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         \Nostress\Koongo\Helper\Profile $profileHelper,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->feedFactory = $feedFactory;
@@ -230,7 +231,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         $this->_datetimeformat = $datetimeformat;
         $this->cacheProduct = $cacheProduct;
         $this->profileHelper = $profileHelper;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
     }
 
     /**
