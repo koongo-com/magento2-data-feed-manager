@@ -58,16 +58,16 @@ class Logger extends \Nostress\Koongo\Model\AbstractModel
     */
     protected $_datetimeformat;
 
-    /**
-     * @param \Nostress\Koongo\Helper\Data $helper
+    protected \Magento\Framework\Filesystem\DriverInterface $driver;
 
-     */
     public function __construct(
         \Nostress\Koongo\Helper\Data $helper,
-        \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeformat
+        \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeformat,
+        \Magento\Framework\Filesystem\DriverInterface $driver
     ) {
         $this->helper = $helper;
         $this->_datetimeformat = $datetimeformat;
+        $this->driver = $driver;
     }
 
     public function logNewProfileEvent($feedCode, $url)
@@ -112,7 +112,7 @@ class Logger extends \Nostress\Koongo\Model\AbstractModel
             $dir = $this->helper->getFeedStorageDirPath("", null);
             $this->helper->createDirectory($dir);
 
-        if ($this->driver->fileExists($file)) {
+        if ($this->helper->fileExists($file)) {
                 $this->checkFile($file);
                 $message = PHP_EOL . $message;
                 $this->driver->filePutContents($file, $message, FILE_APPEND);
@@ -128,7 +128,7 @@ class Logger extends \Nostress\Koongo\Model\AbstractModel
     {
         $limit = (int)$this->helper->getModuleConfig(self::PARAM_LOG_LIMIT);
 
-        $lines = $this->driver->file($file);
+        $lines = $this->helper->file($file);
         if (count($lines) >= $limit) {
             $recordsLeft = (int)$this->helper->getModuleConfig(self::PARAM_LOG_REST);
             $recordsToRemove = $limit-$recordsLeft;
