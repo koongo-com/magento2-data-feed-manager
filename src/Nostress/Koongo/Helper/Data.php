@@ -943,12 +943,31 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * @param string $filename
-     * @param string $mode
-     * @param bool $use_include_path
+     * @return false|string[]
+     */
+    public function file(string $filename)
+    {
+        return explode("\n", $this->driver->fileGetContents($filename));
+    }
+
+    /**
+     * @param string $path
+     * @param string|null $flag
      * @param resource|null $context
+     * @return string
+     * @throws FileSystemException
+     */
+    public function fileGetContents($path, $flag = null, $context = null)
+    {
+        return $this->driver->fileGetContents($path, $flag, $context);
+    }
+
+    /**
+     * @param string $filename
+     * @param string $mode
      * @return resource|false
      */
-    public function fileOpen($filename, $mode, $use_include_path = false, $context = null)
+    public function fileOpen($filename, $mode)
     {
         return $this->driver->fileOpen($filename, $mode);
     }
