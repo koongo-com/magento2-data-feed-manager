@@ -9,22 +9,29 @@ class Profile extends \Nostress\Koongo\Helper\Data
     public function readXmlPreview($url, $encoding = 'utf-8', $max = 30000)
     {
 
-        //if( !is_file( $url)) return false;
+        //if( !$this->driver->isFile( $url)) return false;
 
         // read file by lines
         $code = '';
         $braked = false;
-        $fp = fopen($url, "r");
-        while (!feof($fp)) {
-            $result = fgets($fp, 10000);
-            $code .= $result;
-            // if max is reached, we must end xml with correct element
-            if (strlen($code) > $max) {
-                $braked = true;
-                break;
-            }
+
+        $resource = $this->driver->fileOpen($url, 'r');
+        if (!$resource) {
+            throw new \Exception(__("Can't open file $url for reading."));
         }
-        fclose($fp);
+        try {
+            while (!$this->driver->endOfFile($resource)) {
+                $result = $this->driver->fileRead($resource, 10000);
+                $code .= $result;
+                // if max is reached, we must end xml with correct element
+                if (strlen($code) > $max) {
+                    $braked = true;
+                    break;
+                }
+            }
+        } finally {
+            $this->driver->fileClose($resource);
+        }
 
         //XML file is already formated see "Format as pretty XML" in Nostress\Koongo\Model\Data\Transformation\Xslt
         //$code = $this->formatXmlString($code);
@@ -94,7 +101,7 @@ class Profile extends \Nostress\Koongo\Helper\Data
     public function readCsvPreview($url, $columnSeparator = ';', $enclosure = '"', $encoding = 'utf-8', $max = 500)
     {
 
-        //if( !is_file( $url)) return false;
+        //if( !$this->driver->isFile( $url)) return false;
 
         if (empty($enclosure)) {
             $enclosure = '"';
@@ -103,24 +110,32 @@ class Profile extends \Nostress\Koongo\Helper\Data
         $row = 1;
         $header = [];
         $array = [];
-        if (($handle = fopen($url, "r")) !== false) {
-            while (($data = fgetcsv($handle, 10000, $columnSeparator, $enclosure)) !== false) {
-                if ($row > $max) {
-                    break;
-                }
-                if ($row== 1) {
-                    // overjump first row with comment if exist
-                    if (count($data) == 1) {
-                        continue;
+        if ($handle = $this->driver->fileOpen($url, 'r') !== false) {
+            try {
+                while (!$this->driver->endOfFile($handle)) {
+                    $data = $this->driver->fileGetCsv($handle, 10000, $columnSeparator, $enclosure);
+                    if ($data === false) {
+                        break;
                     }
 
-                    $header = $data;
-                } else {
-                    $array[] = $data;
+                    if ($row > $max) {
+                        break;
+                    }
+                if ($row== 1) {
+                        // overjump first row with comment if exist
+                        if (count($data) == 1) {
+                            continue;
+                        }
+
+                        $header = $data;
+                    } else {
+                        $array[] = $data;
+                    }
+                    $row++;
                 }
-                $row++;
+            } finally {
+                $this->driver->fileClose($handle);
             }
-            fclose($handle);
         }
 
         $html = '<table class="data-grid feed-preview-table"><thead><tr>';

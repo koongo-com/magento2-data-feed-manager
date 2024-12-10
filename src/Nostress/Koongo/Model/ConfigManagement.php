@@ -117,13 +117,14 @@ class ConfigManagement extends AbstractModel
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->_shippingConfig = $shippingConfig;
         $this->_paymentHelper = $paymentHelper;
         $this->_licenseHelper  = $licenseHelper;
         $this->_resourceConnection = $resourceConnection;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
     }
 
     /**

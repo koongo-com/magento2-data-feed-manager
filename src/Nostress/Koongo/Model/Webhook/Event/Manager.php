@@ -66,11 +66,12 @@ class Manager extends \Nostress\Koongo\Model\AbstractModel
         \Nostress\Koongo\Model\WebhookFactory $webhookFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->_eventFactory = $eventFactory;
         $this->_webhookFactory = $webhookFactory;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
     }
 
     /**

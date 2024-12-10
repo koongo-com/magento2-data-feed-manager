@@ -41,18 +41,17 @@ class Writer extends \Nostress\Koongo\Model\AbstractModel
     public function write($data)
     {
         $fp = $this->openFile($this->getFullFilename());
-        fwrite($fp, $data);
+        $this->driver->fileWrite($fp, $data);
         $this->closeFile($fp);
     }
 
     protected function openFile($filename)
     {
-        $fp = fopen($filename, self::DEF_OPEN_MODE);
-        if ($fp===false) {
-            $e = error_get_last();
-            $this->logAndException(__("Unable to open the file %1 (%2)", $filename, $e['message']));
+        try {
+            return $this->helper->fileOpen($filename, self::DEF_OPEN_MODE);
+        } catch (\Exception $e) {
+            $this->logAndException(__("Unable to open the file %1 (%2)", $filename, $e->getMessage()));
         }
-        return $fp;
     }
 
     /**
@@ -63,7 +62,7 @@ class Writer extends \Nostress\Koongo\Model\AbstractModel
         if (!$fp) {
             return;
         }
-        fclose($fp);
+        $this->driver->fileClose($fp);
     }
 
     protected function compress()

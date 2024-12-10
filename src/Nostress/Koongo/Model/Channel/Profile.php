@@ -222,6 +222,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         \Nostress\Koongo\Helper\Profile $profileHelper,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->feedFactory = $feedFactory;
@@ -230,7 +231,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         $this->_datetimeformat = $datetimeformat;
         $this->cacheProduct = $cacheProduct;
         $this->profileHelper = $profileHelper;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
     }
 
     /**
@@ -676,7 +677,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         $newFilename = $this->getFilename(true, true);
         $this->helper->renameFile($currentFilename, $newFilename);
 
-        if (file_exists($currentFilenameCompressed)) {
+        if ($this->helper->fileExists($currentFilenameCompressed)) {
             $newFilenameCompressed = $this->getFilename(true, true, \Nostress\Koongo\Helper\Data::FILE_TYPE_ZIP);
             $this->helper->renameFile($currentFilenameCompressed, $newFilenameCompressed);
         }
@@ -841,7 +842,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
 
         if ($compress) {
             $zipFilename = $this->getFilename(true, true, \Nostress\Koongo\Helper\Data::FILE_TYPE_ZIP);
-            if (!file_exists($zipFilename)) {
+            if (!$this->helper->fileExists($zipFilename)) {
                 $fullFilename = $this->getFilename(true, true);
                 $filename = $this->getFilename(false, true);
                 $this->helper->createZip([$filename => $fullFilename], $zipFilename, true);
