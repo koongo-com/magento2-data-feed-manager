@@ -58,16 +58,16 @@ class Logger extends \Nostress\Koongo\Model\AbstractModel
     */
     protected $_datetimeformat;
 
-    /**
-     * @param \Nostress\Koongo\Helper\Data $helper
+    protected \Magento\Framework\Filesystem\DriverInterface $driver;
 
-     */
     public function __construct(
         \Nostress\Koongo\Helper\Data $helper,
-        \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeformat
+        \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeformat,
+        \Magento\Framework\Filesystem\DriverInterface $driver
     ) {
         $this->helper = $helper;
         $this->_datetimeformat = $datetimeformat;
+        $this->driver = $driver;
     }
 
     public function logNewProfileEvent($feedCode, $url)
@@ -112,10 +112,10 @@ class Logger extends \Nostress\Koongo\Model\AbstractModel
             $dir = $this->helper->getFeedStorageDirPath("", null);
             $this->helper->createDirectory($dir);
 
-            if (file_exists($file)) {
+        if ($this->helper->fileExists($file)) {
                 $this->checkFile($file);
                 $message = PHP_EOL . $message;
-                file_put_contents($file, $message, FILE_APPEND);
+                $this->driver->filePutContents($file, $message, FILE_APPEND);
             } else {
                 $this->helper->createFile($file, $message);
             }
@@ -128,14 +128,14 @@ class Logger extends \Nostress\Koongo\Model\AbstractModel
     {
         $limit = (int)$this->helper->getModuleConfig(self::PARAM_LOG_LIMIT);
 
-        $lines = file($file);
+        $lines = $this->helper->file($file);
         if (count($lines) >= $limit) {
             $recordsLeft = (int)$this->helper->getModuleConfig(self::PARAM_LOG_REST);
             $recordsToRemove = $limit-$recordsLeft;
 
-            $content = file_get_contents($file);
+            $content = $this->driver->fileGetContents($file);
             $content = preg_replace("/^(.*" . PHP_EOL . "){{$recordsToRemove}}/", "", $content);
-            file_put_contents($file, $content);
+            $this->driver->filePutContents($file, $content);
         }
     }
 }

@@ -115,6 +115,7 @@ abstract class AbstractProcessor extends AbstractModel
         OrderFactory                       $orderFactory,
         AbstractResource $resource = null,
         AbstractDb           $resourceCollection = null,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         array                                                   $data = []
     ) {
         $this->_eventFactory = $eventFactory;
@@ -122,7 +123,7 @@ abstract class AbstractProcessor extends AbstractModel
         $this->_apiClient = $apiClient;
         $this->_webhookEventManager = $webhookEventManager;
         $this->_orderFactory = $orderFactory;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
     }
 
     /**

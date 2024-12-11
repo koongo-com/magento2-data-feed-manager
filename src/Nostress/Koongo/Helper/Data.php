@@ -174,6 +174,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $_appState;
 
+    protected \Magento\Framework\Filesystem\DriverInterface $driver;
+
     /**
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Catalog\Model\Product\Type $productType
@@ -209,7 +211,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\App\CacheInterface $cache,
         \Magento\Framework\Module\ModuleList $moduleList,
         \Magento\Framework\App\ProductMetadataInterface $productMetadataInterface,
-        \Magento\Framework\App\State $appState
+        \Magento\Framework\App\State $appState,
+        \Magento\Framework\Filesystem\DriverInterface $driver
     ) {
         $this->_coreConfig = $coreConfig;
         $this->_cacheTypeList = $cacheTypeList;
@@ -226,6 +229,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->moduleList = $moduleList;
         $this->_productMetadataInterface = $productMetadataInterface;
         $this->_appState = $appState;
+        $this->driver = $driver;
 
         parent::__construct($context);
     }
@@ -344,7 +348,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 //     		if ($this->_appState->getMode() == State::MODE_PRODUCTION) //Remove pub folder
 //     		{
 //     			//If production mode is enabled and it Document root target to pub directory
-//     			$pubDirExist = file_exists(DirectoryList::PUB);
+//     			$pubDirExist = $this->fileExists(DirectoryList::PUB);
 //     			if(!$pubDirExist)
 //     			{
 //     				$url = str_replace("/".DirectoryList::PUB."/", "/", $url);
@@ -937,18 +941,75 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     //*********************** FILE FUNCTIONS******************************
 
+    /**
+     * @param string $filename
+     * @return false|string[]
+     */
+    public function file(string $filename)
+    {
+        return explode("\n", $this->driver->fileGetContents($filename));
+    }
+
+    /**
+     * @param string $path
+     * @param string|null $flag
+     * @param resource|null $context
+     * @return string
+     * @throws FileSystemException
+     */
+    public function fileGetContents($path, $flag = null, $context = null)
+    {
+        return $this->driver->fileGetContents($path, $flag, $context);
+    }
+
+    /**
+     * @param string $filename
+     * @param string $mode
+     * @return resource|false
+     */
+    public function fileOpen($filename, $mode)
+    {
+        return $this->driver->fileOpen($filename, $mode);
+    }
+
+    /**
+     * Tells whether the filename is a regular file
+     *
+     * @param string $filename
+     * @return bool
+     * @throws FileSystemException
+     */
+    public function fileExists($filename)
+    {
+        return $this->driver->isFile($filename);
+    }
+
+    public function isFile($filename): bool
+    {
+        return $this->driver->isFile($filename);
+    }
+
+    /**
+     * @param resource $stream
+     * @return bool
+     */
+    public function endOfFile($stream): bool
+    {
+        return $this->driver->endOfFile($stream);
+    }
+
     public function createDirectory($dir)
     {
-        if (!is_dir($dir)) {
-            mkdir($dir, self::DEF_FILE_PERMISSION, true);
+        if (!$this->driver->isDirectory($dir)) {
+            $this->driver->createDirectory($dir, self::DEF_FILE_PERMISSION);
         }
     }
 
     public function createFile($file, $content)
     {
-        if (!file_exists($file)) {
-            file_put_contents($file, $content);
-            chmod($file, self::DEF_FILE_PERMISSION);
+        if (!$this->fileExists($file)) {
+            $this->driver->filePutContents($file, $content);
+            $this->driver->changePermissions($file, self::DEF_FILE_PERMISSION);
         }
     }
 
@@ -956,7 +1017,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function createZip($files = [], $destination = '', $overwrite = false)
     {
         //if the zip file already exists and overwrite is false, return false
-        if (file_exists($destination) && !$overwrite) {
+        if ($this->fileExists($destination) && !$overwrite) {
             return false;
         }
         //vars
@@ -966,7 +1027,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             //cycle through each file
             foreach ($files as $localName => $file) {
                 //make sure the file exists
-                if (file_exists($file)) {
+                if ($this->fileExists($file)) {
                     $valid_files[$localName] = $file;
                 }
             }
@@ -978,7 +1039,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $zip = new \ZipArchive();
             $openZip = $zip->open($destination, $overwrite ? \ZIPARCHIVE::OVERWRITE : \ZIPARCHIVE::CREATE);
             if ($openZip !== true) {
-                file_put_contents($destination, "");
+                $this->driver->filePutContents($destination, "");
                 $openZip = $zip->open($destination, \ZIPARCHIVE::OVERWRITE);
                 if ($openZip !== true) {
                     return false;
@@ -999,7 +1060,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $zip->close();
 
             //check to make sure the file exists
-            return file_exists($destination);
+            return $this->fileExists($destination);
         } else {
             return false;
         }
@@ -1013,8 +1074,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function renameFile($originalFile, $newFile)
     {
         //rename file
-        if (is_file($originalFile)) {
-            rename($originalFile, $newFile);
+        if ($this->fileExists($originalFile)) {
+            $this->driver->rename($originalFile, $newFile);
         }
     }
 
@@ -1027,8 +1088,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             return;
         }
 
-        if (file_exists($file)) {
-            unlink($file);
+        if ($this->fileExists($file)) {
+            $this->driver->deleteFile($file);
         }
     }
 
@@ -1081,15 +1142,15 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
         $reader = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
         $absolutePath = $reader->getAbsolutePath($path);
-        if (!is_dir($absolutePath)) {
-            mkdir($absolutePath);
+        if (!$this->driver->isDirectory($absolutePath)) {
+            $this->driver->createDirectory($absolutePath);
         }
 
         if (isset($subDirectory)) {
             $path .= $subDirectory . self::PATH_DELIMITER;
             $absolutePath = $reader->getAbsolutePath($path);
-            if (!is_dir($absolutePath)) {
-                mkdir($absolutePath);
+            if (!$this->driver->isDirectory($absolutePath)) {
+                $this->driver->createDirectory($absolutePath);
             }
         }
 

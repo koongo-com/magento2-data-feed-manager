@@ -122,7 +122,8 @@ class Service extends \Nostress\Koongo\Helper\Data
         \Magento\Integration\Model\OauthService $oauthService,
         \Magento\Integration\Model\AuthorizationService $authorizationService,
         \Magento\Framework\Acl\AclResource\ProviderInterface $resourceProvider,
-        \Magento\Integration\Model\Oauth\TokenFactory $tokenFactory
+        \Magento\Integration\Model\Oauth\TokenFactory $tokenFactory,
+        \Magento\Framework\Filesystem\DriverInterface $driver
     ) {
         $this->_backendHelper = $backendHelper;
         $this->_urlBuilder = $urlBuilder;
@@ -147,7 +148,8 @@ class Service extends \Nostress\Koongo\Helper\Data
             $cache,
             $moduleList,
             $productMetadataInterface,
-            $appState
+            $appState,
+            $driver
         );
     }
 
