@@ -126,8 +126,8 @@
             <argument name="filterPool" xsi:type="object" shared="false">KoongoGridFilterPool</argument>
         </arguments>
     </virtualType>
-    
-    
+
+    <preference for="Magento\Framework\Filesystem\DriverInterface" type="Magento\Framework\Filesystem\Driver\File" />
     
     
      <!-- 
