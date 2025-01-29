@@ -80,6 +80,7 @@ class Category extends \Nostress\Koongo\Model\AbstractModel
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Nostress\Koongo\Model\Translation $translation
      * @param \Nostress\Koongo\Model\Taxonomy\SetupFactory $taxonomySetupFactory
+     * @param \Magento\Framework\Filesystem\DriverInterface $driver,
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
@@ -91,13 +92,13 @@ class Category extends \Nostress\Koongo\Model\AbstractModel
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Nostress\Koongo\Model\Translation $translation,
         \Nostress\Koongo\Model\Taxonomy\SetupFactory $taxonomySetupFactory,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->taxonomySetupFactory = $taxonomySetupFactory;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $driver, $resource, $resourceCollection, $data);
     }
 
     public function _construct()
