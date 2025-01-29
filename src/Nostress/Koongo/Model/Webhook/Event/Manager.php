@@ -52,6 +52,7 @@ class Manager extends \Nostress\Koongo\Model\AbstractModel
      * @param \Nostress\Koongo\Model\Translation $translation
      * @param \Nostress\Koongo\Model\Webhook\EventFactory $eventFactory
      * @param \Nostress\Koongo\Model\WebhookFactory $webhookFactory
+     * @param \Magento\Framework\Filesystem\DriverInterface $driver ,
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
@@ -64,14 +65,14 @@ class Manager extends \Nostress\Koongo\Model\AbstractModel
         \Nostress\Koongo\Model\Translation $translation,
         \Nostress\Koongo\Model\Webhook\EventFactory $eventFactory,
         \Nostress\Koongo\Model\WebhookFactory $webhookFactory,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->_eventFactory = $eventFactory;
         $this->_webhookFactory = $webhookFactory;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $driver, $resource, $resourceCollection, $data);
     }
 
     /**

@@ -204,6 +204,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
      * @param \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeformat
      * @param \Nostress\Koongo\Model\Cache\Product $cacheProduct
      * @param \Nostress\Koongo\Helper\Profile $profileHelper
+     * @param \Magento\Framework\Filesystem\DriverInterface $driver,
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
@@ -220,9 +221,9 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeformat,
         \Nostress\Koongo\Model\Cache\Product $cacheProduct,
         \Nostress\Koongo\Helper\Profile $profileHelper,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->feedFactory = $feedFactory;
@@ -231,7 +232,7 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         $this->_datetimeformat = $datetimeformat;
         $this->cacheProduct = $cacheProduct;
         $this->profileHelper = $profileHelper;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $driver, $resource, $resourceCollection, $data);
     }
 
     /**

@@ -63,6 +63,7 @@ class Cron extends \Nostress\Koongo\Model\AbstractModel
      * @param \Nostress\Koongo\Helper\Data $helper
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Nostress\Koongo\Model\Translation $translation
+     * @param \Magento\Framework\Filesystem\DriverInterface $driver,
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
@@ -74,13 +75,13 @@ class Cron extends \Nostress\Koongo\Model\AbstractModel
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Nostress\Koongo\Model\Translation $translation,
         \Nostress\Koongo\Model\Config\Source\Datetimeformat $datetimeFormat,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->_datetimeFormat = $datetimeFormat;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $driver, $resource, $resourceCollection, $data);
     }
 
     /**

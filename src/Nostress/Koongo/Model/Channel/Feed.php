@@ -86,6 +86,7 @@ class Feed extends \Nostress\Koongo\Model\AbstractModel
      * @param \Nostress\Koongo\Model\Translation $translation
      * @param \Nostress\Koongo\Model\ChannelFactory $channelFactory
      * @param \Nostress\Koongo\Model\Taxonomy\Setup $taxonomySetup
+     * @param \Magento\Framework\Filesystem\DriverInterface $driver,
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
@@ -98,15 +99,15 @@ class Feed extends \Nostress\Koongo\Model\AbstractModel
         \Nostress\Koongo\Model\Translation $translation,
         \Nostress\Koongo\Model\ChannelFactory $channelFactory,
         \Nostress\Koongo\Model\Taxonomy\Setup $taxonomySetup,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->channelFactory = $channelFactory;
         $this->taxonomySetup = $taxonomySetup;
 
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $driver, $resource, $resourceCollection, $data);
     }
 
     public function getFeedByCode($code = null)

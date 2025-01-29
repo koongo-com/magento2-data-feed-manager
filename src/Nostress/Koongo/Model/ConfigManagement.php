@@ -101,6 +101,7 @@ class ConfigManagement extends AbstractModel
      * @param \Magento\Payment\Helper\Data $paymentHelper
      * @param \Nostress\Koongo\Helper\Version $licenseHelper
      * @param \Magento\Framework\App\ResourceConnection $resourceConnection
+     * @param \Magento\Framework\Filesystem\DriverInterface $driver,
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
@@ -115,16 +116,16 @@ class ConfigManagement extends AbstractModel
         \Magento\Payment\Helper\Data $paymentHelper,
         \Nostress\Koongo\Helper\Version $licenseHelper,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Filesystem\DriverInterface $driver,
         array $data = []
     ) {
         $this->_shippingConfig = $shippingConfig;
         $this->_paymentHelper = $paymentHelper;
         $this->_licenseHelper  = $licenseHelper;
         $this->_resourceConnection = $resourceConnection;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $driver, $resource, $resourceCollection, $data);
     }
 
     /**
