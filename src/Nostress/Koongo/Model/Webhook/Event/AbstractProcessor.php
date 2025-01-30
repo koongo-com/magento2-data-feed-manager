@@ -98,6 +98,7 @@ abstract class AbstractProcessor extends AbstractModel
      * @param Kaas $apiClient
      * @param Manager $eventManager
      * @param OrderFactory $orderFactory
+     * @param \Magento\Framework\Filesystem\DriverInterface $driver ,
      * @param AbstractResource $resource
      * @param AbstractDb $resourceCollection
      * @param array $data
@@ -113,9 +114,9 @@ abstract class AbstractProcessor extends AbstractModel
         Kaas                                                    $apiClient,
         Manager                                                 $webhookEventManager,
         OrderFactory                       $orderFactory,
+        \Magento\Framework\Filesystem\DriverInterface $driver,
         AbstractResource $resource = null,
         AbstractDb           $resourceCollection = null,
-        \Magento\Framework\Filesystem\DriverInterface $driver,
         array                                                   $data = []
     ) {
         $this->_eventFactory = $eventFactory;
@@ -123,7 +124,7 @@ abstract class AbstractProcessor extends AbstractModel
         $this->_apiClient = $apiClient;
         $this->_webhookEventManager = $webhookEventManager;
         $this->_orderFactory = $orderFactory;
-        parent::__construct($context, $registry, $helper, $storeManager, $translation, $resource, $resourceCollection, $driver, $data);
+        parent::__construct($context, $registry, $helper, $storeManager, $translation, $driver, $resource, $resourceCollection, $data);
     }
 
     /**
