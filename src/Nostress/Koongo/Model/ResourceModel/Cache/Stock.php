@@ -251,7 +251,7 @@ class Stock extends \Nostress\Koongo\Model\ResourceModel\Cache\Product
         $invResTable = $this->getTable('inventory_reservation');
 
         $select = $this->getEmptySelect();
-        $select->from([$mainTableAlias => $mainTable], ["product_id" => "product_id", "store_id" => "({$this->getStoreId()})"]);
+        $select->from([$mainTableAlias => $mainTable], ["product_id" => "product_id", "store_id" => "store_id"]);
 
         // LEFT JOIN cataloginventory_stock_item AS csi ON nkcs.product_id = csi.product_id AND csi.stock_id = X
         $select->joinLeft(
