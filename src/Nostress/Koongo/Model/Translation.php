@@ -212,7 +212,7 @@ class Translation extends \Magento\Framework\Model\AbstractModel
             $errorList[5] = ["message" => "Empty product and/or category data source.",
                                         "link" => ""];
             $errorList[7] = ["message" => __("Following attributes are missing in Product Flat Catalog: "),
-                                        "link" => __("https://docs.koongo.com/display/koongo/Following+attributes+are+missing+in+Product+Flat+catalog+-+M2"),
+                                        "link" => __("https://koongo.atlassian.net/wiki/spaces/koongo/pages/787612/Following+attributes+are+missing+in+Product+Flat+catalog+-+M2"),
                                         "action_message" => __('<a onclick="return confirm(\'Following attributes are missing in Product Flat Catalog: \n {{params}} \n\nAdd the attribute(s) to Product Flat Catalog? \n\n Following actions will be performed: \n (1) Set the attribute\\\'s property Used in Product Listing to Yes \n (2) Product Flat Reindex \n (3) Flush Cache Storage\')" href="{{action_link}}">Click here to add the attribute(s) to Product Flat Catalog</a>.<br> Action includes:<br>&nbsp;&nbsp;(1) Set the attribute\'s property Used in Product Listing<br>&nbsp;&nbsp;(2) Product Flat Reindex<br>&nbsp;&nbsp;(3) Flush Cache Storage'),
                                         "action_link" => "{{add_attributes_to_product_flat_link}}"];
             $errorList[10] = ["message" => __("Zero products selected for export. Please choose products in Product filter in Export profile detail."),

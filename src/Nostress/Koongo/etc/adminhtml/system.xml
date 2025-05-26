@@ -34,7 +34,7 @@
 				<!-- Group configs -->
 				<label>Koongo Connector - Basic Settings</label>
 				<attribute type="expanded">1</attribute>
-				<comment><![CDATA[See documentation at <a href="https://docs.koongo.com/display/koongo/Connector+Configuration+-+M2" target="_blank" style="color:orange;"><font size="4px">Koongo Docs</font></a> for more information.]]></comment>								
+				<comment><![CDATA[See documentation at <a href="https://koongo.atlassian.net/wiki/spaces/koongo/pages/787956/Connector+Configuration+-+M2" target="_blank" style="color:orange;"><font size="4px">Koongo Docs</font></a> for more information.]]></comment>
 								
 				<field id="show_blog_news" translate="label" type="select" sortOrder="30" showInDefault="1" >
 					<label>Show Koongo Blog News</label>
@@ -87,7 +87,7 @@
 				<field id="log_profile_events" translate="label" type="select" sortOrder="100" showInDefault="1" >
 					<label>Provide Feed Usage Log</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-					<comment><![CDATA[Please help us to find out which Feed Authorities are the most popular among Koongo users. More information you may find <a target="_blank" href="https://docs.koongo.com/display/koongo/Feed+Usage+Tracking">here</a>.]]></comment>
+					<comment><![CDATA[Please help us to find out which Feed Authorities are the most popular among Koongo users. More information you may find <a target="_blank" href="https://koongo.atlassian.net/wiki/spaces/koongo/pages/787933/Feed+Usage+Tracking+-+M2">here</a>.]]></comment>
 				</field>								
 				<field id="image_folder" translate="label" type="text" sortOrder="150"  showInDefault="1" >
                     <label>Product Image Folder</label>
