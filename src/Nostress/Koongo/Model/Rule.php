@@ -68,8 +68,8 @@ class Rule extends \Magento\CatalogRule\Model\Rule
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypesList,
         \Magento\Framework\Stdlib\DateTime $dateTime,
         \Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor $ruleProductProcessor,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $relatedCacheTypes = [],
         array $data = []
     ) {

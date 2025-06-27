@@ -60,8 +60,8 @@ class Ftp extends \Nostress\Koongo\Model\AbstractModel
         \Nostress\Koongo\Model\Translation $translation,
         \Magento\Framework\Filesystem\DirectoryList $dir,
         \Magento\Framework\Filesystem\DriverInterface $driver,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->_dir = $dir;

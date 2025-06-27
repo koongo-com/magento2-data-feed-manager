@@ -86,8 +86,8 @@ class Webhook extends \Nostress\Koongo\Model\AbstractModel implements WebhookInt
         \Magento\Sales\Model\Order\Shipment $shipmentModel,
         \Magento\Shipping\Model\Config $shippingConfig,
         \Magento\Framework\Filesystem\DriverInterface $driver,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->_shipmentModel = $shipmentModel;

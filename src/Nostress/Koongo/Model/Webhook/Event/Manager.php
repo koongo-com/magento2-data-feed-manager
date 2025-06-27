@@ -66,8 +66,8 @@ class Manager extends \Nostress\Koongo\Model\AbstractModel
         \Nostress\Koongo\Model\Webhook\EventFactory $eventFactory,
         \Nostress\Koongo\Model\WebhookFactory $webhookFactory,
         \Magento\Framework\Filesystem\DriverInterface $driver,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->_eventFactory = $eventFactory;
