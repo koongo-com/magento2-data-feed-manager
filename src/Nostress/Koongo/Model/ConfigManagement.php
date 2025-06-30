@@ -117,8 +117,8 @@ class ConfigManagement extends AbstractModel
         \Nostress\Koongo\Helper\Version $licenseHelper,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Magento\Framework\Filesystem\DriverInterface $driver,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->_shippingConfig = $shippingConfig;
