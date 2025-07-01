@@ -56,7 +56,7 @@ final class Processor extends AbstractProcessor
         $this->_renewErrorEvents();
     }
 
-    protected function _processEvents(array $eventIds = null, bool $pendingOnly = true)
+    protected function _processEvents(?array $eventIds = null, bool $pendingOnly = true)
     {
         $eventCollection = $this->_eventFactory->create()->getCollection();
         $select = $eventCollection->getSelect();

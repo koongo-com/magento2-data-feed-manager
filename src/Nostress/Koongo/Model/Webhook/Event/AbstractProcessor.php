@@ -115,8 +115,8 @@ abstract class AbstractProcessor extends AbstractModel
         Manager                                                 $webhookEventManager,
         OrderFactory                       $orderFactory,
         \Magento\Framework\Filesystem\DriverInterface $driver,
-        AbstractResource $resource = null,
-        AbstractDb           $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb           $resourceCollection = null,
         array                                                   $data = []
     ) {
         $this->_eventFactory = $eventFactory;

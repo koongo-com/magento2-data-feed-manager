@@ -100,8 +100,8 @@ class Feed extends \Nostress\Koongo\Model\AbstractModel
         \Nostress\Koongo\Model\ChannelFactory $channelFactory,
         \Nostress\Koongo\Model\Taxonomy\Setup $taxonomySetup,
         \Magento\Framework\Filesystem\DriverInterface $driver,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->channelFactory = $channelFactory;

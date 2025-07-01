@@ -222,8 +222,8 @@ class Profile extends \Nostress\Koongo\Model\AbstractModel implements ProfileInt
         \Nostress\Koongo\Model\Cache\Product $cacheProduct,
         \Nostress\Koongo\Helper\Profile $profileHelper,
         \Magento\Framework\Filesystem\DriverInterface $driver,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->feedFactory = $feedFactory;
