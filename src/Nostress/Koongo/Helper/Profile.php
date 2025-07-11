@@ -110,7 +110,8 @@ class Profile extends \Nostress\Koongo\Helper\Data
         $row = 1;
         $header = [];
         $array = [];
-        if ($handle = $this->driver->fileOpen($url, 'r') !== false) {
+        $handle = $this->driver->fileOpen($url, 'r');
+        if ($handle !== false) {
             try {
                 while (!$this->driver->endOfFile($handle)) {
                     $data = $this->driver->fileGetCsv($handle, 10000, $columnSeparator, $enclosure);
