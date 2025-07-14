@@ -28,6 +28,7 @@
 
 namespace Nostress\Koongo\Model;
 
+use Magento\Framework\Module\Manager;
 use Magento\Framework\ObjectManagerInterface;
 use Nostress\Koongo\Api\ReservationKoongoInterface;
 use Nostress\Koongo\Api\ReservationRepositoryInterface;
@@ -43,10 +44,15 @@ class ReservationRepository implements ReservationRepositoryInterface
      * @var Magento\InventoryReservationsApi\Model\AppendReservationsInterface
      */
     private $appendReservations;
+    /**
+     * @var Manager
+     */
+    private Manager $moduleManager;
 
     public function __construct(ObjectManagerInterface $objectManager)
     {
-        if (interface_exists("Magento\InventoryReservationsApi\Model\ReservationBuilderInterface")) {
+        $this->moduleManager = $objectManager->get(Manager::class);
+        if ($this->moduleManager->isEnabled('Magento_InventoryReservationsApi') && interface_exists("Magento\InventoryReservationsApi\Model\ReservationBuilderInterface")) {
             $this->appendReservations = $objectManager->get("Magento\InventoryReservationsApi\Model\AppendReservationsInterface");
             $this->reservationBuilder = $objectManager->get("Magento\InventoryReservationsApi\Model\ReservationBuilderInterface");
         }
