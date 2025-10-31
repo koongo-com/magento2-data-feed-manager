@@ -90,7 +90,7 @@ class BatchProcessor extends AbstractProcessor
                         }
 
                         if (count($skus) >= self::BATCH_SIZE) {
-                            $hash = md5(json_encode($eventIds));
+                            $hash = hash('md5', json_encode($eventIds));
                             // send
                             try {
                                 $result = $this->send($webhook, $skus);
@@ -106,7 +106,7 @@ class BatchProcessor extends AbstractProcessor
                     }
 
                     if (count($skus) > 0) {
-                        $hash = md5(json_encode($eventIds));
+                        $hash = hash('md5', json_encode($eventIds));
                         // send
                         try {
                             $result = $this->send($webhook, $skus);
