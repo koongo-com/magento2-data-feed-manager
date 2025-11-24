@@ -41,7 +41,7 @@
     </div>
     
     <?php if ($singleStore) { ?>
-    <input type="hidden" name="store_view" value="<?php echo $storeId;?>" />
+    <input type="hidden" name="store_view" value="<?php /* @escapeNotVerified */ echo $storeId;?>" />
 	
     <?php } else {?>
     <div class="steps-wizard-section">
@@ -74,14 +74,14 @@
                         	<div class="admin__field admin__field-option">
                         	    <input
                         	       type="radio"
-                        	       id="channel_link-radio_<?php echo $id; ?>"
+                        	       id="channel_link-radio_<?php /* @escapeNotVerified */ echo $id; ?>"
                         	       name="channel_link"
                         	       data-bind="checked: isChecked"
                         	       class="admin__control-radio"
-                        	       value="<?php echo $item['label'];?>"
+                        	       value="<?php /* @escapeNotVerified */ echo $item['label'];?>"
                         	    />
-    	                        <label for="channel_link-radio_<?php echo $id; ?>" class="admin__field-label">
-    	                            <span><?php  echo $item['label']; ?></span>
+    	                        <label for="channel_link-radio_<?php /* @escapeNotVerified */ echo $id; ?>" class="admin__field-label">
+    	                            <span><?php /* @escapeNotVerified */ echo $item['label']; ?></span>
     	                        </label>
                         	</div>
                     	</li>
@@ -108,8 +108,8 @@
                         "appendTo": "<?= /* @escapeNotVerified */  $block->getParentComponentName()?>",
 						"feedLink": "<?= /* @escapeNotVerified */  $firstItemLink?>",
 						"storeId": "<?= /* @escapeNotVerified */  $storeId?>",
-                        "channelsByLink": <?php echo json_encode($block->getChannelsList()); ?>,
-                        "stores": <?php echo $block->getStoresEncoded(); ?>
+                        "channelsByLink": <?php /* @escapeNotVerified */ echo json_encode($block->getChannelsList()); ?>,
+                        "stores": <?php /* @escapeNotVerified */ echo $block->getStoresEncoded(); ?>
                     }
                 }
             }

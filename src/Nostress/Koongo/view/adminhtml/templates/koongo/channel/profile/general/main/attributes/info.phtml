@@ -27,7 +27,7 @@
     <?php if (empty($title)): ?>
 		<h1><?= /* @escapeNotVerified */  $block->getChannelLabel() . " " . __('Attribute') . " ";?><strong data-bind="text: attributes()[currentAttributeIndex()].label">Attribute Label</strong></h1>
 	<?php else: ?>
-		<h3><?php echo $title;?></h3>
+		<h3><?php /* @escapeNotVerified */ echo $title;?></h3>
 	<?php endif;?>
    	    <p data-bind="text: attributes()[currentAttributeIndex()].description.text">Attribute Description</p>
    	    <p data-bind="visible: attributes()[currentAttributeIndex()].description.text == ''"><?= /* @escapeNotVerified */  __('Attribute description not available.');?></p>

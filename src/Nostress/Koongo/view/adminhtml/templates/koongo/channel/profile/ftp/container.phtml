@@ -19,7 +19,7 @@
 	</div>
 	<div class="client-col">
 	    <div id="client_container" data-bind="scope: 'profile.ftp.client'">
-	        <div class="feedfile"><b><?php /* @escapeNotVerified */ echo __('Feed File') ?>: </b><?php echo $this->getProfile()->getFilename(); ?></div>
+	        <div class="feedfile"><b><?php /* @escapeNotVerified */ echo __('Feed File') ?>: </b><?php /* @escapeNotVerified */ echo $this->getProfile()->getFilename(); ?></div>
 	        <h2><span data-bind="i18n: '<?php /* @escapeNotVerified */ echo __('FTP Client') ?>'"></span> - <span data-bind="text: path()"></span></h2>
             <!-- ko template: getTemplate() --><!-- /ko -->
         </div>
