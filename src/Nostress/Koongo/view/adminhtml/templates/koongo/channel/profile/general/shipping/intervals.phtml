@@ -96,8 +96,8 @@
 		//Update column labels
 		function updateShippingTable(selectElement)
 		{			
-	    	$('shipping_table_column_from').update(selectElement[selectElement.selectedIndex].text+' <?php echo __("From") ?>');
-	    	$('shipping_table_column_to').update(selectElement[selectElement.selectedIndex].text+' <?php echo __("To") ?>');
+	    	$('shipping_table_column_from').update(selectElement[selectElement.selectedIndex].text+' <?php echo $block->escapeJs(__("From")) ?>');
+	    	$('shipping_table_column_to').update(selectElement[selectElement.selectedIndex].text+' <?php echo $block->escapeJs(__("To")) ?>');
 	 	}	
 
 		function fillNewRow()

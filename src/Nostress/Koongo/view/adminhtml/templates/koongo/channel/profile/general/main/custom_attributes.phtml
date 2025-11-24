@@ -34,7 +34,7 @@
     <?php if (!$block->exportCustomAttributes()):?>
     	<?php /* @escapeNotVerified */ echo __("Custom attributes not available for this feed.")?>
     <?php else:?>
-	    <?php /* @escapeNotVerified */ echo __("Define custom attributes for %1 using the table below.", $block->getChannelLabel())?>
+	    <?php /* @escapeNotVerified */ echo __("Define custom attributes for %1 using the table below.", $block->escapeHtml($block->getChannelLabel()))?>
 	    <div id="manage-attributes-table">
 			<table id="convert_table" class="admin__control-table convert_table">
 				<thead>
@@ -145,8 +145,8 @@ require([
          "Magento_Ui/js/modal/modal"
      ], function($, mageTemplate, tooltipTemplate){
 
-         var channelLabel = '<?php echo $block->getChannelLabel(); ?>';
-         var tooltipSettingsUrl =  '<?php echo $block->getHelp('attributes_mapping_custom_attributes'); ?>';
+         var channelLabel = '<?php /* @escapeNotVerified */ echo $block->getChannelLabel(); ?>';
+         var tooltipSettingsUrl =  '<?php /* @escapeNotVerified */ echo $block->getHelp('attributes_mapping_custom_attributes'); ?>';
 
          var tooltipHtml = tooltipSettingsUrl ? mageTemplate( tooltipTemplate, { url: tooltipSettingsUrl}) : '';
 	 	

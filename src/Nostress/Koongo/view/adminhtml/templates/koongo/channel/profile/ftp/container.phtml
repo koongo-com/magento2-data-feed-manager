@@ -66,7 +66,7 @@ require([
                     "component": "Nostress_Koongo/js/channel/profile/ftp/client",
                     "loadUrl": "<?= /* @escapeNotVerified */ $block->getUrl('*/channel_profile_ftp/client', [ 'entity_id'=>$block->getProfile()->getId()]); ?>",
                     "template": "Nostress_Koongo/ui/ftp/client",
-                    "feedfile": "<?php echo $this->getProfile()->getFilename(); ?>"
+                    "feedfile": "<?php /* @escapeNotVerified */ echo $this->getProfile()->getFilename(); ?>"
                 }
             }
         }

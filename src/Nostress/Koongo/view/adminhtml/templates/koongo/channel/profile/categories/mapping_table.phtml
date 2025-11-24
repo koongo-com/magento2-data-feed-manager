@@ -101,7 +101,7 @@
 				        <td class="col-actions-add" data-bind="click: addRuleTableRow" colspan="6">
 				        	
 				        	<span style="float: right; font-size: 1.1em">
-							     <?php /* @escapeNotVerified */ echo __("Map Magento categories to %1 categories.", $block->getChannelLabel())?>
+							     <?php /* @escapeNotVerified */ echo __("Map Magento categories to %1 categories.", $block->escapeHtml($block->getChannelLabel()))?>
 							</span>
 				        	
 				        	<button  class="action-primary scalable add" type="button" title="<?= /* @escapeNotVerified */  __('Add Mapping Rule')?>" id="add_mapping_rule_button">
@@ -134,8 +134,8 @@
 	    		 
 	    		 <div class="col-8">
     	    		
-    	    		<h2><?= /* @escapeNotVerified */  __('%1 Category', $block->getChannelLabel()) ?></h2>
-    	    		<p class='cat-description'><?php /* @escapeNotVerified */ echo __('Choose one %1 category.', $block->getChannelLabel()); ?></p>
+    	    		<h2><?= /* @escapeNotVerified */ __('%1 Category', $block->escapeHtml($block->getChannelLabel())) ?></h2>
+    	    		<p class='cat-description'><?php /* @escapeNotVerified */ echo __('Choose one %1 category.', $block->escapeHtml($block->getChannelLabel())); ?></p>
     			    <span data-bind="text: getChannelCategory(), css: getChannelCategoryClass()"></span>
     				<br><br>
     				<h3><?= /* @escapeNotVerified */  __("Search Box") ?></h3>
@@ -170,7 +170,7 @@
 						"magentoCategories": <?php /* @escapeNotVerified */ echo $block->getCategoriesInfoJson();?>,
                         "loadDataUrl": "<?= /* @escapeNotVerified */ $block->getUrl('*/*/loadcategories', [ 'entity_id'=>$this->getProfile()->getId()]); ?>",
                         "previewUrl": "<?= /* @escapeNotVerified */ $block->getUrl('*/*/previewcategories', [ 'entity_id'=>$this->getProfile()->getId()]); ?>",
-                        "previewHelpUrl": "<?php echo $block->getHelp('category_mapping_preview'); ?>"
+                        "previewHelpUrl": "<?php /* @escapeNotVerified */ echo $block->getHelp('category_mapping_preview'); ?>"
                     }
                 }
             }
@@ -187,8 +187,8 @@
         "Magento_Ui/js/modal/modal"
     ], function($, mageTemplate, tooltipTemplate){
 
-        var channelLabel = '<?php echo $block->getChannelLabel(); ?>';
-        var tooltipSettingsUrl =  '<?php echo $block->getHelp('category_mapping_rules'); ?>';
+        var channelLabel = '<?php /* @escapeNotVerified */ echo $block->getChannelLabel(); ?>';
+        var tooltipSettingsUrl =  '<?php /* @escapeNotVerified */ echo $block->getHelp('category_mapping_rules'); ?>';
 
         var tooltipHtml = tooltipSettingsUrl ? mageTemplate( tooltipTemplate, { url: tooltipSettingsUrl}) : '';
 	
