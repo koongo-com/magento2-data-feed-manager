@@ -33,7 +33,7 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Nostress\Koongo\Model\Webhook;
 use Nostress\Koongo\Model\Webhook\Event;
 use Zend_Db_Expr;
-use Zend_Db_Select;
+use Magento\Framework\DB\Select;
 use Magento\Cron\Model\Schedule;
 
 /**
@@ -148,7 +148,7 @@ class BatchProcessor extends AbstractProcessor
         $eventCollection = $this->_eventFactory->create()->getCollection();
         $select = $eventCollection->getSelect();
 
-        $select->reset(Zend_Db_Select::COLUMNS)
+        $select->reset(Select::COLUMNS)
             ->columns([
             'cnt' => new Zend_Db_Expr('COUNT(*)'),
             'webhook_id' => 'webhook_id'
