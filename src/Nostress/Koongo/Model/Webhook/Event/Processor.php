@@ -30,7 +30,7 @@ namespace Nostress\Koongo\Model\Webhook\Event;
 use Nostress\Koongo\Model\Webhook;
 use Nostress\Koongo\Model\Webhook\Event;
 
-final class Processor extends AbstractProcessor
+class Processor extends AbstractProcessor
 {
     /**
      * Proces events

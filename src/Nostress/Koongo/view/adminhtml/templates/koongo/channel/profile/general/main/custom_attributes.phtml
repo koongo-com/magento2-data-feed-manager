@@ -27,14 +27,14 @@
     <legend class="legend">
         <span>
             <?php /* @escapeNotVerified */ echo __('Custom Attributes Table') ?>
-            <?php echo $this->getTooltip(); ?>
+            <?php /* @escapeNotVerified */ echo $this->getTooltip(); ?>
         </span>
     </legend>
     
     <?php if (!$block->exportCustomAttributes()):?>
-    	<?php echo __("Custom attributes not available for this feed.")?>
+    	<?php /* @escapeNotVerified */ echo __("Custom attributes not available for this feed.")?>
     <?php else:?>
-	    <?php echo __("Define custom attributes for %1 using the table below.", $block->getChannelLabel())?>
+	    <?php /* @escapeNotVerified */ echo __("Define custom attributes for %1 using the table below.", $block->escapeHtml($block->getChannelLabel()))?>
 	    <div id="manage-attributes-table">
 			<table id="convert_table" class="admin__control-table convert_table">
 				<thead>
@@ -50,7 +50,7 @@
 			
 				<!-- rules are empty -->
 				<!-- ko if: (attributes().length <= 0) -->
-					<input type="hidden" id="attributes_empty" name="<?php echo $block->getAttributeInputName()?>" value=""/>
+					<input type="hidden" id="attributes_empty" name="<?php /* @escapeNotVerified */ echo $block->getAttributeInputName()?>" value=""/>
 				<!-- /ko -->
 				<tbody id="convert_container" data-bind="foreach: attributes()">
 					<tr>
@@ -58,32 +58,32 @@
 						 	<span data-bind="text: $index()+1"></span>
 						</td>
 						<td class="col-label">
-							<input type="text" data-bind="value: label, attr: { name: <?php echo $block->getAttributeInputNameKO('label')?>, id: 'custom_attribute_label_'+$index()  }" class=" input-text admin__control-text required-entry _required">
+							<input type="text" data-bind="value: label, attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('label')?>, id: 'custom_attribute_label_'+$index()  }" class=" input-text admin__control-text required-entry _required">
 						</td>
 						<td class="col-magento_attribute">
 							<?php echo $block->getSelectHtmlWithValue();?>
 						</td>
 						<td class="col-default_value">
-							<input type="text" id="custom_attribute_constant" data-bind="value: constant, attr: { name: <?php echo $block->getAttributeInputNameKO('constant')?> }" class=" input-text admin__control-text">
+							<input type="text" id="custom_attribute_constant" data-bind="value: constant, attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('constant')?> }" class=" input-text admin__control-text">
 						</td>
 						<td class="col-settings">
 							<button id='attribute_settings' data-bind='click: function(){ $parent.openCustomAttributeSettings($index()); }' data-action='open-attribute-settings' class='primary add'><?= /* @escapeNotVerified */  __('Settings')?></button>
 							
 							<!-- hidden inputs for form submit -->
-							<input type="hidden" id="custom_attribute_limit" data-bind="value: limit, attr: { name: <?php echo $block->getAttributeInputNameKO('limit')?> }" class=" input-text admin__control-text">
-							<input type="hidden" id="custom_attribute_eppav" data-bind="value: eppav, attr: { name: <?php echo $block->getAttributeInputNameKO('eppav')?> }" class=" input-text admin__control-text">
-							<input type="hidden" id="custom_attribute_postproc" data-bind="value: postproc, attr: { name: <?php echo $block->getAttributeInputNameKO('postproc')?> }" class=" input-text admin__control-text">
-							<input type="hidden" id="custom_attribute_composed_value" data-bind="value: composed_value, attr: { name: <?php echo $block->getAttributeInputNameKO('composed_value')?> }" class=" input-text admin__control-text">
+							<input type="hidden" id="custom_attribute_limit" data-bind="value: limit, attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('limit')?> }" class=" input-text admin__control-text">
+							<input type="hidden" id="custom_attribute_eppav" data-bind="value: eppav, attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('eppav')?> }" class=" input-text admin__control-text">
+							<input type="hidden" id="custom_attribute_postproc" data-bind="value: postproc, attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('postproc')?> }" class=" input-text admin__control-text">
+							<input type="hidden" id="custom_attribute_composed_value" data-bind="value: composed_value, attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('composed_value')?> }" class=" input-text admin__control-text">
 							<span id="convert_container_values" data-bind="foreach: convert">
 					            <input type="hidden"
 					            	id="convert_row_from"
 					            	data-bind="value: from,
-					            			  attr: { name: <?php echo $block->getAttributeInputNameKO('convert', true)?> + '[' + $index() + '][from]',
+					            			  attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('convert', true)?> + '[' + $index() + '][from]',
 			    							  id: 'convert_row_from_' + $parentContext.$index()  +  '_' + $index() }"
 					            	 class=" input-text admin__control-text">
 			            		<input type="hidden"
 			            			data-bind="value: to,
-			            			  		attr: { name: <?php echo $block->getAttributeInputNameKO('convert', true)?> + '[' + $index() + '][to]',
+			            			  		attr: { name: <?php /* @escapeNotVerified */ echo $block->getAttributeInputNameKO('convert', true)?> + '[' + $index() + '][to]',
 	    									 id: 'convert_row_to_' + $parentContext.$index()  +  '_' + $index() }"
 			            	 		class=" input-text admin__control-text">
 							</span>
@@ -128,7 +128,7 @@
                 "components": {
                     "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
                         "component": "Nostress_Koongo/js/channel/profile/editgeneral/attributes",
-						"attributeSource": <?php echo $block->getCustomAttributesJson(); ?>
+						"attributeSource": <?php /* @escapeNotVerified */ echo $block->getCustomAttributesJson(); ?>
                     }
                 }
             }
@@ -145,8 +145,8 @@ require([
          "Magento_Ui/js/modal/modal"
      ], function($, mageTemplate, tooltipTemplate){
 
-         var channelLabel = '<?php echo $block->getChannelLabel(); ?>';
-         var tooltipSettingsUrl =  '<?php echo $block->getHelp('attributes_mapping_custom_attributes'); ?>';
+         var channelLabel = '<?php /* @escapeNotVerified */ echo $block->getChannelLabel(); ?>';
+         var tooltipSettingsUrl =  '<?php /* @escapeNotVerified */ echo $block->getHelp('attributes_mapping_custom_attributes'); ?>';
 
          var tooltipHtml = tooltipSettingsUrl ? mageTemplate( tooltipTemplate, { url: tooltipSettingsUrl}) : '';
 	 	

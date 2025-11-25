@@ -155,10 +155,10 @@
 					    	<div class="attribute-options">
 					    		<?php foreach ($block->getPostprocOptions() as $value => $label):?>
 					    	
-					    		<div class="attribute-option" data-attribute-option-title="<?= htmlentities($label)?>">
+					    		<div class="attribute-option" data-attribute-option-title="<?= $block->escapeHtmlAttr($label)?>">
 			                        <div class="admin__field admin__field-option">
 			                            <input type="checkbox" value="<?= /* @escapeNotVerified */  $value?>" data-bind="checked: attributes()[currentAttributeIndex()].postproc" name="attribute_settings_modal_postproc" id="attribute_settings_modal_postproc_<?= /* @escapeNotVerified */  $value?>" class="admin__control-checkbox">
-			                            <label class="admin__field-label" for="attribute_settings_modal_postproc_<?= /* @escapeNotVerified */  $value?>"><?= htmlentities($label)?></label>
+			                            <label class="admin__field-label" for="attribute_settings_modal_postproc_<?= /* @escapeNotVerified */  $value?>"><?= $block->escapeHtml($label)?></label>
 			                        </div>
 			                    </div>
 			                    <?php endforeach;?>

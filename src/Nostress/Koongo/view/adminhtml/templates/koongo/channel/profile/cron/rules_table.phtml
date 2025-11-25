@@ -27,7 +27,7 @@
     	<legend class="admin__legend legend">
     	   <span>
     	       <?php /* @escapeNotVerified */ echo __('Profile Schedule Execution Rules') ?>
-    	       <?php echo $block->getTooltip(); ?>
+    	       <?php /* @escapeNotVerified */ echo $block->getTooltip(); ?>
     	   </span>
     	</legend>
 	    
@@ -47,7 +47,7 @@
 			
 				<!-- rules are empty -->
 				<!-- ko if: (rules().length <= 0) -->
-					<input type="hidden" id="rules_empty" name="<?php echo $block->getRulesInputName()?>" value=""/>
+					<input type="hidden" id="rules_empty" name="<?php /* @escapeNotVerified */ echo $block->getRulesInputName()?>" value=""/>
 				<!-- /ko -->
 				<tbody id="convert_container" data-bind="foreach: rules()">
 					
@@ -62,11 +62,11 @@
 							<?php echo $block->getTimesSelectHtml();?>
 							<div data-bind="visible: times_interval() == 'every_24h'">
 								<br>
-								<?= /* @escapeNotVerified */  __('At')?> &nbsp; <?php echo $block->getHoursSelectHtml();?> : <?php echo $block->getMinutesSelectHtml()?>
+								<?= /* @escapeNotVerified */  __('At')?> &nbsp; <?php /* @escapeNotVerified */ echo $block->getHoursSelectHtml();?> : <?php /* @escapeNotVerified */ echo $block->getMinutesSelectHtml()?>
 							</div>
 						</td>						
 						<td class="col-enabled">	
-							<input type="checkbox" id="rule_enabled" data-bind="checked: enabled, attr: { name: <?php echo $block->getInputNameKO('enabled')?> }" />						
+							<input type="checkbox" id="rule_enabled" data-bind="checked: enabled, attr: { name: <?php /* @escapeNotVerified */ echo $block->getInputNameKO('enabled')?> }" />						
 						</td>
 						<td class="col-duplicate">
 							<button data-bind="click: function(){ $parent.duplicateRuleTableRow(this, $parent, $index()); }" id="rule_row_duplicate_button" class="action- scalable delete icon-btn duplicate-product-option" type="button" title="<?= /* @escapeNotVerified */  __('Duplicate')?>">
@@ -85,7 +85,7 @@
 				        <td class="col-actions-add" data-bind="click: addRuleTableRow" colspan="6">
 				        	
 				        	<span style="float: right; font-size: 1.1em">
-							     <?php echo __("Adjust schedule for automatic profile execution.")?>
+							     <?php /* @escapeNotVerified */ echo __("Adjust schedule for automatic profile execution.")?>
 							</span>
 				        	
 				        	<button  class="action-primary scalable add" type="button" title="<?= /* @escapeNotVerified */  __('Add Schedule Rule')?>" id="add_schedule_rule_button">
@@ -106,7 +106,7 @@
                 "components": {
                     "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
                         "component": "Nostress_Koongo/js/channel/profile/editcron/rulestable",
-						"ruleSource": <?php echo json_encode($block->getCronRules());?>                                             
+						"ruleSource": <?php /* @escapeNotVerified */ echo json_encode($block->getCronRules());?>                                             
                     }
                 }
             }

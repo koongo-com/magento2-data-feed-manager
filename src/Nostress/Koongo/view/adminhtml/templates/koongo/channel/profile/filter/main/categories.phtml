@@ -23,17 +23,17 @@
 /** @var $block Nostress\Koongo\Block\Adminhtml\Channel\Profile\Filter\Edit\Tab\Main\Categories */
 ?>
 
-<fieldset class="fieldset" id="<?php echo $block->getFieldsetName();?>">
+<fieldset class="fieldset" id="<?php /* @escapeNotVerified */ echo $block->getFieldsetName();?>">
     <legend class="legend">
         <span>
             <?php /* @escapeNotVerified */ echo __('Categories') ?>
-            <?php echo $this->getTooltip(); ?>
+            <?php /* @escapeNotVerified */ echo $this->getTooltip(); ?>
         </span>
     </legend>
-     <?php echo __("Category filter is active only if at least one category is selected.")?>
+     <?php /* @escapeNotVerified */ echo __("Category filter is active only if at least one category is selected.")?>
      <br/>
      <br/>
-     <input id="<?php echo $block->getCategoriesFilterInputId(); ?>" type="hidden" value="<?php echo $block->getCategoryIdsString(); ?>" name=<?php echo $block->getCategoriesFilterInputName();?>/>
+     <input id="<?php /* @escapeNotVerified */ echo $block->getCategoriesFilterInputId(); ?>" type="hidden" value="<?php /* @escapeNotVerified */ echo $block->getCategoryIdsString(); ?>" name=<?php /* @escapeNotVerified */ echo $block->getCategoriesFilterInputName();?>/>
      <?php echo $block->getCategoryTreeHtml();?>
 </fieldset>
 

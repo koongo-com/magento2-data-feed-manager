@@ -59,9 +59,9 @@
                     "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
                         "component": "Nostress_Koongo/js/createprofile/steps/feed",
                         "appendTo": "<?= /* @escapeNotVerified */  $block->getParentComponentName()?>",
-						"feedsByLink": <?php echo $block->getFeedsByLink()?>,
+						"feedsByLink": <?php /* @escapeNotVerified */ echo $block->getFeedsByLink()?>,
 						"createProfileUrl": "<?= /* @escapeNotVerified */  $block->getUrl('*/*/create')?>",
-                        "manualsByCode": <?php echo json_encode($block->getChannelManualList()); ?>
+                        "manualsByCode": <?php /* @escapeNotVerified */ echo json_encode($block->getChannelManualList()); ?>
                     }
                 }
             }
