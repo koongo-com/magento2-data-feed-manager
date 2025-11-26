@@ -29,12 +29,12 @@
 	    <legend class="legend">
 	       <span>
 	           <?php /* @escapeNotVerified */ echo __('Attributes Mapping Table') ?>
-	           <?php echo $this->getTooltip(); ?>
+	           <?php /* @escapeNotVerified */ echo $this->getTooltip(); ?>
 	       </span>
 	       	       
 	       
 	    </legend>
-	    <?php echo __("Map Magento attributes onto %1 attributes using the attributes mapping table below.", $block->getChannelLabel())?>
+	    <?php /* @escapeNotVerified */ echo __("Map Magento attributes onto %1 attributes using the attributes mapping table below.", $block->escapeHtml($block->getChannelLabel()))?>
 	    <div id="manage-attributes-table">
 			<?php echo $block->getChildHtml('attributes_table_grid');?>
 	    </div>
@@ -70,7 +70,7 @@
                 "components": {
                     "<?= /* @escapeNotVerified */  $block->getComponentName()?>": {
                         "component": "Nostress_Koongo/js/channel/profile/editgeneral/attributes",
-						"attributeSource": <?php echo $block->getStandardAttributesJson(); ?>
+						"attributeSource": <?php /* @escapeNotVerified */ echo $block->getStandardAttributesJson(); ?>
                     }
                 }
             }
@@ -87,8 +87,8 @@ require([
          "Magento_Ui/js/modal/modal"
      ], function($, mageTemplate, tooltipTemplate){
 
-         var channelLabel = '<?php echo $block->getChannelLabel(); ?>';
-         var tooltipSettingsUrl =  '<?php echo $block->getHelp('attributes_advanced_settings'); ?>';
+         var channelLabel = '<?php /* @escapeNotVerified */ echo $block->getChannelLabel(); ?>';
+         var tooltipSettingsUrl =  '<?php /* @escapeNotVerified */ echo $block->getHelp('attributes_advanced_settings'); ?>';
 
          var tooltipHtml = tooltipSettingsUrl ? mageTemplate( tooltipTemplate, { url: tooltipSettingsUrl}) : '';
 	 	
