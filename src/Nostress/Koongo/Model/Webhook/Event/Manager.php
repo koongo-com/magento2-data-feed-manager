@@ -280,7 +280,7 @@ class Manager extends \Nostress\Koongo\Model\AbstractModel
      *
      * @param Int $storeId
      * @param String $topic
-     * @return void
+     * @return \Nostress\Koongo\Model\ResourceModel\Webhook\Collection
      */
     protected function _getWebhooks($storeId, $topic)
     {
@@ -301,7 +301,7 @@ class Manager extends \Nostress\Koongo\Model\AbstractModel
      * @param Int $productId
      * @param Int $orderId
      * @param Array $params
-     * @return void
+     * @return \Nostress\Koongo\Model\Webhook\Event
      */
     protected function _createWebhookEvent($webhook, $productId, $orderId, $params)
     {

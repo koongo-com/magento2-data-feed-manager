@@ -374,8 +374,8 @@ class Loader extends \Nostress\Koongo\Model\ResourceModel\AbstractResourceModel
     /**
      * Set store scope
      *
-     * @param int|string|Mage_Core_Model_Store $storeId
-     * @return Mage_Catalog_Model_Resource_Collection_Abstract
+     * @param int|string|\Magento\Store\Model\Store $storeId
+     * @return $this
      */
     public function setStoreId($storeId)
     {

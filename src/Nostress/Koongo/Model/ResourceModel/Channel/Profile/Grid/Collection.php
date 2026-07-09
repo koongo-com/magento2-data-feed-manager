@@ -105,7 +105,7 @@ class Collection extends ProfileCollection implements SearchResultInterface
 
     /**
      * @param AggregationInterface $aggregations
-     * @return $this
+     * @return void
      */
     public function setAggregations($aggregations)
     {
@@ -221,8 +221,8 @@ class Collection extends ProfileCollection implements SearchResultInterface
     /**
      *Add main_table to where part
      *
-     * @param [type] $select
-     * @return void
+     * @param \Magento\Framework\DB\Select $select
+     * @return \Magento\Framework\DB\Select
      */
     protected function _fixSqlSelect($select)
     {

@@ -34,7 +34,7 @@ class Preview extends SaveAbstract
     /**
      * Update feeds action
      *
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return void
      */
     public function execute()
     {

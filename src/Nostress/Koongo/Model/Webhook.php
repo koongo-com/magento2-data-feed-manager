@@ -99,7 +99,7 @@ class Webhook extends \Nostress\Koongo\Model\AbstractModel implements WebhookInt
      * Create payload for webhook request
      *
      * @param \Nostress\Koongoorderapi\Model\Webhook\Event $event
-     * @return void
+     * @return array
      */
     public function preparePayloadForEvent($event)
     {
@@ -122,7 +122,7 @@ class Webhook extends \Nostress\Koongo\Model\AbstractModel implements WebhookInt
      * Prepare payload for event
      *
      * @param \Nostress\Koongoorderapi\Model\Webhook\Event $event
-     * @return void
+     * @return array
      */
     protected function _preparePayloadDefault($event)
     {
