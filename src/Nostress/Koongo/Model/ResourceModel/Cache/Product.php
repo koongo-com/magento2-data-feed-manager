@@ -134,7 +134,7 @@ class Product extends \Nostress\Koongo\Model\ResourceModel\Cache
 
     /**
      * Updates category info from parent to child.
-     * @return string
+     * @return void
      */
     protected function updateParentToChildsCategoryInfo()
     {
@@ -144,7 +144,7 @@ class Product extends \Nostress\Koongo\Model\ResourceModel\Cache
 
     /**
      * Update qty for configurable products only if stock_id = 1
-     * @return string
+     * @return void
      */
     protected function updateConfigurableQty()
     {
@@ -159,7 +159,7 @@ class Product extends \Nostress\Koongo\Model\ResourceModel\Cache
 
     /**
      * Update qty for bundle products only if stock_id = 1
-     * @return string
+     * @return void
      */
     protected function updateBundleQty()
     {

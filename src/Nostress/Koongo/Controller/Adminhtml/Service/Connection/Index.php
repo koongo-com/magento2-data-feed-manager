@@ -128,7 +128,7 @@ class Index extends \Magento\Backend\App\Action
      * Get step number based on Koongo integration availability and status
      *
      * @param \Magento\Integration\Model\Integration $integration
-     * @return void
+     * @return int
      */
     protected function _getStepNumber($integration)
     {
