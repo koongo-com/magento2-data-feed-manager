@@ -221,10 +221,7 @@ class Restclient extends \Nostress\Koongo\Model\AbstractModel
         $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
         $headers = substr($response, 0, $header_size);
         $body = substr($response, $header_size);
-
-        if (PHP_VERSION_ID < 80000) {
-            curl_close($curl);
-        }
+        $this->closeCurlHandle($curl);
 
         if ($http_status >= 200 && $http_status <= 299) {
             return $this->_convertRequestReturnBody($body, $returnBodyConversion);

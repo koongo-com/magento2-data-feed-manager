@@ -278,11 +278,4 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
 
         return $data;
     }
-
-    private function closeCurlHandle($ch)
-    {
-        if (PHP_VERSION_ID < 80000) {
-            curl_close($ch);
-        }
-    }
 }
