@@ -56,7 +56,7 @@ class BatchProcessor extends AbstractProcessor
         $eventCollection = $this->_eventFactory->create()->getCollection();
 
         foreach ($batches as $cnt => $webhookId) {
-            var_dump($webhookId);
+//            var_dump($webhookId);
             $webhook = $this->_webhookFactory->create()->load($webhookId);
 
             if (!empty($webhook->getId())) {

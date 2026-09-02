@@ -231,4 +231,21 @@ abstract class AbstractModel extends \Magento\Framework\Model\AbstractModel
     {
         return $this->helper->getHelp($key);
     }
+
+    /**
+     * Close cURL handle
+     *
+     * Since PHP 8.0 a cURL handle is an object released by the garbage collector and curl_close()
+     * has no effect. The function is deprecated since PHP 8.5, therefore it must be called
+     * on PHP 7.4 only.
+     *
+     * @param resource|\CurlHandle $ch
+     * @return void
+     */
+    protected function closeCurlHandle($ch)
+    {
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($ch);
+        }
+    }
 }
