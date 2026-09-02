@@ -378,7 +378,10 @@ class Simple extends AbstractModel
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
         $result = curl_exec($ch);
         $this->checkResponseEmpty($result, curl_error($ch));
-        curl_close($ch);
+
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($ch);
+        }
 
         return $result;
     }

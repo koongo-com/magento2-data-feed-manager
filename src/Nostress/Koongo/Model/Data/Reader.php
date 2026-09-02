@@ -228,7 +228,7 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         if ($httpCode == 404) {
             /* Handle 404 here. */
             $message = __("File %1 doesn't exist. The file url location returns error 404.", $fileUrl);
-            curl_close($ch);
+            $this->closeCurlHandle($ch);
             $this->driver->fileClose($out);
             throw new Exception($message);
         }
@@ -236,12 +236,12 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         $error = curl_error($ch);
         if (!empty($error)) {
             $message = __("Can't download file %1 Following error occurs: %2", $fileUrl, $error);
-            curl_close($ch);
+            $this->closeCurlHandle($ch);
             $this->driver->fileClose($out);
             throw new Exception($message);
         }
 
-        curl_close($ch);
+        $this->closeCurlHandle($ch);
         $this->driver->fileClose($out);
     }
 
@@ -263,19 +263,26 @@ class Reader extends \Nostress\Koongo\Model\AbstractModel
         if ($httpCode == 404) {
             /* Handle 404 here. */
             $message = __("File %1 doesn't exist. The file url location returns error 404.", $fileUrl);
-            curl_close($ch);
+            $this->closeCurlHandle($ch);
             throw new Exception($message);
         }
 
         $error = curl_error($ch);
         if (!empty($error)) {
             $message = __("Can't download file %1", $fileUrl);
-            curl_close($ch);
+            $this->closeCurlHandle($ch);
             throw new Exception($message);
         }
 
-        curl_close($ch);
+        $this->closeCurlHandle($ch);
 
         return $data;
+    }
+
+    private function closeCurlHandle($ch)
+    {
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($ch);
+        }
     }
 }
