@@ -93,7 +93,7 @@ class Profilecategory extends \Nostress\Koongo\Model\ResourceModel\Cache\Product
 
     /**
      * Updates category info from parent to child.
-     * @return string
+     * @return void
      */
     protected function updateParentToChildsCategoryInfo()
     {

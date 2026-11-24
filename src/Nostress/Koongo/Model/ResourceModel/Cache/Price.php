@@ -89,7 +89,7 @@ class Price extends \Nostress\Koongo\Model\ResourceModel\Cache\Product
 
     /**
      * Update prices for configurable products.
-     * @return string
+     * @return void
      */
     protected function updateConfigurablePrices()
     {
@@ -99,7 +99,7 @@ class Price extends \Nostress\Koongo\Model\ResourceModel\Cache\Product
 
     /**
      * Update tier prices for all products.
-     * @return string
+     * @return void
      */
     protected function updateTierPrices()
     {

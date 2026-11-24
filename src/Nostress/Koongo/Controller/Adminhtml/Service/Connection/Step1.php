@@ -29,8 +29,10 @@
 namespace Nostress\Koongo\Controller\Adminhtml\Service\Connection;
 
 use Magento\Backend\App\Action;
+use Magento\Framework\Exception\State\UserLockedException;
 use Magento\Framework\View\Result\PageFactory;
 use Laminas\Http\Client as Client;
+use Magento\Security\Model\SecurityCookie;
 
 class Step1 extends \Magento\Backend\App\Action
 {
@@ -61,11 +63,18 @@ class Step1 extends \Magento\Backend\App\Action
      */
     protected $_serviceHelper = null;
     protected $_httpClient;
+
+    /**
+     * @var SecurityCookie
+     */
+    protected $securityCookie;
+
     /**
      * @param Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\Registry $registry,
      * @param \Magento\Framework\Escaper $escaper,
+     * @param SecurityCookie $securityCookie
      */
     public function __construct(
         Action\Context $context,
@@ -73,13 +82,15 @@ class Step1 extends \Magento\Backend\App\Action
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Escaper $escaper,
         \Nostress\Koongo\Helper\Data\Service $serviceHelper,
-        Client $httpClient
+        Client $httpClient,
+        SecurityCookie $securityCookie
     ) {
         $this->_coreRegistry = $registry;
         $this->resultPageFactory = $resultPageFactory;
         $this->escaper = $escaper;
         $this->_serviceHelper = $serviceHelper;
         $this->_httpClient = $httpClient;
+        $this->securityCookie = $securityCookie;
 
         parent::__construct($context);
     }
@@ -92,7 +103,7 @@ class Step1 extends \Magento\Backend\App\Action
             $this->messageManager->addSuccess(__('A system integration with name %1 was sucessfully created.', $this->_serviceHelper->getKoongoIntegrationName()));
         } catch (UserLockedException $e) {
             $this->_auth->logout();
-            $this->getSecurityCookie()->setLogoutReasonCookie(
+            $this->securityCookie->setLogoutReasonCookie(
                 \Magento\Security\Model\AdminSessionsManager::LOGOUT_REASON_USER_LOCKED
             );
             $this->_redirect('*');

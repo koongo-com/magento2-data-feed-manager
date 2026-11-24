@@ -833,7 +833,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     * @param string $identifier
     * @param array $tags
     * @param int $lifeTime In seconds
-    * @return bool
+    * @return void
     */
     public function saveCache($data, $identifier, $tags = [], $lifeTime = null)
     {

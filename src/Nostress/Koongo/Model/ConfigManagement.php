@@ -149,8 +149,19 @@ class ConfigManagement extends AbstractModel
         $settings["cataloginventory/options/reservations_enabled"] = (int)$this->inventoryReservationsTableExists();
 
         $result = ['settings' => $settings];
-        $result['carriers'] = $this->_getShippingCarriersAndMethods($storeId);
-        $result['payment_methods'] = $this->_getPaymentMethods($storeId);
+        // a broken third-party carrier or payment method must not hide the settings
+        try {
+            $result['carriers'] = $this->_getShippingCarriersAndMethods($storeId);
+        } catch (\Throwable $e) {
+            $this->log("Shipping carriers can't be loaded: " . $e->getMessage());
+            $result['carriers'] = [];
+        }
+        try {
+            $result['payment_methods'] = $this->_getPaymentMethods($storeId);
+        } catch (\Throwable $e) {
+            $this->log("Payment methods can't be loaded: " . $e->getMessage());
+            $result['payment_methods'] = [];
+        }
         return [$result];
     }
 
@@ -161,20 +172,24 @@ class ConfigManagement extends AbstractModel
 
         $carriers = $this->_shippingConfig->getAllCarriers($store);
         foreach ($carriers as $carrierCode => $carrier) {
-            $carrierItem = [];
-            $carrierItem['title'] = $this->helper->getStoreConfig($storeId, 'carriers/' . $carrierCode . '/title');
-            $carrierItem['active'] = $this->helper->getStoreConfig($storeId, 'carriers/' . $carrierCode . '/active');
-            $carrierItem['code'] = $carrierCode;
+            try {
+                $carrierItem = [];
+                $carrierItem['title'] = $this->helper->getStoreConfig($storeId, 'carriers/' . $carrierCode . '/title');
+                $carrierItem['active'] = $this->helper->getStoreConfig($storeId, 'carriers/' . $carrierCode . '/active');
+                $carrierItem['code'] = $carrierCode;
 
-            $shippingMethods = $carrier->getAllowedMethods();
-            $shippingMethodsArray = [];
+                $shippingMethods = $carrier->getAllowedMethods();
+                $shippingMethodsArray = [];
 
-            foreach ($shippingMethods as $methodCode => $methodTitle) {
-                $shippingMethodsArray[] = ['code' => $methodCode, 'title' => $methodTitle];
+                foreach ((array)$shippingMethods as $methodCode => $methodTitle) {
+                    $shippingMethodsArray[] = ['code' => $methodCode, 'title' => $methodTitle];
+                }
+
+                $carrierItem['shipping_methods'] = $shippingMethodsArray;
+                $carriersArray[] = $carrierItem;
+            } catch (\Throwable $e) {
+                $this->log("Shipping carrier " . $carrierCode . " is skipped: " . $e->getMessage());
             }
-
-            $carrierItem['shipping_methods'] = $shippingMethodsArray;
-            $carriersArray[] = $carrierItem;
         }
         return $carriersArray;
     }
@@ -184,10 +199,14 @@ class ConfigManagement extends AbstractModel
         $paymentMethods = $this->_paymentHelper->getStoreMethods($storeId);
         $paymentMethodsArray = [];
         foreach ($paymentMethods as $method) {
-            $paymentMethodItem = [];
-            $paymentMethodItem['code'] = $method->getCode();
-            $paymentMethodItem['title'] = $method->getTitle();
-            $paymentMethodsArray[] = $paymentMethodItem;
+            try {
+                $paymentMethodItem = [];
+                $paymentMethodItem['code'] = $method->getCode();
+                $paymentMethodItem['title'] = $method->getTitle();
+                $paymentMethodsArray[] = $paymentMethodItem;
+            } catch (\Throwable $e) {
+                $this->log("Payment method " . get_class($method) . " is skipped: " . $e->getMessage());
+            }
         }
         return $paymentMethodsArray;
     }

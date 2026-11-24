@@ -35,7 +35,7 @@ class KoongoReindexCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<info>Start recomputing products!</info>');
         $this->flat->executeFull();

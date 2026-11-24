@@ -37,7 +37,6 @@ class Sftp extends \Magento\Framework\Filesystem\Io\Sftp implements Listable
     public function __construct(DriverInterface $driver)
     {
         $this->driver = $driver;
-        parent::__construct();
     }
 
     /**

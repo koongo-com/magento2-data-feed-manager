@@ -113,7 +113,7 @@ class Ftp extends \Nostress\Koongo\Model\AbstractModel
     protected function _getFtpAdatper($config)
     {
         if (isset($config['protocol']) && $config['protocol'] == \Nostress\Koongo\Model\Config\Source\Ftpprotocol::SFTP) {
-            $ftp = new \Nostress\Koongo\Model\Io\Sftp();
+            $ftp = new \Nostress\Koongo\Model\Io\Sftp($this->driver);
             $ftpConfig = [
                 'host'      => $config['hostname'] . ":" . $config['port'],
                 'username'  => $config['username'],

@@ -59,7 +59,7 @@ class Loadcategories extends SaveAbstract
     /**
      * Index action
      *
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return void
      */
     public function execute()
     {
